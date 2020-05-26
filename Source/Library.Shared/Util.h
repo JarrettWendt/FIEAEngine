@@ -56,13 +56,6 @@ namespace Library::Util
 	 */
 	template <typename T, typename U, typename... Ts>
 	constexpr std::size_t Index() noexcept;
-	
-	/**
-	 * @returns the one-based index of T in Ts
-	 * @returns 0 if T is not in Ts
-	 */
-	template <typename T, typename U, typename... Ts>
-	constexpr std::size_t OneIndex() noexcept;
 
 #pragma region Query
 	/**

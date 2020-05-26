@@ -2,6 +2,8 @@
 
 [*]
 indent_style = tab
+# Explicitly specifying indent_size because GitHub respects it when viewing source files on the web.
+indent_size = 4
 end_of_line = lf
 
 [*.{c,cc,cpp,h,hh,hpp}]

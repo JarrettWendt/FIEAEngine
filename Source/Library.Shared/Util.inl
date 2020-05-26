@@ -61,23 +61,6 @@ namespace Library::Util
 		}
 	}
 
-	template<typename T, typename U, typename ...Ts>
-	constexpr std::size_t OneIndex() noexcept
-	{
-		if constexpr (!IsOneOf<T, U, Ts...>())
-		{
-			return 0;
-		}
-		else if constexpr (std::is_same_v<T, U>)
-		{
-			return 1;
-		}
-		else
-		{
-			return 1 + OneIndex<T, Ts...>();
-		}
-	}
-
 	template<Concept::HasSize Class>
 	constexpr size_t GetSize(const Class& c) noexcept
 	{
