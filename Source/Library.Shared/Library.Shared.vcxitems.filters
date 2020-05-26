@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Datum.cpp">
+      <Filter>Containers\Datum</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hash.cpp">
+      <Filter>Containers\HashMap\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LibMath.cpp">
+      <Filter>Util\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Exception.cpp">
+      <Filter>Util\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EngineTime.cpp">
+      <Filter>Engine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Coroutine.cpp">
+      <Filter>Engine\Coroutine</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
+      <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Datum.h">
+      <Filter>Containers\Datum</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariantArray.h">
+      <Filter>Containers\VariantArray</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Array.h">
+      <Filter>Containers\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Util.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Memory.h">
+      <Filter>Util\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)HashMap.h">
+      <Filter>Containers\HashMap</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SList.h">
+      <Filter>Containers\SList</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hash.h">
+      <Filter>Containers\HashMap\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Concept.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Macros.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LibMath.h">
+      <Filter>Util\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RTTI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Enum.h">
+      <Filter>Util\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Random.h">
+      <Filter>Util\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Exception.h">
+      <Filter>Util\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EventManager.h">
+      <Filter>Events\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EngineTime.h">
+      <Filter>Engine\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h">
+      <Filter>Containers\Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Queue.h">
+      <Filter>Containers\Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Coroutine.h">
+      <Filter>Engine\Coroutine</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Literals.h">
+      <Filter>Util\Literals</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="pch">
+      <UniqueIdentifier>{1c4f69b0-f6ca-45c9-8ddc-907ac5f0fa1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers">
+      <UniqueIdentifier>{438bf9ee-b674-4e19-b1ca-79fc9e104a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\Datum">
+      <UniqueIdentifier>{5b1d630c-906e-4c9d-ac5f-7069f7a1c1e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\VariantArray">
+      <UniqueIdentifier>{2965c69e-402f-4625-8510-dc704c94bcaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\Array">
+      <UniqueIdentifier>{eb83af8e-0e16-40b0-94bb-e9c966daba6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{59c7d677-2fe9-4712-9049-0544a5a51252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Memory">
+      <UniqueIdentifier>{ba4a42cc-8f0d-4812-a74b-052cc4ad2ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\SList">
+      <UniqueIdentifier>{271e0cc5-06e7-4920-91cf-2f6edf7ce8db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\HashMap">
+      <UniqueIdentifier>{fb5d6008-df2b-48c1-b295-dc2f6478109f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\HashMap\Hash">
+      <UniqueIdentifier>{fe72d20c-43fb-47c2-9ce5-1edfae062495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Math">
+      <UniqueIdentifier>{41a0972d-a2e3-4af1-8d53-bc4d30328554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Enum">
+      <UniqueIdentifier>{fee402d6-c584-453d-8ac9-431fb5f808c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Random">
+      <UniqueIdentifier>{63e53f89-fa38-4d88-9a6b-e913e0a0bdad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{cc6468c3-c6b7-48d8-aa93-f1d47f8c4197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events\EventManager">
+      <UniqueIdentifier>{3ee7e013-7f6c-4bda-ba0e-2af7e0369f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Exception">
+      <UniqueIdentifier>{93cefbc5-3be8-4405-bb97-26fff72bdf37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{e527557c-9727-490f-bc62-e1dd6de1d200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{b6f0ec46-08b2-4aed-a834-8dc59a2511eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Time">
+      <UniqueIdentifier>{045481a8-deae-4e84-893e-41f8f3f5322f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\Stack">
+      <UniqueIdentifier>{3abbb888-d333-46f3-9d2f-44408453cb63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\Queue">
+      <UniqueIdentifier>{ca74d9f1-35e1-4438-830d-cd9d8e1aaf5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Literals">
+      <UniqueIdentifier>{92430b2a-b750-4584-87e8-0a7372ed39b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Coroutine">
+      <UniqueIdentifier>{278562ba-03b3-4e8b-88db-5ae722d093d7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)VariantArray.inl">
+      <Filter>Containers\VariantArray</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Array.inl">
+      <Filter>Containers\Array</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Memory.inl">
+      <Filter>Util\Memory</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)HashMap.inl">
+      <Filter>Containers\HashMap</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)SList.inl">
+      <Filter>Containers\SList</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Hash.inl">
+      <Filter>Containers\HashMap\Hash</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Util.inl">
+      <Filter>Util</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Enum.inl">
+      <Filter>Util\Enum</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Random.inl">
+      <Filter>Util\Random</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Datum.inl">
+      <Filter>Containers\Datum</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Event.inl">
+      <Filter>Events</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)EventManager.inl">
+      <Filter>Events\EventManager</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)EngineTime.inl">
+      <Filter>Engine\Time</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Stack.inl">
+      <Filter>Containers\Stack</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Queue.inl">
+      <Filter>Containers\Queue</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Coroutine.inl">
+      <Filter>Engine\Coroutine</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)LibMath.inl">
+      <Filter>Util\Math</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Literals.inl">
+      <Filter>Util\Literals</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory).editorconfig" />
+  </ItemGroup>
+</Project>

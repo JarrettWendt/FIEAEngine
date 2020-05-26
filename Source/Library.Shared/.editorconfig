@@ -1,0 +1,12 @@
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
+[*]
+indent_style = tab
+end_of_line = lf
+
+[*.{c,cc,cpp,h,hh,hpp}]
+file_header_template = (c) Jarrett Wendt 2020
+
+[*.xml]
+
+[*.json]
