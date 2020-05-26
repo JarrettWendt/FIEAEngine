@@ -127,7 +127,6 @@ namespace UnitTestLibraryDesktop
 				throw std::exception();
 			}, true);
 			Engine::Update();
-			std::this_thread::sleep_for(5ms);
 			Assert::ExpectException<AggregateException>([] { Engine::Update(); });
 
 			// one more Update() to remove everything
