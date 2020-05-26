@@ -126,8 +126,7 @@ namespace UnitTestLibraryDesktop
 				co_yield 1ns;
 				throw std::exception();
 			}, true);
-			Engine::Update();
-			Assert::ExpectException<AggregateException>([] { Engine::Update(); });
+			Assert::ExpectException<AggregateException>([] { Engine::Update(); Engine::Update(); });
 
 			// one more Update() to remove everything
 			Engine::Update();
