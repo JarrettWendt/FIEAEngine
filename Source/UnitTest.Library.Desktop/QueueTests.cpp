@@ -1,3 +1,5 @@
+// MIT License Copyright (c) 2020 Jarrett Wendt
+
 #include "pch.h"
 
 #define TEMPLATE_TEST_METHOD_BEGIN(methodName)								\

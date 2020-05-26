@@ -1,6 +1,4 @@
-/**
- * (c) 2020 Jarrett Wendt
- */
+// MIT License Copyright (c) 2020 Jarrett Wendt
 
 #pragma once
 

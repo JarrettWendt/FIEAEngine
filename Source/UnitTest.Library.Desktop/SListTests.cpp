@@ -1,3 +1,5 @@
+// MIT License Copyright (c) 2020 Jarrett Wendt
+
 #include "pch.h"
 
 // Macros which expands to defining a recursive template method.

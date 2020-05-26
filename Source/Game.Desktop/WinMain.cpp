@@ -1,7 +1,4 @@
-// To change this to a Windows Desktop Application:
-// Go to Project Properties > Linker > System > SubSystem
-// compile with: /D_UNICODE /DUNICODE /DWIN32 /D_WINDOWS /c
-// Change main to WinMain
+// MIT License Copyright (c) 2020 Jarrett Wendt
 
 #include "pch.h"
 

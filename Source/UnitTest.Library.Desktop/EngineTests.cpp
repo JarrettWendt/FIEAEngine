@@ -10,12 +10,16 @@ namespace UnitTestLibraryDesktop
 {
 	TEST_CLASS(EngineTests)
 	{
-		INITIALIZE_CLEANUP
+	INITIALIZE_CLEANUP
 
 		TEST_METHOD(Main)
 		{
 			// Start a coroutine to kill the simulation so we don't get into an infinite loop.
-			Coroutines::Start([]()->Coroutine { co_yield 5ms; Engine::IsActive() = false; });
+			Coroutines::Start([]()-> Coroutine
+			{
+				co_yield 5ms;
+				Engine::IsActive() = false;
+			});
 			Engine::Main();
 			Engine::IsActive() = true;
 			// One more to clear the Coroutines.

@@ -1,3 +1,5 @@
+// MIT License Copyright (c) 2020 Jarrett Wendt
+
 #include "pch.h"
 
 using namespace std::string_literals;
