@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio
+*.vs/
+Build/bin/*
+Build/obj/*
+
+# ReSharper
+*.DotSettings
+*.DotSettings.*
