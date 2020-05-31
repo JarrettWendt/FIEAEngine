@@ -128,9 +128,11 @@ namespace UnitTestLibraryDesktop
 			}, true);
 			Assert::ExpectException<AggregateException>([] { Engine::Update(); Engine::Update(); });
 
-			// one more Update() to remove everything
-			Engine::Update();
-			Assert::AreEqual(0_z, Coroutines::Count());
+			// Update() until everything is gone
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 		}
 
 		TEST_METHOD(StopWithinCoroutine)
