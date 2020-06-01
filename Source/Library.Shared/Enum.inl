@@ -36,7 +36,7 @@ namespace Library
 	{
 		if (value <= T::End)
 		{
-			value = T(static_cast<typename std::underlying_type<T>::type>(value) + 1);
+			value = T(static_cast<underlying_type>(value) + 1);
 		}
 		return *this;
 	}

@@ -10,4 +10,16 @@ namespace Library::Math
 	{
 		t -= t ? diff : 0;
 	}
+	
+	template<typename T>
+	T ReMap(const T x, const T inMin, const T inMax, const T outMin, const T outMax) noexcept
+	{
+		return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+	}
+	
+	template<typename T>
+	T ReMap01(const T x, T inMin, T inMax) noexcept
+	{
+		return ReMap(x, inMin, inMax, T(0), T(1));
+	}
 }

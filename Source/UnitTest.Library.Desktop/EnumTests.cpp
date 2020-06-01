@@ -85,25 +85,77 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual("Nine", std::to_string(Digit::Nine));
 		}
 
-		TEST_METHOD(Overflow)
+		TEST_METHOD(Count)
 		{
-			Digit d = Digit::Nine;
+			Assert::AreEqual(10, Enum<Digit>::Count);
+		}
+
+		TEST_METHOD(UnsignedOverflow)
+		{
+			using D = UnsignedDigit;
+			
+			D d = D::Nine;
 			++d;
-			Assert::AreEqual(Digit::Zero, d);
+			Assert::AreEqual(D::Zero, d);
+
+			d = D::Eight;
+			d += 2;
+			Assert::AreEqual(D::Zero, d);
+
+			d = D::One;
+			d += 10;
+			Assert::AreEqual(D::One, d, "should wrap back around to itself");
 		}
 
 		TEST_METHOD(UnsignedUnderflow)
 		{
-			UnsignedDigit d = UnsignedDigit::Zero;
+			using D = UnsignedDigit;
+			
+			D d = D::Zero;
 			--d;
-			Assert::AreEqual(UnsignedDigit::Nine, d);
+			Assert::AreEqual(D::Nine, d);
+
+			d = D::One;
+			d -= 2;
+			Assert::AreEqual(D::Nine, d);
+
+			d = D::One;
+			d -= 10;
+			Assert::AreEqual(D::One, d, "should wrap back around to itself");
+		}
+
+		TEST_METHOD(SignedOverflow)
+		{
+			using D = SignedDigit;
+			
+			D d = D::Nine;
+			++d;
+			Assert::AreEqual(D::Zero, d);
+
+			d = D::Eight;
+			d += 2;
+			Assert::AreEqual(D::Zero, d);
+
+			d = D::One;
+			d += 10;
+			Assert::AreEqual(D::One, d, "should wrap back around to itself");
 		}
 
 		TEST_METHOD(SignedUnderflow)
 		{
-			SignedDigit d = SignedDigit::Zero;
+			using D = SignedDigit;
+			
+			D d = D::Zero;
 			--d;
-			Assert::AreEqual(SignedDigit::Nine, d);
+			Assert::AreEqual(D::Nine, d);
+
+			d = D::One;
+			d -= 2;
+			Assert::AreEqual(D::Nine, d);
+
+			d = D::One;
+			d -= 10;
+			Assert::AreEqual(D::One, d, "should wrap back around to itself");
 		}
 	};
 }

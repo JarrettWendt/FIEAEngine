@@ -64,6 +64,9 @@
     <ClCompile Include="EngineTests.cpp">
       <Filter>Tests\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="MathTests.cpp">
+      <Filter>Tests\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">

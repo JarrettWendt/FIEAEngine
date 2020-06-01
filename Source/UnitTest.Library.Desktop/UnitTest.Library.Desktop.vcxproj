@@ -249,6 +249,7 @@
     <ClCompile Include="HashMapTests.cpp" />
     <ClCompile Include="HashTests.cpp" />
     <ClCompile Include="InputTests.cpp" />
+    <ClCompile Include="MathTests.cpp" />
     <ClCompile Include="MemoryTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

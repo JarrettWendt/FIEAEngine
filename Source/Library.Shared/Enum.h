@@ -7,6 +7,7 @@
 
 #include "Concept.h"
 #include "Macros.h"
+#include "LibMath.h"	// Mod
 
 namespace Library
 {
@@ -20,6 +21,9 @@ namespace Library
 	class Enum final
 	{
 	public:
+		using underlying_type = typename std::underlying_type_t<T>;
+		static inline size_t Count = underlying_type(T::End) - underlying_type(T::Begin) + 1;
+		
 		class iterator final
 		{
 		public:
@@ -84,17 +88,34 @@ namespace std
  * operator-- (pre/post)
  *
  * These operators will overflow/underflow within the range of [Begin, End]
+ * Assumes [Begin, End] is a positive contiguous number space
  *
  * @param EnumType		an enum type
  */
 #define ENUM_OPERATORS(EnumType)																			\
-inline EnumType operator+(const EnumType e, const std::underlying_type<EnumType>::type i)					\
+__pragma(warning(push))																						\
+__pragma(warning(disable:4244)) /* conversion, possible loss of data */										\
+inline EnumType operator+(EnumType e, std::underlying_type_t<EnumType> i)									\
 {																											\
-	return e >= EnumType::End ? EnumType::Begin : EnumType(decltype(i)(e) + i);								\
+	auto a = decltype(i)(e) + i;																			\
+	a = Library::Math::Mod(a, decltype(i)(EnumType::End) - decltype(i)(EnumType::Begin) + 1);				\
+	a += decltype(i)(EnumType::Begin);																		\
+	return EnumType(a);																						\
 }																											\
-inline EnumType operator-(const EnumType e, const std::underlying_type<EnumType>::type i)					\
+inline EnumType operator-(const EnumType e, std::underlying_type_t<EnumType> i)								\
 {																											\
-	return e <= EnumType::Begin ? EnumType::End : EnumType(decltype(i)(e) - i);								\
+	auto a = decltype(i)(e) - i;																			\
+	a = Library::Math::Mod(a, decltype(i)(EnumType::End) - decltype(i)(EnumType::Begin) + 1);				\
+	a += decltype(i)(EnumType::Begin);																		\
+	return EnumType(a);																						\
+}																											\
+inline EnumType& operator+=(EnumType& e, const std::underlying_type_t<EnumType> i)							\
+{																											\
+	return e = operator+(e, i);																				\
+}																											\
+inline EnumType& operator-=(EnumType& e, const std::underlying_type_t<EnumType> i)							\
+{																											\
+	return e = operator-(e, i);																				\
 }																											\
 inline EnumType& operator++(EnumType& e)																	\
 {																											\
@@ -115,6 +136,7 @@ inline EnumType operator--(EnumType& e, int)																\
 	const auto ret = e;																						\
 	operator--(e);																							\
 	return ret;																								\
-}
+}																											\
+__pragma(warning(pop))
 
 #include "Enum.inl"

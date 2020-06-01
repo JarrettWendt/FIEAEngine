@@ -27,23 +27,7 @@ namespace Library::Math::Constants
 }
 
 namespace Library::Math
-{
-	// aliases to Library::Math::Constants for when you don't want to `using namespace` and the fully qualified namespace is too wordy.
-	constexpr auto PI_llf = Constants::PI_llf;
-	constexpr auto PI_lf = Constants::PI_lf;
-	constexpr auto PI_f = Constants::PI_f;
-	constexpr auto PI = Constants::PI;
-
-	constexpr auto TAU_llf = Constants::TAU_llf;
-	constexpr auto TAU_lf = Constants::TAU_lf;
-	constexpr auto TAU_f = Constants::TAU_f;
-	constexpr auto TAU = Constants::TAU;
-
-	constexpr auto ETA_llf = Constants::ETA_llf;
-	constexpr auto ETA_lf = Constants::ETA_lf;
-	constexpr auto ETA_f = Constants::ETA_f;
-	constexpr auto ETA = Constants::ETA;
-	
+{	
 	/**
 	 * wrapper for safely decrementing an unsigned type without underflowing
 	 *
@@ -70,6 +54,55 @@ namespace Library::Math
 	 * @returns		the next prime > n
 	 */
 	size_t NextPrime(size_t num);
+
+	/**
+	 * re-maps a number from one rage to another
+	 *
+	 * @param x			the number to map
+	 * @param inMin		the lower bound of x's current range
+	 * @param inMax		the upper bound of x's current range
+	 * @param outMin	the lower bound of x's target range
+	 * @param outMax	the upper bound of x's target range
+	 */
+	template<typename T>
+	T ReMap(T x, T inMin, T inMax, T outMin, T outMax) noexcept;
+
+	/**
+	 * re-maps a number from one range to [0, 1]
+	 *
+	 * @param x			the number to map
+	 * @param inMin		the lower bound of x's current range
+	 * @param inMax		the upper bound of x's current range
+	 */
+	template<typename T>
+	T ReMap01(T x, T inMin, T inMax) noexcept;
+
+	/**
+	 * mathematically conformant signed modulo
+	 * 
+	 * in mathematics:
+	 * -1 mod 10 == -1
+	 * 1 mod -10 == -9
+	 * 
+	 * in C/C++:
+	 * -1 % 10 == 9
+	 * 1 & -10 == 1
+	 */
+	template<typename T, typename M>
+	auto Mod(T t, M m) noexcept
+	{
+		assert(m && "modulus not defined for modulo of 0");
+
+		const auto r = t % m;
+		if constexpr (std::is_signed_v<decltype(r)> && std::is_signed_v<M>)
+		{
+			if ((m > 0 && r < 0) || m < 0 && r > 0)
+			{
+				return r + m;
+			}
+		}
+		return r;
+	}
 }
 
 #include "LibMath.inl"

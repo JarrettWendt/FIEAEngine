@@ -53,7 +53,7 @@ namespace Library
 
 			Space = 0x20,
 
-			End = 0x23,
+			EndKey = 0x23,
 			Home,
 
 			LeftArrow = 0x26,
@@ -68,7 +68,10 @@ namespace Library
 			LeftWindows = LeftMeta,
 			RightMeta = 0x5C,
 			RightCommand = RightMeta,
-			RightWindows = RightMeta
+			RightWindows = RightMeta,
+
+			Begin = 0,
+			End = 255
 		};
 
 		/**
@@ -84,7 +87,10 @@ namespace Library
 			// Just pressed.
 			Pressed,
 			// Just released.
-			Released
+			Released,
+
+			Begin = Up,
+			End = Released
 		};
 
 		/** it is suggested to use this EventManager for storing Input Events */
