@@ -8,7 +8,25 @@
 
 namespace UnitTests
 {
-	enum class Digit
+	enum class Digit : uint8_t
+	{
+		Zero,
+		One,
+		Two,
+		Three,
+		Four,
+		Five,
+		Six,
+		Seven,
+		Eight,
+		Nine,
+
+		Begin = Zero,
+		End = Nine
+	};
+
+	using UnsignedDigit = Digit;
+	enum class SignedDigit : int
 	{
 		Zero,
 		One,
@@ -71,4 +89,19 @@ namespace Library
 		}
 		return map.At(key);
 	}
+
+	template<>
+	inline const std::string& Enum<UnitTests::SignedDigit>::ToString(const UnitTests::SignedDigit t)
+	{
+		return Enum<UnitTests::Digit>::ToString(UnitTests::Digit(int(t)));
+	}
+
+	template<>
+	inline UnitTests::SignedDigit Enum<UnitTests::SignedDigit>::FromString(const std::string& str)
+	{
+		return UnitTests::SignedDigit(int(Enum<UnitTests::Digit>::FromString(str)));
+	}
 }
+
+ENUM_OPERATORS(UnitTests::Digit)
+ENUM_OPERATORS(UnitTests::SignedDigit)

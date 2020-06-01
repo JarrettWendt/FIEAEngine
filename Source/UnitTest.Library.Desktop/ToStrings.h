@@ -8,54 +8,54 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace UnitTests;
 
-#define SPECIALIZE_TO_STRING_REF(Q)											\
-template<>																	\
-inline std::wstring ToString<Q>(const Q& q)									\
-{																			\
-	return CppUnitTestFramework::ToString(Stringify<Q>::std(q));			\
+#define SPECIALIZE_TO_STRING_REF(Q)															\
+template<>																					\
+inline std::wstring ToString<Q>(const Q& q)													\
+{																							\
+	return CppUnitTestFramework::ToString(Stringify<Q>::std(q));							\
 }
 
-#define SPECIALIZE_TO_STRING_PTR(Q)											\
-template<>																	\
-inline std::wstring ToString<Q>(Q* q)										\
-{																			\
-	return q ? CppUnitTestFramework::ToString(Stringify<Q*>::std(q)) : L"nullptr";	\
+#define SPECIALIZE_TO_STRING_PTR(Q)															\
+template<>																					\
+inline std::wstring ToString<Q>(Q* q)														\
+{																							\
+	return q ? CppUnitTestFramework::ToString(Stringify<Q*>::std(q)) : L"nullptr";			\
 }
 
-#define SPECIALIZE_TO_STRING_CONST_PTR(Q)									\
-template<>																	\
-inline std::wstring ToString<Q>(const Q* q)									\
-{																			\
+#define SPECIALIZE_TO_STRING_CONST_PTR(Q)													\
+template<>																					\
+inline std::wstring ToString<Q>(const Q* q)													\
+{																							\
 	return q ? CppUnitTestFramework::ToString(Stringify<Q*>::std(q)) : L"const nullptr";	\
 }
-#define SPECIALIZE_TO_STRING(Q)												\
-SPECIALIZE_TO_STRING_REF(SINGLE_ARG(Q))										\
-SPECIALIZE_TO_STRING_PTR(SINGLE_ARG(Q))										\
+#define SPECIALIZE_TO_STRING(Q)																\
+SPECIALIZE_TO_STRING_REF(SINGLE_ARG(Q))														\
+SPECIALIZE_TO_STRING_PTR(SINGLE_ARG(Q))														\
 SPECIALIZE_TO_STRING_CONST_PTR(SINGLE_ARG(Q))
 
-#define SPECIALIZE_TO_STRING_IT(Q)											\
-template<>																	\
-inline std::wstring ToString<Q>(const Q& q)									\
-{																			\
-	return L"iterator at " + CppUnitTestFramework::ToString(*q);			\
-}																			\
-template<>																	\
-inline std::wstring ToString<Q>(Q*)											\
-{																			\
-	return L"iterator pointer";												\
-}																			\
-template<>																	\
-inline std::wstring ToString<Q>(const Q*)									\
-{																			\
-	return L"const iterator pointer";										\
+#define SPECIALIZE_TO_STRING_IT(Q)															\
+template<>																					\
+inline std::wstring ToString<Q>(const Q& q)													\
+{																							\
+	return L"iterator at " + CppUnitTestFramework::ToString(*q);							\
+}																							\
+template<>																					\
+inline std::wstring ToString<Q>(Q*)															\
+{																							\
+	return L"iterator pointer";																\
+}																							\
+template<>																					\
+inline std::wstring ToString<Q>(const Q*)													\
+{																							\
+	return L"const iterator pointer";														\
 }
 
-#define SPECIALIZE_CONTAINER_(Container)									\
-	SPECIALIZE_TO_STRING(SINGLE_ARG(Container))								\
-	SPECIALIZE_TO_STRING_IT(SINGLE_ARG(Container::iterator))				\
+#define SPECIALIZE_CONTAINER_(Container)													\
+	SPECIALIZE_TO_STRING(SINGLE_ARG(Container))												\
+	SPECIALIZE_TO_STRING_IT(SINGLE_ARG(Container::iterator))								\
 	SPECIALIZE_TO_STRING_IT(SINGLE_ARG(Container::const_iterator))
 
-#define SPECIALIZE_CONTAINER(Container, Q)									\
+#define SPECIALIZE_CONTAINER(Container, Q)													\
 	SPECIALIZE_CONTAINER_(SINGLE_ARG(Container<Q>))
 
 namespace Microsoft::VisualStudio::CppUnitTestFramework
@@ -94,6 +94,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	SPECIALIZE_TO_STRING(Input::KeyState)
 	SPECIALIZE_TO_STRING(Datum::Type)
 	SPECIALIZE_TO_STRING(Digit)
+	SPECIALIZE_TO_STRING(SignedDigit)
 	SPECIALIZE_TO_STRING(Foo)
 	SPECIALIZE_TO_STRING(std::shared_ptr<Foo>)
 

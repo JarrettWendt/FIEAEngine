@@ -84,5 +84,26 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual("Eight", std::to_string(Digit::Eight));
 			Assert::AreEqual("Nine", std::to_string(Digit::Nine));
 		}
+
+		TEST_METHOD(Overflow)
+		{
+			Digit d = Digit::Nine;
+			++d;
+			Assert::AreEqual(Digit::Zero, d);
+		}
+
+		TEST_METHOD(UnsignedUnderflow)
+		{
+			UnsignedDigit d = UnsignedDigit::Zero;
+			--d;
+			Assert::AreEqual(UnsignedDigit::Nine, d);
+		}
+
+		TEST_METHOD(SignedUnderflow)
+		{
+			SignedDigit d = SignedDigit::Zero;
+			--d;
+			Assert::AreEqual(SignedDigit::Nine, d);
+		}
 	};
 }

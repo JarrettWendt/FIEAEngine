@@ -87,44 +87,34 @@ namespace std
  *
  * @param EnumType		an enum type
  */
-#define ENUM_OPERATORS(EnumType)															\
-inline EnumType operator+(const EnumType e, const std::underlying_type<EnumType>::type i)	\
-{																							\
-	auto ret = static_cast<EnumType>(static_cast<decltype(i)>(e) + i);						\
-	if (ret > EnumType::End)																\
-	{																						\
-		ret = EnumType::Begin;																\
-	}																						\
-	return ret;																				\
-}																							\
-inline EnumType operator-(const EnumType e, const std::underlying_type<EnumType>::type i)	\
-{																							\
-	auto ret = static_cast<EnumType>(static_cast<decltype(i)>(e) - i);						\
-	if (ret > EnumType::End)																\
-	{																						\
-		ret = EnumType::End;																\
-	}																						\
-	return ret;																				\
-}																							\
-inline EnumType& operator++(EnumType& e)													\
-{																							\
-	return e = operator+(e, 1);																\
-}																							\
-inline EnumType operator++(EnumType& e, int)												\
-{																							\
-	const auto ret = e;																		\
-	operator++(e);																			\
-	return ret;																				\
-}																							\
-inline EnumType& operator--(EnumType& e)													\
-{																							\
-	return e = operator-(e, 1);																\
-}																							\
-inline EnumType operator--(EnumType& e, int)												\
-{																							\
-	const auto ret = e;																		\
-	operator--(e);																			\
-	return ret;																				\
+#define ENUM_OPERATORS(EnumType)																			\
+inline EnumType operator+(const EnumType e, const std::underlying_type<EnumType>::type i)					\
+{																											\
+	return e >= EnumType::End ? EnumType::Begin : EnumType(decltype(i)(e) + i);								\
+}																											\
+inline EnumType operator-(const EnumType e, const std::underlying_type<EnumType>::type i)					\
+{																											\
+	return e <= EnumType::Begin ? EnumType::End : EnumType(decltype(i)(e) - i);								\
+}																											\
+inline EnumType& operator++(EnumType& e)																	\
+{																											\
+	return e = operator+(e, 1);																				\
+}																											\
+inline EnumType operator++(EnumType& e, int)																\
+{																											\
+	const auto ret = e;																						\
+	operator++(e);																							\
+	return ret;																								\
+}																											\
+inline EnumType& operator--(EnumType& e)																	\
+{																											\
+	return e = operator-(e, 1);																				\
+}																											\
+inline EnumType operator--(EnumType& e, int)																\
+{																											\
+	const auto ret = e;																						\
+	operator--(e);																							\
+	return ret;																								\
 }
 
 #include "Enum.inl"
