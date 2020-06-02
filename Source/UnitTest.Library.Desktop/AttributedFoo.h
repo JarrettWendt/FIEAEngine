@@ -14,31 +14,31 @@ namespace UnitTests
 		[[Attribute]]
 		int integers[10]{ 0, 1, 2, 3, 4, 5, 5, 7, 8, 9 };
 
-		//[[Attribute]]
-		//float Float{ 0.f };
-		//[[Attribute]]
-		//float floats[10]{};
+		[[Attribute]]
+		float Float{ 0.f };
+		[[Attribute]]
+		float floats[10]{};
 
-		//[[Attribute]]
-		//std::string string{};
-		//[[Attribute]]
-		//std::string strings[10]{};
+		[[Attribute]]
+		std::string string{};
+		[[Attribute]]
+		std::string strings[10]{};
 
-		//[[Attribute]]
-		//std::shared_ptr<UnitTests::Foo> foo{};
-		//[[Attribute]]
-		//std::shared_ptr<UnitTests::Foo> foos[10]{};
+		[[Attribute]]
+		std::shared_ptr<UnitTests::Foo> foo{};
+		[[Attribute]]
+		std::shared_ptr<UnitTests::Foo> foos[10]{};
 
-		//[[Attribute]]
-		//std::shared_ptr<Scope> scope{ scope };
+		[[Attribute]]
+		std::shared_ptr<Scope> scope{ std::make_shared<Scope>() };
 
 		// Prescribed attributes without data members.
-		//[[Attribute(int, "intWithoutMember")]]
-		//[[Attribute(float, "floatWithoutmember")]]
-		//[[Attribute(std::string, "stringWithoutMember")]];
-		//[[Attribute(std::shared_ptr<UnitTests::Foo>, "fooWithoutMember")]]
-		//[[Attribute(std::shared_ptr<Scope>, "scopeWithoutMember")]]
-		//[[Attribute(std::shared_ptr<UnitTests::AttributedFoo>, "recursive")]];
+		[[Attribute(int, "intWithoutMember")]]
+		[[Attribute(float, "floatWithoutmember")]]
+		[[Attribute(std::string, "stringWithoutMember")]];
+		[[Attribute(std::shared_ptr<UnitTests::Foo>, "fooWithoutMember")]]
+		[[Attribute(std::shared_ptr<Scope>, "scopeWithoutMember")]]
+		[[Attribute(std::shared_ptr<UnitTests::AttributedFoo>, "recursive")]];
 
 		ATTRIBUTED_SPECIAL_MEMBERS(AttributedFoo)
     };

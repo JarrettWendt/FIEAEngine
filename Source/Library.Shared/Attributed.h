@@ -26,7 +26,7 @@ namespace Library
 		Attributed(Attributed&& other) noexcept;
 		Attributed& operator=(const Attributed& other);
 		Attributed& operator=(Attributed&& other) noexcept;
-		virtual ~Attributed() = 0 {};
+		virtual ~Attributed() = 0;
 #pragma endregion
 
 #pragma region Is

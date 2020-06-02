@@ -138,6 +138,8 @@ namespace Library
 #pragma endregion
 
 #pragma region Insert
+		// TODO: Emplace
+		
 		/**
 		 * Does not overwrite any Datum already assocated with name.
 		 * O(1)
@@ -149,6 +151,18 @@ namespace Library
 		 * @throws InvalidNameException
 		 */
 		Datum& Insert(const std::string& name, const Datum& datum = {});
+
+		/**
+		 * Does not overwrite any Datum already assocated with name.
+		 * O(1)
+		 *
+		 * @param name		name of the Datum
+		 * @param datum		Datum to append, a copy of which will be made
+		 * @returns			reference to newly inserted Datum
+		 *
+		 * @throws InvalidNameException
+		 */
+		Datum& Insert(const std::string& name, Datum&& datum);
 
 		/**
 		 * Appends a default Scope.

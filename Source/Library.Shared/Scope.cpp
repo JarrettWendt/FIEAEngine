@@ -73,7 +73,13 @@ namespace Library
 	Datum& Scope::Insert(const std::string& name, const Datum& datum)
 	{
 		ThrowName(name);
-		return map.Emplace(name, datum).first->value;
+		return map.Insert(name, datum).first->value;
+	}
+
+	Datum& Scope::Insert(const std::string& name, Datum&& datum)
+	{
+		ThrowName(name);
+		return map.Insert(name, std::move(datum)).first->value;
 	}
 
 	std::shared_ptr<Scope> Scope::InsertScope(const std::string& name)

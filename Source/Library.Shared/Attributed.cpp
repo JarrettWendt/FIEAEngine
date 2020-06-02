@@ -8,9 +8,8 @@ namespace Library
 {
 #pragma region Special Members
 	Attributed::Attributed(const IDType derived) :
-		Scope(Registry::NumAttributes(derived))
+		Scope(Registry::NumAttributes(derived) + 1)
 	{
-		//Insert("this", Datum{ std::shared_ptr<Attributed>(this) });
 		Populate(derived);
 	}
 
@@ -49,6 +48,8 @@ namespace Library
 		}
 		return *this;
 	}
+
+	Attributed::~Attributed() {}
 #pragma endregion
 	
 	void Attributed::Populate(const IDType derived)
