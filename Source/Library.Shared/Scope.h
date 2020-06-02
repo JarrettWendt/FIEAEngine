@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// MIT License Copyright (c) 2020 Jarrett Wendt
+
+#pragma once
 
 #include "Datum.h"
 #include "RTTI.h"

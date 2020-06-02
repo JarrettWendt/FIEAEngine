@@ -1,4 +1,6 @@
-﻿#include "pch.h"
+﻿// MIT License Copyright (c) 2020 Jarrett Wendt
+
+#include "pch.h"
 #include "Scope.h"
 
 namespace Library
