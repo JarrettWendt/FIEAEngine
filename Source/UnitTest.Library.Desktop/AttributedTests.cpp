@@ -102,8 +102,7 @@ namespace UnitTestLibraryDesktop
 		{
 			const auto foo = std::make_shared<AttributedFoo>();
 			const auto s = foo->At("scope").Front<std::shared_ptr<Scope>>();
-
-			Assert::IsFalse(s->Parent(), "a scope attribute isn't necessarily a child scope");
+			Assert::IsTrue(s->IsEmpty());
 		}
 
 		TEST_METHOD(NoDataMembers)

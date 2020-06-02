@@ -23,7 +23,7 @@ namespace Library
 		bool, int, float,
 
 		// math types
-		Vector2, Vector3, Vector4, Matrix, Quaternion, Transform,
+		Vector2, Vector3, Vector4, Quaternion, Matrix, Transform,
 
 		// object types
 		std::string, std::shared_ptr<RTTI>>
@@ -46,12 +46,15 @@ namespace Library
 		{
 			None,
 
-			Bool,
-			Int,
-			Float,
-			String,
-			RTTI,
+			// primitives
+			Bool, Int, Float,
 
+			// math types
+			Vector2, Vector3, Vector4, Quaternion, Matrix, Transform,
+
+			// object types
+			String, RTTI,
+			
 			Begin = Bool,
 			End = RTTI
 		};
@@ -64,11 +67,24 @@ namespace Library
 		};
 
 #define IMPL_TYPE_OF_TYPE(Enum, Type) template<> struct TypeOfTypeImpl<Enum> final { using type = Type; };
+
+		// primitives
 		IMPL_TYPE_OF_TYPE(Type::Bool, bool)
 		IMPL_TYPE_OF_TYPE(Type::Int, int)
 		IMPL_TYPE_OF_TYPE(Type::Float, float)
+
+		// math types
+		IMPL_TYPE_OF_TYPE(Type::Vector2, Vector2)
+		IMPL_TYPE_OF_TYPE(Type::Vector3, Vector3)
+		IMPL_TYPE_OF_TYPE(Type::Vector4, Vector4)
+		IMPL_TYPE_OF_TYPE(Type::Quaternion, Quaternion)
+		IMPL_TYPE_OF_TYPE(Type::Matrix, Matrix)
+		IMPL_TYPE_OF_TYPE(Type::Transform, Transform)
+
+		// object types
 		IMPL_TYPE_OF_TYPE(Type::String, std::string)
 		IMPL_TYPE_OF_TYPE(Type::RTTI, std::shared_ptr<RTTI>)
+		
 #undef  IMPL_TYPE_OF_TYPE
 		
 	public:

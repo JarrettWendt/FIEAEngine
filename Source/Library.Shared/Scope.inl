@@ -15,10 +15,5 @@ namespace Library
 	{
 		return map.IsEmpty();
 	}
-
-	inline constexpr const std::string& Scope::NameInParent() const noexcept
-	{
-		return nameInParent;
-	}
 #pragma endregion
 }

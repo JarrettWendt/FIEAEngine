@@ -74,8 +74,6 @@ namespace Library
 	
 	void Attributed::PointerFixup(const IDType derived) noexcept
 	{
-		Insert("this", Datum{ shared_from_this() });
-
 		for (auto& [name, datum] : *this)
 		{
 			if (datum.IsExternal())

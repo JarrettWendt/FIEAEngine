@@ -7,12 +7,7 @@ namespace Library
 {
 	Scope::Scope(const size_t capacity) :
 		map(capacity) {}
-
-	inline std::shared_ptr<Scope> Scope::Parent() const noexcept
-	{
-		return parent.lock();
-	}
-
+	
 #pragma region iterator
 	Scope::iterator Scope::begin() noexcept
 	{
@@ -83,71 +78,12 @@ namespace Library
 		ThrowName(name);
 		return map.Insert(name, std::move(datum)).first->value;
 	}
-
-	std::shared_ptr<Scope> Scope::InsertScope(const std::string& name)
-	{
-		auto ret = Insert(name, Datum{ std::make_shared<Scope>() }).Back<SharedScope>();
-		ret->nameInParent = name;
-		ret->parent = shared_from_this();
-		return ret;
-	}
-
-	std::shared_ptr<Scope> Scope::Adopt(const std::string& name, SharedScope scope)
-	{
-		ThrowName(name);
-
-		if (scope->parent.lock() != shared_from_this())
-		{
-			Datum& d = map[name];
-			if (d.IsEmpty() || d.IsType<SharedScope>())
-			{
-				auto child = d.EmplaceBack<SharedScope>(std::move(scope));
-
-				child->Orphan();
-				child->parent = shared_from_this();
-				child->nameInParent = name;
-
-				return child;
-			}
-			throw std::invalid_argument("Datum of type " + Enum<Datum::Type>::ToString(d.GetType()) + "already exists for key " + name);
-		}
-		// already a child
-		return scope;
-	}
 #pragma endregion
 
 #pragma region Remove
-	void Scope::Orphan() noexcept
-	{
-		auto p = Parent();
-		if (p)
-		{
-			if (const auto it = p->Find(nameInParent))
-			{
-				auto& [name, datum] = *it;
-				datum.Remove(*this);
-
-				parent = {};
-				nameInParent = "";
-			}
-		}
-	}
-
 	void Scope::Remove(const std::string& name) noexcept
 	{
-		if (const auto it = map.Find(name))
-		{
-			auto& [_, datum] = *it;
-			if (datum.IsType<SharedScope>())
-			{
-				for (SharedScope& child : datum)
-				{
-					child->parent = {};
-					child->nameInParent = "";
-				}
-			}
-			map.Remove(it);
-		}
+		map.Remove(name);
 	}
 #pragma endregion
 	

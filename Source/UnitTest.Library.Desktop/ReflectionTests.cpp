@@ -26,7 +26,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(s->Is<Scope>());
 
 			// just doing something to make sure we don't have a memory leak
-			s->InsertScope("child");
+			s->Insert("child");
 		}
 	};
 }

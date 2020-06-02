@@ -36,7 +36,6 @@ namespace Library
 			{
 				Attributed::typeID,
 				{
-					{ "localTransform", Reflection::GetConstructor("Transform"), 1, offsetof(Library::Entity, Library::Entity::localTransform), Datum::TypeOf<Transform>,  },
 					{ "name", Reflection::GetConstructor("string"), 1, offsetof(Library::Entity, Library::Entity::name), Datum::TypeOf<std::string>,  },
 					{ "enabled", Reflection::GetConstructor("bool"), 1, offsetof(Library::Entity, Library::Entity::enabled), Datum::TypeOf<bool>,  },
 				}
