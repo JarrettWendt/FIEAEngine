@@ -166,12 +166,11 @@ namespace Library
 	{
 		switch (type)
 		{
-			// TODO: figure out how to invoke a void template lambda
-		case Type::Bool:	{ bool* p = nullptr;					func(p); break; }
-		case Type::Int:		{ int* p = nullptr;						func(p); break; }
-		case Type::Float:	{ float* p = nullptr;					func(p); break; }
-		case Type::String:	{ std::string* p = nullptr;				func(p); break; }
-		case Type::RTTI:	{ std::shared_ptr<RTTI>* p = nullptr;	func(p); break; }
+		case Type::Bool:	func.template operator()<bool>();					break;
+		case Type::Int:		func.template operator()<int>();					break;
+		case Type::Float:	func.template operator()<float>();					break;
+		case Type::String:	func.template operator()<std::string>();			break;
+		case Type::RTTI:	func.template operator()<std::shared_ptr<RTTI>>();	break;
 		case Type::None: [[fallthrough]];
 		default: assertm("unexpected type");
 		}
