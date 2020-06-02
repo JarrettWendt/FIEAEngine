@@ -42,6 +42,6 @@ namespace UnitTests
 		[[Attribute(std::shared_ptr<Scope>, "scopeWithoutMember")]]
 		[[Attribute(std::shared_ptr<UnitTests::AttributedFoo>, "recursive")]];
 
-		ATTRIBUTED_SPECIAL_MEMBERS(AttributedFoo)
+		ATTRIBUTED_SPECIAL_MEMBERS(AttributedFoo, default)
     };
 }

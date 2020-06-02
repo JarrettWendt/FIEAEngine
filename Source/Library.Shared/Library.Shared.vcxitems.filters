@@ -14,7 +14,7 @@
       <Filter>Containers\HashMap\Hash</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LibMath.cpp">
-      <Filter>Util\Math</Filter>
+      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Exception.cpp">
       <Filter>Util\Exception</Filter>
@@ -42,6 +42,27 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Reflection.cpp">
       <Filter>Util\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp">
+      <Filter>Hierarchy\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
+      <Filter>Math\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Quaternion.cpp">
+      <Filter>Math\Quaternion</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vector2.cpp">
+      <Filter>Math\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vector3.cpp">
+      <Filter>Math\Vector3</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vector4.cpp">
+      <Filter>Math\Vector4</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Matrix.cpp">
+      <Filter>Math\Matrix</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +100,7 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)LibMath.h">
-      <Filter>Util\Math</Filter>
+      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RTTI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enum.h">
@@ -130,6 +151,27 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Reflection.h">
       <Filter>Util\Reflection</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h">
+      <Filter>Hierarchy\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
+      <Filter>Math\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Quaternion.h">
+      <Filter>Math\Quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector2.h">
+      <Filter>Math\Vector2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector3.h">
+      <Filter>Math\Vector3</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector4.h">
+      <Filter>Math\Vector4</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Matrix.h">
+      <Filter>Math\Matrix</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -161,9 +203,6 @@
     </Filter>
     <Filter Include="Containers\HashMap\Hash">
       <UniqueIdentifier>{fe72d20c-43fb-47c2-9ce5-1edfae062495}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Util\Math">
-      <UniqueIdentifier>{41a0972d-a2e3-4af1-8d53-bc4d30328554}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util\Enum">
       <UniqueIdentifier>{fee402d6-c584-453d-8ac9-431fb5f808c6}</UniqueIdentifier>
@@ -216,6 +255,30 @@
     <Filter Include="Util\Reflection">
       <UniqueIdentifier>{207d62cb-e6c7-4265-8f8b-af52a91e419d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hierarchy\Entity">
+      <UniqueIdentifier>{2f43c4aa-b9f5-4ba0-8506-85bc570fdb4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{41a0972d-a2e3-4af1-8d53-bc4d30328554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Transform">
+      <UniqueIdentifier>{5c9a51b3-ac2e-47db-86ab-920863719804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Quaternion">
+      <UniqueIdentifier>{d1e22815-cf6d-4cfa-9d91-5c93f877263f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector2">
+      <UniqueIdentifier>{8bcead4b-84d7-4132-94e3-63c68bcbeb70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector3">
+      <UniqueIdentifier>{5c4384cd-9ac1-499b-8413-9bd75aa7c46b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector4">
+      <UniqueIdentifier>{283aaca0-1249-4bf5-81a0-edecf7cfb608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Matrix">
+      <UniqueIdentifier>{eb84e228-b528-425d-9d1f-43d2903d4c9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)VariantArray.inl">
@@ -267,7 +330,7 @@
       <Filter>Engine\Coroutine</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)LibMath.inl">
-      <Filter>Util\Math</Filter>
+      <Filter>Math</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Literals.inl">
       <Filter>Util\Literals</Filter>
@@ -290,6 +353,9 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)GenerateAttributes.py">
       <Filter>Hierarchy\Attributed</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Entity.inl">
+      <Filter>Hierarchy\Entity</Filter>
     </None>
   </ItemGroup>
 </Project>

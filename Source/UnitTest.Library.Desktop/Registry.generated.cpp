@@ -2,6 +2,7 @@
 #include "Registry.h"
 
 #include "E:/Dev/Students/CH16/Jarrett.Wendt/Prog3/FIEAEngine/Source/UnitTest.Library.Desktop/AttributedFoo.h"
+#include "E:/Dev/Students/CH16/Jarrett.Wendt/Prog3/FIEAEngine/Source/Library.Shared/Entity.h"
 
 namespace Library
 {
@@ -27,6 +28,17 @@ namespace Library
 					{ "fooWithoutMember", Reflection::GetConstructor("Foo>"), 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
 					{ "scopeWithoutMember", Reflection::GetConstructor("shared_ptr<Scope>"), 0, 0, Datum::TypeOf<std::shared_ptr<Scope>>,  },
 					{ "recursive", Reflection::GetConstructor("AttributedFoo>"), 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::AttributedFoo>>,  },
+				}
+			}
+		},
+		{
+			Library::Entity::typeID,
+			{
+				Attributed::typeID,
+				{
+					{ "localTransform", Reflection::GetConstructor("Transform"), 1, offsetof(Library::Entity, Library::Entity::localTransform), Datum::TypeOf<Transform>,  },
+					{ "name", Reflection::GetConstructor("string"), 1, offsetof(Library::Entity, Library::Entity::name), Datum::TypeOf<std::string>,  },
+					{ "enabled", Reflection::GetConstructor("bool"), 1, offsetof(Library::Entity, Library::Entity::enabled), Datum::TypeOf<bool>,  },
 				}
 			}
 		},

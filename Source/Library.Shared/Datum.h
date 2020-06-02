@@ -6,12 +6,27 @@
 #include "RTTI.h"
 #include "VariantArray.h"
 
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Quaternion.h"
+#include "Matrix.h"
+#include "Transform.h"
+
 namespace Library
 {
 	/** 
 	 * A Datum is merely a VariantArray of predefined types.
 	 */
-	class Datum final : public VariantArray<bool, int, float, std::string, std::shared_ptr<RTTI>>
+	class Datum final : public VariantArray<
+		// primitives
+		bool, int, float,
+
+		// math types
+		Vector2, Vector3, Vector4, Matrix, Quaternion, Transform,
+
+		// object types
+		std::string, std::shared_ptr<RTTI>>
 	{
 		friend class Attributed;
 		

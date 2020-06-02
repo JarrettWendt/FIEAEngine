@@ -66,20 +66,20 @@ namespace Library
 	};
 }
 
-#define ATTRIBUTED_DECLARATIONS(BaseType)																		\
-	RTTI_DECLARATIONS(BaseType)																					\
+#define ATTRIBUTED_DECLARATIONS(BaseType)							\
+	RTTI_DECLARATIONS(BaseType)										\
 	friend class Library::Registry;
 
-#define ATTRIBUTED_SPECIAL_MEMBERS(DerivedType)																	\
-protected:																										\
-	explicit DerivedType(RTTI::IDType derived) : Base(derived) {}												\
-public:																											\
-	DerivedType() : Base(typeID) {}																				\
-	DerivedType(const DerivedType& other) : Base(other) {}														\
-	DerivedType(DerivedType&& other) noexcept : Base(std::move(other)) {}										\
-	DerivedType& operator=(const DerivedType& other) { Base::operator=(other); return *this; }					\
-	DerivedType& operator=(DerivedType&& other) noexcept { Base::operator=(std::move(other)); return *this; }	\
-	virtual ~DerivedType() = default;
+#define ATTRIBUTED_SPECIAL_MEMBERS(DerivedType, D)					\
+protected:															\
+	explicit DerivedType(RTTI::IDType derived) : Base(derived) {}	\
+public:																\
+	DerivedType() : Base(typeID) {}									\
+	DerivedType(const DerivedType& other) = D;						\
+	DerivedType(DerivedType&& other) noexcept = D;					\
+	DerivedType& operator=(const DerivedType& other) = D;			\
+	DerivedType& operator=(DerivedType&& other) noexcept = D;		\
+	virtual ~DerivedType() = D;
 	
 		
 

@@ -3,6 +3,12 @@
 #pragma once
 
 #include "Hash.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Quaternion.h"
+#include "Matrix.h"
+#include "Transform.h"
 
 namespace Library
 {
@@ -37,6 +43,7 @@ namespace Library
 #pragma region Specializations
 	// TODO: These explicit specializations should be able to be moved to a .cpp file but they for some reason don't link.
 
+#pragma region string
 	template<>
 	struct Hash<std::string>
 	{
@@ -87,6 +94,61 @@ namespace Library
 		hash_t operator()(const char* const str) const
 		{
 			return Hash<char*>{}(const_cast<char*>(str));
+		}
+	};
+#pragma endregion
+
+	template<>
+	struct Hash<Vector2>
+	{
+		hash_t operator()(const Vector2& m) const
+		{
+			return HashUtils::AdditiveHash(reinterpret_cast<uint8_t*>(const_cast<Vector2*>(&m)), sizeof(Vector2));
+		}
+	};
+
+	template<>
+	struct Hash<Vector3>
+	{
+		hash_t operator()(const Vector3& m) const
+		{
+			return HashUtils::AdditiveHash(reinterpret_cast<uint8_t*>(const_cast<Vector3*>(&m)), sizeof(Vector3));
+		}
+	};
+
+	template<>
+	struct Hash<Vector4>
+	{
+		hash_t operator()(const Vector4& m) const
+		{
+			return HashUtils::AdditiveHash(reinterpret_cast<uint8_t*>(const_cast<Vector4*>(&m)), sizeof(Vector4));
+		}
+	};
+
+	template<>
+	struct Hash<Quaternion>
+	{
+		hash_t operator()(const Quaternion& m) const
+		{
+			return HashUtils::AdditiveHash(reinterpret_cast<uint8_t*>(const_cast<Quaternion*>(&m)), sizeof(Quaternion));
+		}
+	};
+
+	template<>
+	struct Hash<Matrix>
+	{
+		hash_t operator()(const Matrix& m) const
+		{
+			return HashUtils::AdditiveHash(reinterpret_cast<uint8_t*>(const_cast<Matrix*>(&m)), sizeof(Matrix));
+		}
+	};
+
+	template<>
+	struct Hash<Transform>
+	{
+		hash_t operator()(const Transform& t) const
+		{
+			return HashUtils::AdditiveHash(reinterpret_cast<uint8_t*>(const_cast<Transform*>(&t)), sizeof(Transform));
 		}
 	};
 #pragma endregion

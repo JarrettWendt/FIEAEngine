@@ -24,20 +24,27 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Datum.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EngineTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Exception.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hash.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LibMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Matrix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Quaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Reflection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Registry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Util.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vector2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vector3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Array.h" />
@@ -47,6 +54,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Datum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EngineTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EventManager.h" />
@@ -57,7 +65,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Literals.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LibMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Matrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Quaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Queue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Reflection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Registry.h" />
@@ -67,8 +77,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scope.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Util.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)VariantArray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector4.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory).editorconfig" />
@@ -77,6 +91,7 @@
     <None Include="$(MSBuildThisFileDirectory)Coroutine.inl" />
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />
     <None Include="$(MSBuildThisFileDirectory)EngineTime.inl" />
+    <None Include="$(MSBuildThisFileDirectory)Entity.inl" />
     <None Include="$(MSBuildThisFileDirectory)Enum.inl" />
     <None Include="$(MSBuildThisFileDirectory)Event.inl" />
     <None Include="$(MSBuildThisFileDirectory)EventManager.inl" />
