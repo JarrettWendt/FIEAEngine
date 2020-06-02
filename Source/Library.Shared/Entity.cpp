@@ -3,6 +3,99 @@
 
 namespace Library
 {
+#pragma region iterator
+#pragma region non-const
+	Entity::iterator::iterator(const MapType::iterator it) noexcept :
+		it(it) {}
+	
+	Entity::iterator Entity::iterator::operator++(int) noexcept
+	{
+		const auto ret = *this;
+		operator++();
+		return ret;
+	}
+	
+	Entity::iterator& Entity::iterator::operator++() noexcept
+	{
+		it.operator++();
+		return *this;
+	}
+
+	Entity::iterator::reference Entity::iterator::operator*() const
+	{
+		return it->value;
+	}
+
+	Entity::iterator::pointer Entity::iterator::operator->() const
+	{
+		return &*operator*();
+	}
+
+	bool Entity::iterator::operator==(const iterator& other) const noexcept
+	{
+		return it == other.it;
+	}
+
+	bool Entity::iterator::operator!=(const iterator& other) const noexcept
+	{
+		return !operator==(other);
+	}
+
+	Entity::iterator::operator bool() const noexcept
+	{
+		return it;
+	}
+
+	bool Entity::iterator::operator!() const noexcept
+	{
+		return !it;
+	}
+
+	bool Entity::iterator::IsAtBegin() const noexcept
+	{
+		return it.IsAtBegin();
+	}
+
+	bool Entity::iterator::IsAtEnd() const noexcept
+	{
+		return it.IsAtEnd();
+	}
+#pragma endregion
+
+#pragma region const
+	Entity::const_iterator::operator bool() const noexcept
+	{
+		return it;
+	}
+
+	bool Entity::const_iterator::operator!() const noexcept
+	{
+		return !it;
+	}
+
+	bool Entity::const_iterator::IsAtBegin() const noexcept
+	{
+		return it.IsAtBegin();
+	}
+
+	bool Entity::const_iterator::IsAtEnd() const noexcept
+	{
+		return it.IsAtEnd();
+	}
+#pragma endregion
+
+Entity::iterator Entity::begin() noexcept
+{
+	return children.begin();
+}
+	
+Entity::iterator Entity::end() noexcept
+{
+	return children.end();
+}
+#pragma endregion
+	
+#pragma region Properties
 	constexpr bool& Entity::Enabled() noexcept
 	{
 		return enabled;
@@ -33,7 +126,9 @@ namespace Library
 	{
 		return const_cast<Entity*>(this)->Child(childName);
 	}
-	
+#pragma endregion
+
+#pragma region Remove
 	void Entity::Orphan() noexcept
 	{
 		auto p = Parent();
@@ -43,14 +138,21 @@ namespace Library
 			parent = {};
 		}
 	}
+#pragma endregion
 
 	void Entity::Init()
 	{
-		// TODO: invoke all children Init
+		for (const auto& e : *this)
+		{
+			e->Init();
+		}
 	}
 
 	void Entity::Update()
 	{
-		// TODO: invoke all children Update
+		for (const auto& e : *this)
+		{
+			e->Update();
+		}
 	}
 }
