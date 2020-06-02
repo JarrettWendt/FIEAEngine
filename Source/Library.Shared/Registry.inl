@@ -8,7 +8,7 @@ namespace Library
 	{
 		if (const auto it = registry.Find(id))
 		{
-			const auto& [baseID, attributes] = it->value;
+			const auto& [baseID, attributes, num] = it->value;
 			for (const Attribute& attribute : attributes)
 			{
 				func(attribute);

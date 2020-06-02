@@ -7,7 +7,8 @@
 namespace Library
 {
 #pragma region Special Members
-	Attributed::Attributed(const IDType derived)
+	Attributed::Attributed(const IDType derived) :
+		Scope(Registry::NumAttributes(derived))
 	{
 		//Insert("this", Datum{ std::shared_ptr<Attributed>(this) });
 		Populate(derived);
@@ -52,7 +53,6 @@ namespace Library
 	
 	void Attributed::Populate(const IDType derived)
 	{
-		this->Scope::map.Resize(11);
 		Registry::ForEach(derived, [&](const Registry::Attribute& attribute)
 		{
 			const auto& [name, ctor, count, byteOffset, type] = attribute;

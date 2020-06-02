@@ -35,6 +35,9 @@ namespace Library
 
 			/** the Attributes for this Attributed */
 			Array<Attribute> attributes;
+
+			/** how many attributes exist for this derived type in total, including all base types */
+			size_t num{ std::numeric_limits<size_t>::max() };
 		};
 
 	private:
@@ -42,6 +45,15 @@ namespace Library
 		static const HashMap<RTTI::IDType, Attributes> registry;
 
 	public:
+		/**
+		 * O(1) most cases
+		 * O(n) on the first ever call, where n is the number of parents this derived type has
+		 * 
+		 * @param id	ID of an Attributed to query for
+		 * @return		how many attributes exist for this type in total, including all base types
+		 */
+		static size_t NumAttributes(RTTI::IDType id) noexcept;
+		
 		/**
 		 * O(1)
 		 * 
