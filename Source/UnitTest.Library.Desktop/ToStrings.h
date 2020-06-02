@@ -28,10 +28,19 @@ inline std::wstring ToString<Q>(const Q* q)													\
 {																							\
 	return q ? CppUnitTestFramework::ToString(Stringify<Q*>::std(q)) : L"const nullptr";	\
 }
+
+#define SPECIALIZE_TO_STRING_SHARED_PTR(Q)													\
+template<>																					\
+inline std::wstring ToString<std::shared_ptr<Q>>(const std::shared_ptr<Q>& q)				\
+{																							\
+	return CppUnitTestFramework::ToString(Stringify<std::shared_ptr<Q>>::std(q));			\
+}
+
 #define SPECIALIZE_TO_STRING(Q)																\
 SPECIALIZE_TO_STRING_REF(SINGLE_ARG(Q))														\
 SPECIALIZE_TO_STRING_PTR(SINGLE_ARG(Q))														\
-SPECIALIZE_TO_STRING_CONST_PTR(SINGLE_ARG(Q))
+SPECIALIZE_TO_STRING_CONST_PTR(SINGLE_ARG(Q))												\
+SPECIALIZE_TO_STRING_SHARED_PTR(SINGLE_ARG(Q))
 
 #define SPECIALIZE_TO_STRING_IT(Q)															\
 template<>																					\
@@ -86,7 +95,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	{
 		inline static std::string std(const std::shared_ptr<T> t)
 		{
-			return Stringify<T>::std(*t);
+			return t == nullptr ? "nullptr shared_ptr" : Stringify<T>::std(*t);
 		}
 	};
 
@@ -105,7 +114,6 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	SPECIALIZE_TO_STRING(Digit)
 	SPECIALIZE_TO_STRING(SignedDigit)
 	SPECIALIZE_TO_STRING(Foo)
-	SPECIALIZE_TO_STRING(std::shared_ptr<Foo>)
 	SPECIALIZE_TO_STRING(Scope)
 
 	SPECIALIZE_TO_STRING_PTR(std::string)

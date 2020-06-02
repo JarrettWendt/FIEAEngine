@@ -34,6 +34,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp">
       <Filter>Hierarchy\Scope</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Attributed.cpp">
+      <Filter>Hierarchy\Attributed</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Registry.cpp">
+      <Filter>Hierarchy\Attributed\Registry</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Reflection.cpp">
+      <Filter>Util\Reflection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
@@ -112,6 +121,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scope.h">
       <Filter>Hierarchy\Scope</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Attributed.h">
+      <Filter>Hierarchy\Attributed</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Registry.h">
+      <Filter>Hierarchy\Attributed\Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Reflection.h">
+      <Filter>Util\Reflection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -189,6 +207,15 @@
     <Filter Include="Hierarchy\Scope">
       <UniqueIdentifier>{01444567-3d5f-42d3-9c8c-74f88f6f5c16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hierarchy\Attributed">
+      <UniqueIdentifier>{c21555e2-c033-443b-ac96-c76aaf352ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hierarchy\Attributed\Registry">
+      <UniqueIdentifier>{b2342d4a-903f-45e0-884f-59c536c9cd7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Reflection">
+      <UniqueIdentifier>{207d62cb-e6c7-4265-8f8b-af52a91e419d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)VariantArray.inl">
@@ -248,6 +275,21 @@
     <None Include="$(MSBuildThisFileDirectory).editorconfig" />
     <None Include="$(MSBuildThisFileDirectory)Scope.inl">
       <Filter>Hierarchy\Scope</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Attributed.inl">
+      <Filter>Hierarchy\Attributed</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Reflection.inl">
+      <Filter>Util\Reflection</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Reflection.py">
+      <Filter>Util\Reflection</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Registry.inl">
+      <Filter>Hierarchy\Attributed\Registry</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)GenerateAttributes.py">
+      <Filter>Hierarchy\Attributed</Filter>
     </None>
   </ItemGroup>
 </Project>

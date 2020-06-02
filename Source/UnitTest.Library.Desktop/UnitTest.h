@@ -72,12 +72,14 @@ namespace UnitTests
 			IsNotNull(ptr, message.str());
 		}
 
-		static void IsTrue(const bool b, const std::stringstream& message)
+		template<typename T>
+		static void IsTrue(const T& b, const std::stringstream& message)
 		{
 			IsTrue(b, message.str());
 		}
 
-		static void IsFalse(const bool b, const std::stringstream& message)
+		template<typename T>
+		static void IsFalse(const T& b, const std::stringstream& message)
 		{
 			IsFalse(b, message.str());
 		}
@@ -131,12 +133,14 @@ namespace UnitTests
 			IsNotNull(ptr, message.str());
 		}
 
-		static void IsTrue(const bool b, const std::wstringstream& message)
+		template<typename T>
+		static void IsTrue(const T& b, const std::wstringstream& message)
 		{
 			IsTrue(b, message.str());
 		}
 
-		static void IsFalse(const bool b, const std::wstringstream& message)
+		template<typename T>
+		static void IsFalse(const T& b, const std::wstringstream& message)
 		{
 			IsFalse(b, message.str());
 		}
@@ -211,7 +215,8 @@ namespace UnitTests
 			IsNotNull(ptr, to_wstring(message));
 		}
 
-		static void IsTrue(const bool b, const std::string& message)
+		template<typename T>
+		static void IsTrue(const T& b, const std::string& message)
 		{
 			using namespace std;
 			using namespace Library;
@@ -219,7 +224,8 @@ namespace UnitTests
 			IsTrue(b, to_wstring(message));
 		}
 
-		static void IsFalse(const bool b, const std::string& message)
+		template<typename T>
+		static void IsFalse(const T& b, const std::string& message)
 		{
 			using namespace std;
 			using namespace Library;
@@ -307,17 +313,19 @@ namespace UnitTests
 			msvscpput::Assert::IsNotNull(ptr, message.c_str());
 		}
 
-		static void IsTrue(const bool b, const std::wstring& message = L"")
+		template<typename T>
+		static void IsTrue(const T& b, const std::wstring& message = L"")
 		{
-			if (!b)
+			if (!bool(b))
 			{
 				Fail(message);
 			}
 		}
 
-		static void IsFalse(const bool b, const std::wstring& message = L"")
+		template<typename T>
+		static void IsFalse(const T& b, const std::wstring& message = L"")
 		{
-			IsTrue(!b, message);
+			IsTrue(!bool(b), message);
 		}
 
 		static void Fail(const std::wstring& message = L"")

@@ -447,10 +447,10 @@ namespace UnitTestLibraryDesktop
 		
 		TEMPLATE_TEST_METHOD_BEGIN(Find)
 		{
-			const Container<T> v = UnitTests::Random<Container<T>>::Next();
-			const T& t = v[5];
-			Assert::AreNotEqual(Util::Find(v, t), v.end());
-			Assert::AreEqual(Util::Find(v, [](const T&) { return false; }), v.end());
+			const Container<T> c = UnitTests::Random<Container<T>>::Next();
+			const T& t = c[5];
+			Assert::AreNotEqual(Util::Find(c, t), c.end());
+			Assert::AreEqual(Util::Find(c, [](const T&) { return false; }), c.end());
 		}
 		TEMPLATE_TEST_METHOD_END(Find)
 

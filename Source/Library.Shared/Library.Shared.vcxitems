@@ -19,6 +19,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Attributed.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Coroutine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Datum.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
@@ -33,11 +34,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Reflection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Registry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Array.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Attributed.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Concept.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Coroutine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Datum.h" />
@@ -55,6 +59,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)LibMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Queue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Reflection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Registry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RTTI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Random.h" />
@@ -67,12 +73,14 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory).editorconfig" />
     <None Include="$(MSBuildThisFileDirectory)Array.inl" />
+    <None Include="$(MSBuildThisFileDirectory)Attributed.inl" />
     <None Include="$(MSBuildThisFileDirectory)Coroutine.inl" />
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />
     <None Include="$(MSBuildThisFileDirectory)EngineTime.inl" />
     <None Include="$(MSBuildThisFileDirectory)Enum.inl" />
     <None Include="$(MSBuildThisFileDirectory)Event.inl" />
     <None Include="$(MSBuildThisFileDirectory)EventManager.inl" />
+    <None Include="$(MSBuildThisFileDirectory)GenerateAttributes.py" />
     <None Include="$(MSBuildThisFileDirectory)Hash.inl" />
     <None Include="$(MSBuildThisFileDirectory)HashMap.inl" />
     <None Include="$(MSBuildThisFileDirectory)LibMath.inl" />
@@ -80,6 +88,9 @@
     <None Include="$(MSBuildThisFileDirectory)Memory.inl" />
     <None Include="$(MSBuildThisFileDirectory)Queue.inl" />
     <None Include="$(MSBuildThisFileDirectory)Random.inl" />
+    <None Include="$(MSBuildThisFileDirectory)Reflection.inl" />
+    <None Include="$(MSBuildThisFileDirectory)Reflection.py" />
+    <None Include="$(MSBuildThisFileDirectory)Registry.inl" />
     <None Include="$(MSBuildThisFileDirectory)Scope.inl" />
     <None Include="$(MSBuildThisFileDirectory)SList.inl" />
     <None Include="$(MSBuildThisFileDirectory)Stack.inl" />

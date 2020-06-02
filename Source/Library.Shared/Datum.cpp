@@ -8,6 +8,25 @@
 namespace Library
 {
 #pragma region Datum
+	Datum::Datum(const Type type, const size_t count) noexcept
+	{
+		Do(type, [&]<typename T>(T*)
+		{
+			this->Base::SetType<T>();
+			Reserve<T>(count);
+		});
+	}
+
+	Datum::Datum(const Type type, void* array, const size_t size, const size_t capacity) noexcept :
+		isExternal(true)
+	{
+		Do(type, [&]<typename T>(T*)
+		{
+			this->Base::SetType<T>();
+			GetArray<T>().SetData(reinterpret_cast<T*>(array), size, capacity);
+		});
+	}
+	
 	Datum::Datum(const Datum& other)
 	{
 		if (other.IsExternal())
@@ -82,6 +101,14 @@ namespace Library
 	{
 		ThrowExternal();
 		Base::ShrinkToFit(count);
+	}
+	
+	void Datum::SetStorage(void* array) noexcept
+	{
+		Do(GetType(), [&]<typename T>(T*)
+		{
+			GetArray<T>().SetData(reinterpret_cast<T*>(array), Size(), Capacity());
+		});
 	}
 #pragma endregion
 

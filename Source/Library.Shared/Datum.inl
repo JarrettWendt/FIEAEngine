@@ -160,4 +160,20 @@ namespace Library
 		Base::Resize(capacity, prototype);
 	}
 #pragma endregion
+
+	template<typename Invokable>
+	inline void Datum::Do(const Type type, Invokable func)
+	{
+		switch (type)
+		{
+			// TODO: figure out how to invoke a void template lambda
+		case Type::Bool:	{ bool* p = nullptr;					func(p); break; }
+		case Type::Int:		{ int* p = nullptr;						func(p); break; }
+		case Type::Float:	{ float* p = nullptr;					func(p); break; }
+		case Type::String:	{ std::string* p = nullptr;				func(p); break; }
+		case Type::RTTI:	{ std::shared_ptr<RTTI>* p = nullptr;	func(p); break; }
+		case Type::None: [[fallthrough]];
+		default: assertm("unexpected type");
+		}
+	}
 }

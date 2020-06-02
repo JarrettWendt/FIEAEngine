@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Scope.h"
 
 namespace Library
@@ -6,18 +6,23 @@ namespace Library
 	Scope::Scope(const size_t capacity) :
 		map(capacity) {}
 
+	inline std::shared_ptr<Scope> Scope::Parent() const noexcept
+	{
+		return parent.lock();
+	}
+
 #pragma region iterator
-	inline Scope::iterator Scope::begin() noexcept
+	Scope::iterator Scope::begin() noexcept
 	{
 		return map.begin();
 	}
 
-	inline Scope::iterator Scope::end() noexcept
+	Scope::iterator Scope::end() noexcept
 	{
 		return map.end();
 	}
 #pragma endregion
-
+	
 #pragma region Accessors
 	Datum& Scope::At(const std::string & name)
 	{
@@ -75,7 +80,7 @@ namespace Library
 	{
 		auto ret = Insert(name, Datum{ std::make_shared<Scope>() }).Back<SharedScope>();
 		ret->nameInParent = name;
-		ret->parent = this;
+		ret->parent = shared_from_this();
 		return ret;
 	}
 
@@ -83,7 +88,7 @@ namespace Library
 	{
 		ThrowName(name);
 
-		if (scope->parent != this)
+		if (scope->parent.lock() != shared_from_this())
 		{
 			Datum& d = map[name];
 			if (d.IsEmpty() || d.IsType<SharedScope>())
@@ -91,7 +96,7 @@ namespace Library
 				auto child = d.EmplaceBack<SharedScope>(std::move(scope));
 
 				child->Orphan();
-				child->parent = this;
+				child->parent = shared_from_this();
 				child->nameInParent = name;
 
 				return child;
@@ -106,14 +111,15 @@ namespace Library
 #pragma region Remove
 	void Scope::Orphan() noexcept
 	{
-		if (parent)
+		auto p = Parent();
+		if (p)
 		{
-			if (const auto it = parent->Find(nameInParent))
+			if (const auto it = p->Find(nameInParent))
 			{
 				auto& [name, datum] = *it;
 				datum.Remove(*this);
 
-				parent = nullptr;
+				parent = {};
 				nameInParent = "";
 			}
 		}
@@ -128,7 +134,7 @@ namespace Library
 			{
 				for (SharedScope& child : datum)
 				{
-					child->parent = nullptr;
+					child->parent = {};
 					child->nameInParent = "";
 				}
 			}

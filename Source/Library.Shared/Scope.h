@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Datum.h"
 #include "RTTI.h"
@@ -6,7 +6,11 @@
 
 namespace Library
 {
-	class Scope : public RTTI
+	/**
+	 * A Scope can only exist as a shared_ptr 
+	 */
+	[[Reflectable]];
+	class Scope : public RTTI, public std::enable_shared_from_this<Scope>
 	{
 		RTTI_DECLARATIONS(RTTI)
 		friend class Attributed;
@@ -23,7 +27,7 @@ namespace Library
 		 */
 		std::string nameInParent{};
 		/** non-owning reference to parent */
-		Scope* parent{ nullptr };
+		std::weak_ptr<Scope> parent{};
 
 	public:
 		class InvalidNameException final : public std::invalid_argument
@@ -32,7 +36,7 @@ namespace Library
 			explicit InvalidNameException(const std::string& str) : std::invalid_argument(str) {};
 			SPECIAL_MEMBERS(InvalidNameException, default)
 		};
-
+		
 		/**
 		 * @param capacity		initial capacity to give the inernal HashMap
 		 */
@@ -59,7 +63,7 @@ namespace Library
 		/**
 		 * @returns		the Scope that owns this one, or nullptr if it is an orphan
 		 */
-		[[nodiscard]] constexpr Scope* Parent() const noexcept;
+		[[nodiscard]] SharedScope Parent() const noexcept;
 
 		/**
 		 * @returns		the name of this Scope in its parent, or empty string if it is an orphan
