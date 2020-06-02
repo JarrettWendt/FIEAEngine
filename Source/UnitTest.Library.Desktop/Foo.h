@@ -25,8 +25,6 @@ namespace UnitTests
 
 		[[nodiscard]] int& Data() noexcept;
 		[[nodiscard]] int Data() const noexcept;
-
-		RTTI_EQUALS(Foo)
 	};
 }
 

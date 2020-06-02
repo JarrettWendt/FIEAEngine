@@ -55,6 +55,8 @@
 #include "Engine.h"
 #include "EngineTime.h"
 #include "Input.h"
+// Hierarchy
+#include "Scope.h"
 
 // UnitTests
 #include "Digit.h"

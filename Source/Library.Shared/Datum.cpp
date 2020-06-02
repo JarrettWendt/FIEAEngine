@@ -58,11 +58,6 @@ namespace Library
 	{
 		return isExternal;
 	}
-
-	constexpr Datum::Type Datum::GetType() const noexcept
-	{
-		return Type(TypeID());
-	}
 	
 	void Datum::Empty() noexcept
 	{

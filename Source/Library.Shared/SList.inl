@@ -9,13 +9,13 @@ namespace Library
 	template<typename T>
 	template<typename ...Args>
 	inline SList<T>::Node::Node(Node* next, Args&& ...args) :
-		data(std::forward<Args>(args)...),
-		next(next) {}
+		next(next),
+		data{ std::forward<Args>(args)... } {}
 	
 	template<typename T>
 	template<typename ...Args>
 	inline SList<T>::Node::Node(Args&& ...args) :
-		data(std::forward<Args>(args)...) {}
+		data{ std::forward<Args>(args)... } {}
 
 	template<typename T>
 	inline SList<T>::SList(const std::initializer_list<T> list) :

@@ -67,6 +67,9 @@
     <ClCompile Include="MathTests.cpp">
       <Filter>Tests\Util</Filter>
     </ClCompile>
+    <ClCompile Include="ScopeTests.cpp">
+      <Filter>Tests\Hierarchy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -98,6 +101,9 @@
     </Filter>
     <Filter Include="Tests\Engine">
       <UniqueIdentifier>{6fed2c0b-f171-4e89-828d-6c62a9657e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\Hierarchy">
+      <UniqueIdentifier>{9d2447ef-58f9-40e1-bed2-3685ad358ce1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

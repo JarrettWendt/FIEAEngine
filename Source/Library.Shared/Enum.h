@@ -16,6 +16,9 @@ namespace Library
 	/// The Iterator can iterate through any enum class provided that they provide:
 	/// Begin, which should be the first element in the enum.
 	/// End, which should be the last (not last + 1) element in the enum.
+	///
+	/// TODO: It might be better if begin/end were lowercase
+	/// TODO: It might be a good idea to require some sort of T::count/size
 	/// </summary>
 	template<Concept::Enumeration T>
 	class Enum final

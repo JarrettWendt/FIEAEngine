@@ -90,6 +90,15 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 		}
 	};
 
+	template<>
+	struct Stringify<Scope>
+	{
+		inline static std::string std(const Scope&)
+		{
+			return "Scope";
+		}
+	};
+
 	SPECIALIZE_TO_STRING(Input::KeyCode)
 	SPECIALIZE_TO_STRING(Input::KeyState)
 	SPECIALIZE_TO_STRING(Datum::Type)
@@ -97,6 +106,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	SPECIALIZE_TO_STRING(SignedDigit)
 	SPECIALIZE_TO_STRING(Foo)
 	SPECIALIZE_TO_STRING(std::shared_ptr<Foo>)
+	SPECIALIZE_TO_STRING(Scope)
 
 	SPECIALIZE_TO_STRING_PTR(std::string)
 	SPECIALIZE_TO_STRING_CONST_PTR(std::string)

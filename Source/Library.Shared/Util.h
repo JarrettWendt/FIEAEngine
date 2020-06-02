@@ -20,6 +20,9 @@ namespace Library::Concept
 
 namespace Library::Util
 {
+	/** A static empty string for functions that want to return empty string by const& */
+	inline static const std::string EmptyString{ "" };
+	
 	struct DefaultReserveStrategy final
 	{
 		size_t operator()(size_t size, size_t capacity) noexcept;
@@ -191,27 +194,27 @@ namespace Library::Util
 
 #pragma region SFINAE
 	// UNDER CONSTRUCTION: This works but is ugly. Concepts can replace this.
-	//namespace
-	//{
-	//	template<class Left, class Right>
-	//	struct HasOperatorEqualImplementation
-	//	{
-	//		template<class U, class V>
-	//		static auto Test(U*)->decltype(std::declval<U>() == std::declval<V>());
-	//		template<typename, typename>
-	//		static auto Test(...)->std::false_type;
+	namespace
+	{
+		template<class Left, class Right>
+		struct HasOperatorEqualImplementation
+		{
+			template<class U, class V>
+			static auto Test(U*)->decltype(std::declval<U>() == std::declval<V>());
+			template<typename, typename>
+			static auto Test(...)->std::false_type;
 
-	//		using value = typename std::is_same<bool, decltype(Test<Left, Right>(0))>::type;
-	//	};
-	//}
-	//
-	///*
-	// * @param <Left>	lhs of operation
-	// * @param <Right>	rhs of operation
-	// * @returns		whether or not T::operator==(EqualTo) is defined
-	// */
-	//template<class Left, class Right = Left>
-	//inline static constexpr bool HasOperatorEqual = typename HasOperatorEqualImplementation<Left, Right>::value();
+			using value = typename std::is_same<bool, decltype(Test<Left, Right>(0))>::type;
+		};
+	}
+	
+	/*
+	 * @param <Left>	lhs of operation
+	 * @param <Right>	rhs of operation
+	 * @returns		whether or not T::operator==(EqualTo) is defined
+	 */
+	template<class Left, class Right = Left>
+	inline static constexpr bool HasOperatorEqual = typename HasOperatorEqualImplementation<Left, Right>::value();
 	
 	/**
 	 * @returns whether or not T is defined (it could be forward declared).

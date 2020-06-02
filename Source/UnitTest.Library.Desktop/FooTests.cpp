@@ -14,19 +14,25 @@ namespace UnitTestLibraryDesktop
 {
 	TEST_CLASS(FooTests)
 	{
-		struct MyRTTI : public RTTI
-		{
-			RTTI_DECLARATIONS(RTTI)
-		};
-
 		INITIALIZE_CLEANUP
 
+
+		TEST_METHOD(HasID)
+		{
+			const Foo f;
+			const RTTI* r = f.As<RTTI>();
+			Assert::IsFalse(r->HasID(std::numeric_limits<RTTI::IDType>::max()));
+		}
+		
 		TEST_METHOD(Is)
 		{
 			const Foo f;
-			const RTTI* rtti = f.As<RTTI>();
-			Assert::IsTrue(rtti->Is<Foo>());
-			Assert::IsFalse(rtti->Is(std::numeric_limits<size_t>::max()));
+			
+			Assert::IsTrue(f.Is<RTTI>());
+			
+			const RTTI* r = f.As<RTTI>();
+			
+			Assert::IsTrue(r->Is<Foo>());
 		}
 
 		TEST_METHOD(As)
@@ -45,7 +51,7 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(Equals)
 		{
-			Assert::IsFalse(MyRTTI().Equals(MyRTTI()));
+			Assert::IsTrue(Foo().Equals(Foo()));
 		}
 	};
 }

@@ -51,6 +51,11 @@ namespace Library
 		Base::SetType<T>();
 	}
 
+	inline constexpr Datum::Type Datum::GetType() const noexcept
+	{
+		return Type(TypeID());
+	}
+
 #pragma region Insert
 	template<typename ...Args>
 	inline auto Datum::Insert(Args&& ...args)

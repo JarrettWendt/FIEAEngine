@@ -58,6 +58,13 @@ namespace UnitTestLibraryDesktop
 			d = 0.5;
 			d.EmplaceBack<double>(0.5);
 		}
+
+		TEST_METHOD(GetType)
+		{
+			Datum d;
+			d = 1;
+			Assert::AreEqual(Datum::Type::Int, d.GetType());
+		}
 		
 #pragma region value_type
 		TEMPLATE_TEST_METHOD_BEGIN(ValueTypeComparison)

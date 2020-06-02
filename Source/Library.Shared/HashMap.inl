@@ -18,7 +18,7 @@ namespace Library
 		return !operator==(other);
 	}
 
-#pragma region Ctors
+#pragma region Special Members
 	TEMPLATE
 	template<std::forward_iterator It>
 	inline HASHMAP::HashMap(It first, It last) :

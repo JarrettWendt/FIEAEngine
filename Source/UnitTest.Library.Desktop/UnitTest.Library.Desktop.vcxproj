@@ -259,6 +259,7 @@
     </ClCompile>
     <ClCompile Include="QueueTests.cpp" />
     <ClCompile Include="RandomTests.cpp" />
+    <ClCompile Include="ScopeTests.cpp" />
     <ClCompile Include="SListTests.cpp" />
     <ClCompile Include="StackTests.cpp" />
     <ClCompile Include="TimeTests.cpp" />
