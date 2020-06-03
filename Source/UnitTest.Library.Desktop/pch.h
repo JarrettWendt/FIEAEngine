@@ -20,6 +20,7 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 // External
 #include <gsl/gsl>
@@ -47,6 +48,7 @@
 #include "Literals.h"
 #include "LibMath.h"
 #include "Util.h"
+#include "Reflection.h"
 #include "../Library.Shared/Random.h"
 // Events
 #include "Event.h"
@@ -56,11 +58,13 @@
 #include "EngineTime.h"
 #include "Input.h"
 // Hierarchy
-#include "Scope.h"
+#include "Attributed.h"
+#include "Entity.h"
 
 // UnitTests
 #include "Digit.h"
 #include "Foo.h"
+#include "AttributedFoo.h"
 #include "UnitTest.h"
 #include "../UnitTest.Library.Desktop/Random.h"
 #include "ToStrings.h"

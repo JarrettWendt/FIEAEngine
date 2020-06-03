@@ -123,8 +123,8 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>does_not_exist.txt</Outputs>
@@ -156,8 +156,8 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>does_not_exist.txt</Outputs>
@@ -191,8 +191,8 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>does_not_exist.txt</Outputs>
@@ -226,8 +226,8 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\UnitTest.Library.Desktop" "$(ProjectDir)..\Library.Shared"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>does_not_exist.txt</Outputs>
@@ -237,10 +237,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArrayTests.cpp" />
+    <ClCompile Include="AttributedTests.cpp" />
     <ClCompile Include="ConceptTests.cpp" />
     <ClCompile Include="CoroutineTests.cpp" />
     <ClCompile Include="DatumTests.cpp" />
     <ClCompile Include="EngineTests.cpp" />
+    <ClCompile Include="EntityTests.cpp" />
     <ClCompile Include="EnumTests.cpp" />
     <ClCompile Include="EventManagerTests.cpp" />
     <ClCompile Include="EventTests.cpp" />
@@ -259,13 +261,17 @@
     </ClCompile>
     <ClCompile Include="QueueTests.cpp" />
     <ClCompile Include="RandomTests.cpp" />
-    <ClCompile Include="ScopeTests.cpp" />
+    <ClCompile Include="Reflection.generated.cpp" />
+    <ClCompile Include="ReflectionTests.cpp" />
+    <ClCompile Include="Registry.generated.cpp" />
+    <ClCompile Include="RegistryTests.cpp" />
     <ClCompile Include="SListTests.cpp" />
     <ClCompile Include="StackTests.cpp" />
     <ClCompile Include="TimeTests.cpp" />
     <ClCompile Include="UtilTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttributedFoo.h" />
     <ClInclude Include="Digit.h" />
     <ClInclude Include="Foo.h" />
     <ClInclude Include="pch.h" />

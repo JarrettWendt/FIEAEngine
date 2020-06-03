@@ -6,13 +6,30 @@
 #include "RTTI.h"
 #include "VariantArray.h"
 
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Quaternion.h"
+#include "Matrix.h"
+#include "Transform.h"
+
 namespace Library
 {
 	/** 
 	 * A Datum is merely a VariantArray of predefined types.
 	 */
-	class Datum final : public VariantArray<bool, int, float, std::string, std::shared_ptr<RTTI>>
+	class Datum final : public VariantArray<
+		// primitives
+		bool, int, float,
+
+		// math types
+		Vector2, Vector3, Vector4, Quaternion, Matrix, Transform,
+
+		// object types
+		std::string, std::shared_ptr<RTTI>>
 	{
+		friend class Attributed;
+		
 	private:
 		using Base = VariantArray;
 		// TODO: This bool feels like a big waste because it's taking up 8 bytes due to padding.
@@ -29,15 +46,50 @@ namespace Library
 		{
 			None,
 
-			Bool,
-			Int,
-			Float,
-			String,
-			RTTI,
+			// primitives
+			Bool, Int, Float,
 
+			// math types
+			Vector2, Vector3, Vector4, Quaternion, Matrix, Transform,
+
+			// object types
+			String, RTTI,
+			
 			Begin = Bool,
 			End = RTTI
 		};
+
+	private:
+		template<Type T>
+		struct TypeOfTypeImpl final
+		{
+			using type = void;
+		};
+
+#define IMPL_TYPE_OF_TYPE(Enum, Type) template<> struct TypeOfTypeImpl<Enum> final { using type = Type; };
+
+		// primitives
+		IMPL_TYPE_OF_TYPE(Type::Bool, bool)
+		IMPL_TYPE_OF_TYPE(Type::Int, int)
+		IMPL_TYPE_OF_TYPE(Type::Float, float)
+
+		// math types
+		IMPL_TYPE_OF_TYPE(Type::Vector2, Vector2)
+		IMPL_TYPE_OF_TYPE(Type::Vector3, Vector3)
+		IMPL_TYPE_OF_TYPE(Type::Vector4, Vector4)
+		IMPL_TYPE_OF_TYPE(Type::Quaternion, Quaternion)
+		IMPL_TYPE_OF_TYPE(Type::Matrix, Matrix)
+		IMPL_TYPE_OF_TYPE(Type::Transform, Transform)
+
+		// object types
+		IMPL_TYPE_OF_TYPE(Type::String, std::string)
+		IMPL_TYPE_OF_TYPE(Type::RTTI, std::shared_ptr<RTTI>)
+		
+#undef  IMPL_TYPE_OF_TYPE
+		
+	public:
+		template<Type T>
+		using TypeOfType = typename TypeOfTypeImpl<T>::type;
 
 		/**
 		 * exception that will be thrown when attempting an operation that would resize the container when using external storage
@@ -54,6 +106,24 @@ namespace Library
 		using VariantArray::VariantArray;
 
 		/**
+		 * @param type		type to initialize this Datum as
+		 * @param count		how many elements to initially reserve space for 
+		 */
+		Datum(Type type, size_t count = 0) noexcept;
+
+	private:
+		/**
+		 * ctor for constructing an external Datum
+		 *
+		 * @param type		the type the array points to
+		 * @param array		the array of data to never be resized
+		 * @param size		how many elements are in the array
+		 * @param capacity	how many elemetns the array can hold (never to change)
+		 */
+		Datum(Type type, void* array, size_t size, size_t capacity) noexcept;
+
+	public:
+		/**
 		 * ctor for constructing an external Datum
 		 *
 		 * @param data		retval of Array::TakeData
@@ -65,7 +135,7 @@ namespace Library
 		 * ctor for constructing an external Datum
 		 *
 		 * @param array		the array of data to never be resized
-		 * @param count		how many elements are in the array
+		 * @param size		how many elements are in the array
 		 * @param capacity	how many elemetns the array can hold (never to change)
 		 *
 		 * @asserts			size <= capacity
@@ -264,6 +334,13 @@ namespace Library
 		template<typename T>
 		void SetStorage(T* array, size_t count) noexcept;
 
+	private:
+		/**
+		 * @param array		new external storage array to reference
+		 */
+		void SetStorage(void* array) noexcept;
+	public:
+
 		/**
 		 * Calls SetType<T>() then Reserve(capacity)
 		 * O(n) where n is the current size of the container.
@@ -332,6 +409,16 @@ namespace Library
 		 * @throws ExternalStorageException		if IsExternal()
 		 */
 		void ThrowExternal() const;
+
+		/**
+		 * Helper for "do"ing generic things when compile-time type information is not known, but run-time enum information is available
+		 *
+		 * @param<Invokable>	tempalted lambda type
+		 * @param type			Datum::Type to "do something" for
+		 * @param func			tempalted lambda which will be passed a dummy nullptr of TypeOfType<type>
+		 */
+		template<typename Invokable>
+		void Do(Type type, Invokable func);
 	};
 
 	/**

@@ -38,18 +38,25 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(TypeOf)
 		{
-			Assert::AreEqual(Datum::Type::None, Datum::TypeOf<std::exception>);
-			Assert::AreEqual(Datum::Type::Bool, Datum::TypeOf<bool>);
-			Assert::AreEqual(Datum::Type::Int, Datum::TypeOf<int>);
-			Assert::AreEqual(Datum::Type::Float, Datum::TypeOf<float>);
-			Assert::AreEqual(Datum::Type::String, Datum::TypeOf<std::string>);
-			Assert::AreEqual(Datum::Type::RTTI, Datum::TypeOf<std::shared_ptr<Foo>>);
+			using Type = Datum::Type;
+			Assert::AreEqual(Type::None, Datum::TypeOf<std::exception>);
+			Assert::AreEqual(Type::Bool, Datum::TypeOf<bool>);
+			Assert::AreEqual(Type::Int, Datum::TypeOf<int>);
+			Assert::AreEqual(Type::Float, Datum::TypeOf<float>);
+			Assert::AreEqual(Type::String, Datum::TypeOf<std::string>);
+			Assert::AreEqual(Type::RTTI, Datum::TypeOf<std::shared_ptr<Foo>>);
 
-			Assert::AreEqual(Datum::Type::Bool, Library::TypeOf(Datum(1, false)[0]));
-			Assert::AreEqual(Datum::Type::Int, Library::TypeOf(Datum(1, 0)[0]));
-			Assert::AreEqual(Datum::Type::Float, Library::TypeOf(Datum(1, 0.f)[0]));
-			Assert::AreEqual(Datum::Type::String, Library::TypeOf(Datum(1, ""s)[0]));
-			Assert::AreEqual(Datum::Type::RTTI, Library::TypeOf(Datum(1, std::make_shared<Foo>(0))[0]));
+			Assert::AreEqual(Type::Bool, Library::TypeOf(Datum(1, false)[0]));
+			Assert::AreEqual(Type::Int, Library::TypeOf(Datum(1, 0)[0]));
+			Assert::AreEqual(Type::Float, Library::TypeOf(Datum(1, 0.f)[0]));
+			Assert::AreEqual(Type::String, Library::TypeOf(Datum(1, ""s)[0]));
+			Assert::AreEqual(Type::RTTI, Library::TypeOf(Datum(1, std::make_shared<Foo>(0))[0]));
+
+			Assert::IsTrue(std::is_same_v<bool, Datum::TypeOfType<Type::Bool>>);
+			Assert::IsTrue(std::is_same_v<int, Datum::TypeOfType<Type::Int>>);
+			Assert::IsTrue(std::is_same_v<float, Datum::TypeOfType<Type::Float>>);
+			Assert::IsTrue(std::is_same_v<std::string, Datum::TypeOfType<Type::String>>);
+			Assert::IsTrue(std::is_same_v<std::shared_ptr<RTTI>, Datum::TypeOfType<Type::RTTI>>);
 		}
 
 		TEST_METHOD(Double)

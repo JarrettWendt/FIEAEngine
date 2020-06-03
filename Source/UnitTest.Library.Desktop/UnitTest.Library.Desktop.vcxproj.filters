@@ -67,7 +67,22 @@
     <ClCompile Include="MathTests.cpp">
       <Filter>Tests\Util</Filter>
     </ClCompile>
-    <ClCompile Include="ScopeTests.cpp">
+    <ClCompile Include="ReflectionTests.cpp">
+      <Filter>Tests\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Reflection.generated.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
+    <ClCompile Include="Registry.generated.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributedTests.cpp">
+      <Filter>Tests\Hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="RegistryTests.cpp">
+      <Filter>Tests\Hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityTests.cpp">
       <Filter>Tests\Hierarchy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,6 +120,12 @@
     <Filter Include="Tests\Hierarchy">
       <UniqueIdentifier>{9d2447ef-58f9-40e1-bed2-3685ad358ce1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="generated">
+      <UniqueIdentifier>{21151fd2-de55-4eca-9dd3-8ade8322681c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FooBar\AttributedFoo">
+      <UniqueIdentifier>{e968ce8d-f9b5-4065-b5af-15c4c0c04b94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -119,6 +140,9 @@
       <Filter>FooBar\Foo</Filter>
     </ClInclude>
     <ClInclude Include="Digit.h" />
+    <ClInclude Include="AttributedFoo.h">
+      <Filter>FooBar\AttributedFoo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Random.inl">
