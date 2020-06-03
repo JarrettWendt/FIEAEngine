@@ -31,15 +31,11 @@ namespace UnitTests
 		[[Attribute]]
 		std::shared_ptr<UnitTests::Foo> foos[10]{};
 
-		[[Attribute]]
-		std::shared_ptr<Scope> scope{ std::make_shared<Scope>() };
-
 		// Prescribed attributes without data members.
 		[[Attribute(int, "intWithoutMember")]]
 		[[Attribute(float, "floatWithoutmember")]]
 		[[Attribute(std::string, "stringWithoutMember")]];
 		[[Attribute(std::shared_ptr<UnitTests::Foo>, "fooWithoutMember")]]
-		[[Attribute(std::shared_ptr<Scope>, "scopeWithoutMember")]]
 		[[Attribute(std::shared_ptr<UnitTests::AttributedFoo>, "recursive")]];
 
 		ATTRIBUTED_SPECIAL_MEMBERS(AttributedFoo, default)

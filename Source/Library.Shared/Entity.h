@@ -33,6 +33,7 @@ namespace Library
 		/** whether the relativeTransform is good */
 		bool transformInval{ true };
 
+	public:
 #pragma region iterator
 		class const_iterator;
 
@@ -170,16 +171,80 @@ namespace Library
 #pragma endregion
 
 #pragma region Properties
+		/**
+		 * O(1)
+		 *
+		 * @returns		whether or not this Entity is enabled (Updates will not be called when disabled)
+		 */
 		[[nodiscard]] constexpr bool& Enabled() noexcept;
+
+		/**
+		 * O(1)
+		 *
+		 * @returns		whether or not this Entity is enabled (Updates will not be called when disabled)
+		 */
 		[[nodiscard]] constexpr bool Enabled() const noexcept;
+
+		/**
+		 * O(1)
+		 * 
+		 * @returns		how many children this Entity has
+		 */
+		[[nodiscard]] constexpr size_t NumChildren() const noexcept;
+
+		/**
+		 * O(1)
+		 * 
+		 * @returns		if this Entity has any children
+		 */
+		[[nodiscard]] constexpr bool HasChildren() const noexcept;
 		
-		[[nodiscard]] std::shared_ptr<Entity> Parent() noexcept;
+		/**
+		 * O(1)
+		 * 
+		 * @returns		this Entity's parent
+		 */
+		[[nodiscard]] SharedEntity Parent() noexcept;
+		
+		/**
+		 * O(1)
+		 *
+		 * @returns		this Entity's parent
+		 */
 		[[nodiscard]] std::shared_ptr<const Entity> Parent() const noexcept;
-		
-		[[nodiscard]] std::shared_ptr<Entity> Child(const std::string& childName) noexcept;
+
+		/**
+		 * O(1)
+		 *
+		 * @param childName		the name of the child to query for
+		 * @returns				this child with that name
+		 */
+		[[nodiscard]] SharedEntity Child(const std::string& childName) noexcept;
+
+		/**
+		 * O(1)
+		 *
+		 * @param childName		the name of the child to query for
+		 * @returns				this child with that name
+		 */
 		[[nodiscard]] std::shared_ptr<const Entity> Child(const std::string& childName) const noexcept;
 #pragma endregion
 
+		/**
+		 * O(1)
+		 * 
+		 * @returns		this Entity's name
+		 */
+		[[nodiscard]] constexpr const std::string& GetName() const noexcept;
+
+		/**
+		 * Will require re-hashing this Entity into its parent
+		 * O(1)
+		 * 
+		 * @param newName	new name for this Entity
+		 */
+		void SetName(const std::string& newName) noexcept;
+		
 #pragma region Insert
 		/**
 		 * Appends a default constructed Derived type.
@@ -227,6 +292,15 @@ namespace Library
 		 * O(1)
 		 */
 		void Orphan() noexcept;
+
+		/**
+		 * Orphans child by the specified name.
+		 * Does nothing if no child by that name exists.
+		 * O(1)
+		 * 
+		 * @param childName		child to orphan
+		 */
+		void RemoveChild(const std::string& childName) noexcept;
 #pragma endregion
 
 		virtual void Init();

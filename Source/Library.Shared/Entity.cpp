@@ -127,15 +127,33 @@ Entity::iterator Entity::end() noexcept
 		return const_cast<Entity*>(this)->Child(childName);
 	}
 #pragma endregion
-
+	
+	void Entity::SetName(const std::string& newName) noexcept
+	{
+		if (auto p = Parent())
+		{
+			p->children.Remove(name);
+			name = newName;
+			p->children.Insert(name, shared_from_this());
+		}
+	}
+	
 #pragma region Remove
 	void Entity::Orphan() noexcept
-	{
-		auto p = Parent();
-		if (p)
+	{;
+		if (auto p = Parent())
 		{
 			p->children.Remove(name);
 			parent = {};
+		}
+	}
+
+	void Entity::RemoveChild(const std::string& childName) noexcept
+	{
+		if (const auto it = children.Find(childName))
+		{
+			it->value->parent = {};
+			children.Remove(it);
 		}
 	}
 #pragma endregion

@@ -21,12 +21,12 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(ConstructScope)
 		{
-			const auto s = Reflection::Construct<Scope>("Scope");
+			const auto s = Reflection::Construct<Entity>("Entity");
 			Assert::IsFalse(s == nullptr);
-			Assert::IsTrue(s->Is<Scope>());
+			Assert::IsTrue(s->Is<Entity>());
 
 			// just doing something to make sure we don't have a memory leak
-			s->Insert("child");
+			s->CreateChild<>("child");
 		}
 	};
 }

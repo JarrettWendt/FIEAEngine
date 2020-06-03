@@ -39,7 +39,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Quaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Reflection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Registry.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Util.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Vector2.cpp" />
@@ -74,7 +73,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)RTTI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Random.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scope.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
@@ -106,7 +104,6 @@
     <None Include="$(MSBuildThisFileDirectory)Reflection.inl" />
     <None Include="$(MSBuildThisFileDirectory)Reflection.py" />
     <None Include="$(MSBuildThisFileDirectory)Registry.inl" />
-    <None Include="$(MSBuildThisFileDirectory)Scope.inl" />
     <None Include="$(MSBuildThisFileDirectory)SList.inl" />
     <None Include="$(MSBuildThisFileDirectory)Stack.inl" />
     <None Include="$(MSBuildThisFileDirectory)Util.inl" />

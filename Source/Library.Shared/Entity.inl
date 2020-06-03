@@ -3,6 +3,23 @@
 
 namespace Library
 {
+#pragma region Properties
+	constexpr size_t Entity::NumChildren() const noexcept
+	{
+		return children.Size();
+	}
+	
+	constexpr bool Entity::HasChildren() const noexcept
+	{
+		return NumChildren() > 0;
+	}
+	
+	constexpr const std::string& Entity::GetName() const noexcept
+	{
+		return name;
+	}
+#pragma endregion
+	
 	template<typename Derived>
 	inline std::shared_ptr<Derived> Entity::CreateChild(const std::string& childName)
 	{
@@ -12,7 +29,7 @@ namespace Library
 	template<typename Derived>
 	inline std::shared_ptr<Derived> Entity::Adopt(const std::string& childName, std::shared_ptr<Derived> child)
 	{
-		ThrowName(name);
+		ThrowName(childName);
 
 		if (child->Parent() != shared_from_this())
 		{

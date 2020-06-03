@@ -31,9 +31,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Coroutine.cpp">
       <Filter>Engine\Coroutine</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp">
-      <Filter>Hierarchy\Scope</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Attributed.cpp">
       <Filter>Hierarchy\Attributed</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Literals.h">
       <Filter>Util\Literals</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scope.h">
-      <Filter>Hierarchy\Scope</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Attributed.h">
       <Filter>Hierarchy\Attributed</Filter>
     </ClInclude>
@@ -243,9 +237,6 @@
     <Filter Include="Hierarchy">
       <UniqueIdentifier>{bd2d08a7-78fd-45d9-bad6-e7e79cfaae5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Hierarchy\Scope">
-      <UniqueIdentifier>{01444567-3d5f-42d3-9c8c-74f88f6f5c16}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Hierarchy\Attributed">
       <UniqueIdentifier>{c21555e2-c033-443b-ac96-c76aaf352ebf}</UniqueIdentifier>
     </Filter>
@@ -336,9 +327,6 @@
       <Filter>Util\Literals</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory).editorconfig" />
-    <None Include="$(MSBuildThisFileDirectory)Scope.inl">
-      <Filter>Hierarchy\Scope</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)Attributed.inl">
       <Filter>Hierarchy\Attributed</Filter>
     </None>

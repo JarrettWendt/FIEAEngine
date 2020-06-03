@@ -134,7 +134,10 @@ namespace Library
 		// If we're already external, relinquish what data we have because Array::SetData would free it.
 		if (IsExternal())
 		{
+#pragma warning(push)
+#pragma warning(disable: 4834)	// discarding [[nodiscard]] return value
 			GetArray<T>().TakeData();
+#pragma warning(pop)
 		}
 		GetArray<T>().SetData(array, count, capacity);
 		isExternal = true;

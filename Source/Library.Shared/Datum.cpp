@@ -107,7 +107,7 @@ namespace Library
 	{
 		Do(GetType(), [&]<typename T>()
 		{
-			GetArray<T>().SetData(reinterpret_cast<T*>(array), Size(), Capacity());
+			SetStorage<T>(reinterpret_cast<T*>(array), Size(), Capacity());
 		});
 	}
 #pragma endregion

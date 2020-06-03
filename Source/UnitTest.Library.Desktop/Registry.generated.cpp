@@ -21,12 +21,10 @@ namespace Library
 					{ "strings", Reflection::GetConstructor("string"), 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::strings), Datum::TypeOf<std::string>,  },
 					{ "foo", Reflection::GetConstructor("Foo>"), 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::foo), Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
 					{ "foos", Reflection::GetConstructor("Foo>"), 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::foos), Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
-					{ "scope", Reflection::GetConstructor("shared_ptr<Scope>"), 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::scope), Datum::TypeOf<std::shared_ptr<Scope>>,  },
 					{ "intWithoutMember", Reflection::GetConstructor("int"), 0, 0, Datum::TypeOf<int>,  },
 					{ "floatWithoutmember", Reflection::GetConstructor("float"), 0, 0, Datum::TypeOf<float>,  },
 					{ "stringWithoutMember", Reflection::GetConstructor("string"), 0, 0, Datum::TypeOf<std::string>,  },
 					{ "fooWithoutMember", Reflection::GetConstructor("Foo>"), 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
-					{ "scopeWithoutMember", Reflection::GetConstructor("shared_ptr<Scope>"), 0, 0, Datum::TypeOf<std::shared_ptr<Scope>>,  },
 					{ "recursive", Reflection::GetConstructor("AttributedFoo>"), 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::AttributedFoo>>,  },
 				}
 			}

@@ -58,8 +58,8 @@
 #include "EngineTime.h"
 #include "Input.h"
 // Hierarchy
-#include "Scope.h"
 #include "Attributed.h"
+#include "Entity.h"
 
 // UnitTests
 #include "Digit.h"

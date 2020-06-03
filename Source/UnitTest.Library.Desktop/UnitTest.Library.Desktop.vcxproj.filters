@@ -67,9 +67,6 @@
     <ClCompile Include="MathTests.cpp">
       <Filter>Tests\Util</Filter>
     </ClCompile>
-    <ClCompile Include="ScopeTests.cpp">
-      <Filter>Tests\Hierarchy</Filter>
-    </ClCompile>
     <ClCompile Include="ReflectionTests.cpp">
       <Filter>Tests\Util</Filter>
     </ClCompile>
@@ -83,6 +80,9 @@
       <Filter>Tests\Hierarchy</Filter>
     </ClCompile>
     <ClCompile Include="RegistryTests.cpp">
+      <Filter>Tests\Hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityTests.cpp">
       <Filter>Tests\Hierarchy</Filter>
     </ClCompile>
   </ItemGroup>

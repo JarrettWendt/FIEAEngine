@@ -100,11 +100,20 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	};
 
 	template<>
-	struct Stringify<Scope>
+	struct Stringify<Attributed>
 	{
-		inline static std::string std(const Scope&)
+		inline static std::string std(const Attributed&)
 		{
-			return "Scope";
+			return "Attributed";
+		}
+	};
+
+	template<>
+	struct Stringify<Entity>
+	{
+		inline static std::string std(const Entity&)
+		{
+			return "Entity";
 		}
 	};
 
@@ -114,7 +123,8 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	SPECIALIZE_TO_STRING(Digit)
 	SPECIALIZE_TO_STRING(SignedDigit)
 	SPECIALIZE_TO_STRING(Foo)
-	SPECIALIZE_TO_STRING(Scope)
+	SPECIALIZE_TO_STRING(Attributed)
+	SPECIALIZE_TO_STRING(Entity)
 
 	SPECIALIZE_TO_STRING_PTR(std::string)
 	SPECIALIZE_TO_STRING_CONST_PTR(std::string)

@@ -214,6 +214,9 @@
     <None Update="C:\Dev\Students\CH16\Jarrett.Wendt\Prog2\FIEAGameEngine\Source\Library.Shared\JsonFormatter.inl">
       <FileType>Document</FileType>
     </None>
+    <None Update="E:\Dev\Students\CH16\Jarrett.Wendt\Prog3\FIEAEngine\Source\Library.Shared\.inl">
+      <FileType>Document</FileType>
+    </None>
     <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
