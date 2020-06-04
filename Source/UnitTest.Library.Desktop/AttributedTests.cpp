@@ -117,9 +117,9 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(NumAttributes)
 		{
 			auto s = std::make_shared<AttributedFoo>();
-			Assert::AreEqual(13, s->NumAttributes());
+			Assert::AreEqual(13_z, s->NumAttributes());
 			s->AddAttribute("hi");
-			Assert::AreEqual(14, s->NumAttributes());
+			Assert::AreEqual(14_z, s->NumAttributes());
 		}
 
 		TEST_METHOD(HasAttributes)

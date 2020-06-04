@@ -87,7 +87,7 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(Count)
 		{
-			Assert::AreEqual(10, Enum<Digit>::Count);
+			Assert::AreEqual(10_z, Enum<Digit>::Count);
 		}
 
 		TEST_METHOD(UnsignedOverflow)

@@ -15,7 +15,7 @@ namespace UnitTestLibraryDesktop
 {
 	TEST_CLASS(CoroutineTests)
 	{
-		//INITIALIZE_CLEANUP
+		INITIALIZE_CLEANUP
 
 		static inline int myCoroutineRunCount = 0;
 		
@@ -30,11 +30,11 @@ namespace UnitTestLibraryDesktop
 		{
 			const auto oldCount = myCoroutineRunCount;
 			Coroutines::Start(MyCoroutine);
-			Engine::Update();
-			std::this_thread::sleep_for(0.5s);
-			Engine::Update();
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 			Assert::AreEqual(oldCount + 1, myCoroutineRunCount);
-			Engine::Update();
 		}
 
 		TEST_METHOD(Start)
@@ -63,13 +63,11 @@ namespace UnitTestLibraryDesktop
 
 			Assert::AreEqual(2, count);
 
-			std::this_thread::sleep_for(500ms);
-			Engine::Update();
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 			Assert::AreEqual(3, count);
-
-			// one more Update() to remove everything
-			Engine::Update();
-			Assert::AreEqual(0_z, Coroutines::Count());
 		}
 
 		TEST_METHOD(LossOfScope)
@@ -102,13 +100,11 @@ namespace UnitTestLibraryDesktop
 			Engine::Update();
 			Assert::AreEqual(1, count, L"Still one because it hasn't been enough time");
 
-			std::this_thread::sleep_for(Time::Seconds(0.5f));
-			Engine::Update();
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 			Assert::AreEqual(2, count);
-
-			// one more Update() to remove everything
-			Engine::Update();
-			Assert::AreEqual(0_z, Coroutines::Count());
 		}
 
 		TEST_METHOD(Exception)
@@ -119,20 +115,26 @@ namespace UnitTestLibraryDesktop
 				throw std::exception();
 			});
 			Engine::Update();
-			Assert::ExpectException<AggregateException>([] { Engine::Update(); });
+			Assert::ExpectException<AggregateException>([]
+			{
+				while (Coroutines::Count())
+				{
+					Engine::Update();
+				}
+			});
 
 			Coroutines::Start([]()->Coroutine
 			{
 				co_yield 1ns;
 				throw std::exception();
 			}, true);
-			Assert::ExpectException<AggregateException>([] { Engine::Update(); Engine::Update(); });
-
-			// Update() until everything is gone
-			while (Coroutines::Count())
+			Assert::ExpectException<AggregateException>([]
 			{
-				Engine::Update();
-			}
+				while (Coroutines::Count())
+				{
+					Engine::Update();
+				}
+			});
 		}
 
 		TEST_METHOD(StopWithinCoroutine)
@@ -144,6 +146,7 @@ namespace UnitTestLibraryDesktop
 			});
 			Engine::Update();
 			Engine::Update();
+			Assert::AreEqual(0_z, Coroutines::Count());
 		}
 
 #pragma region async
@@ -156,19 +159,11 @@ namespace UnitTestLibraryDesktop
 				co_return;
 			}, true);
 
-			Engine::Update();
-			std::this_thread::sleep_for(5ms);
-			Engine::Update();
-
-			Engine::Update();
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 			Assert::AreEqual(1, count);
-
-			std::this_thread::sleep_for(5ms);
-			Engine::Update();
-
-			// one more Update() to remove everything
-			Engine::Update();
-			Assert::AreEqual(0_z, Coroutines::Count());
 		}
 
 		TEST_METHOD(AsyncAtomicIncrement)
@@ -183,17 +178,11 @@ namespace UnitTestLibraryDesktop
 				}, true);
 			}
 
-			std::this_thread::sleep_for(5ms);
-			Engine::Update();
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 			Assert::AreEqual(1000, count.load());
-
-			std::this_thread::sleep_for(5ms);
-			Engine::Update();
-
-			// one more Update() to remove everything
-			Coroutines::StopAll();
-			Engine::Update();
-			Assert::AreEqual(0_z, Coroutines::Count());
 		}
 
 		TEST_METHOD(AsyncSort)
@@ -209,10 +198,10 @@ namespace UnitTestLibraryDesktop
 				}, true);
 			}
 
-			Engine::Update();
-
-			std::this_thread::sleep_for(5ms);
-			Engine::Update();
+			while (Coroutines::Count())
+			{
+				Engine::Update();
+			}
 
 			// using ints to prevent underflow
 			for (int i = int(arrays.Size()) - 1; i >= 0; i--)
@@ -220,10 +209,6 @@ namespace UnitTestLibraryDesktop
 				auto& v = arrays[i];
 				Assert::IsTrue(std::is_sorted(v.begin(), v.end()));
 			}
-
-			// one more Update() to remove everything
-			Engine::Update();
-			Assert::AreEqual(0_z, Coroutines::Count());
 		}
 #pragma endregion
 	};
