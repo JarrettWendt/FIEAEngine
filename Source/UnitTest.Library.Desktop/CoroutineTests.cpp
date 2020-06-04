@@ -58,7 +58,7 @@ namespace UnitTestLibraryDesktop
 			Engine::Update();
 			Assert::AreEqual(1, count, L"Still one because it hasn't been enough time");
 
-			std::this_thread::sleep_for(0.5s);
+			std::this_thread::sleep_for(900ms);
 			Engine::Update();
 
 			Assert::AreEqual(2, count);
