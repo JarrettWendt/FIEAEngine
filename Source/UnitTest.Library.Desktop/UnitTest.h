@@ -350,7 +350,7 @@ namespace UnitTests
 private:																					\
 inline static _CrtMemState startMemState;													\
 public:																						\
-TEST_METHOD_INITIALIZE(Initialize)															\
+TEST_CLASS_INITIALIZE(ClassInitialize)														\
 {																							\
 	Math::NextPrime(10000);																	\
 	Enum<Digit>::ToString(Digit());															\
@@ -361,12 +361,20 @@ TEST_METHOD_INITIALIZE(Initialize)															\
 	Enum<Input::KeyCode>::FromString("None");												\
 	Enum<Input::KeyState>::ToString(Input::KeyState());										\
 	Enum<Input::KeyState>::FromString("up");												\
+}																							\
+																							\
+TEST_METHOD_INITIALIZE(Initialize)															\
+{																							\
+	Coroutines::StopAll();																	\
+	Engine::Update();																		\
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);													\
 	_CrtMemCheckpoint(&startMemState);														\
 }																							\
 																							\
 TEST_METHOD_CLEANUP(Cleanup)																\
 {																							\
+	Coroutines::StopAll();																	\
+	Engine::Update();																		\
 	_CrtMemState endMemState, diffMemState;													\
 	_CrtMemCheckpoint(&endMemState);														\
 	if (_CrtMemDifference(&diffMemState, &startMemState, &endMemState))						\
