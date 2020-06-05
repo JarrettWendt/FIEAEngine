@@ -26,6 +26,30 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(ptr.expired());
 		}
 
+#pragma region iterator
+		TEST_METHOD(ConstIterator)
+		{
+			const auto e = std::make_shared<Entity>();
+
+			auto cit = e->begin();
+			
+			Assert::IsTrue(cit.IsAtBegin());
+			Assert::IsTrue(cit.IsAtEnd());
+
+			Assert::IsFalse(cit);
+			Assert::IsTrue(!cit);
+
+			const auto c = e->CreateChild();
+			cit = e->begin();
+
+			Assert::AreEqual(c, *cit);
+			Assert::AreEqual(e, cit->Parent());
+
+			cit++;
+			Assert::IsFalse(cit);
+		}
+#pragma endregion
+
 #pragma region Properties
 		TEST_METHOD(Child)
 		{
@@ -36,6 +60,15 @@ namespace UnitTestLibraryDesktop
 			const std::shared_ptr<const Entity> cp = p;
 
 			Assert::AreEqual(c, cp->Child(c->GetName()));
+		}
+
+		TEST_METHOD(Parent)
+		{
+			const auto p = std::make_shared<Entity>();
+			const auto c = p->CreateChild();
+			const std::shared_ptr<const Entity> cc = c;
+
+			Assert::AreEqual(p, cc->Parent());
 		}
 #pragma endregion
 		
