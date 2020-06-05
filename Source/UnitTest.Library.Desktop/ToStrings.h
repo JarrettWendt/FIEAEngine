@@ -125,7 +125,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	SPECIALIZE_TO_STRING(SignedDigit)
 	SPECIALIZE_TO_STRING(Foo)
 	SPECIALIZE_TO_STRING(Attributed)
-	SPECIALIZE_TO_STRING(Entity)
+	SPECIALIZE_CONTAINER_(Entity)
 
 	SPECIALIZE_TO_STRING_PTR(std::string)
 	SPECIALIZE_TO_STRING_CONST_PTR(std::string)

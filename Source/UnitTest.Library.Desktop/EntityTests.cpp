@@ -31,7 +31,8 @@ namespace UnitTestLibraryDesktop
 		{
 			const auto e = std::make_shared<Entity>();
 
-			auto cit = e->begin();
+			auto cit = e->cbegin();
+			Assert::AreEqual(cit, e->cend());
 			
 			Assert::IsTrue(cit.IsAtBegin());
 			Assert::IsTrue(cit.IsAtEnd());
