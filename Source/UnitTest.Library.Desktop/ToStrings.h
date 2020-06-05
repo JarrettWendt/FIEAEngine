@@ -40,7 +40,8 @@ inline std::wstring ToString<std::shared_ptr<Q>>(const std::shared_ptr<Q>& q)			
 SPECIALIZE_TO_STRING_REF(SINGLE_ARG(Q))														\
 SPECIALIZE_TO_STRING_PTR(SINGLE_ARG(Q))														\
 SPECIALIZE_TO_STRING_CONST_PTR(SINGLE_ARG(Q))												\
-SPECIALIZE_TO_STRING_SHARED_PTR(SINGLE_ARG(Q))
+SPECIALIZE_TO_STRING_SHARED_PTR(SINGLE_ARG(Q))												\
+SPECIALIZE_TO_STRING_SHARED_PTR(SINGLE_ARG(const Q))
 
 #define SPECIALIZE_TO_STRING_IT(Q)															\
 template<>																					\
@@ -161,6 +162,10 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 	SPECIALIZE_TO_STRING(SINGLE_ARG(typename HashMap<int, std::string>::value_type))
 	SPECIALIZE_CONTAINER(HashMap, SINGLE_ARG(int, std::string))
 	SPECIALIZE_CONTAINER(HashMap, SINGLE_ARG(int, std::string, Hash<int>, std::equal_to<int>, Util::DefaultReserveStrategy))
+
+	SPECIALIZE_TO_STRING(SINGLE_ARG(typename HashMap<std::string, Datum>::value_type))
+	SPECIALIZE_CONTAINER(HashMap, SINGLE_ARG(std::string, Datum))
+	SPECIALIZE_CONTAINER(HashMap, SINGLE_ARG(std::string, Datum, Hash<std::string>, std::equal_to<std::string>, Util::DefaultReserveStrategy))
 
 	using BoolRefWrapper = std::_Vb_reference<std::_Wrap_alloc<std::allocator<unsigned int>>>;
 	template<>

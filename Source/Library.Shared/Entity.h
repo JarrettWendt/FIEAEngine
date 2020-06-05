@@ -251,12 +251,38 @@ namespace Library
 		 * O(1)
 		 *
 		 * @param name		name for this child
+		 * @param args		arguments to forward to the Derived type's ctor.
 		 * @returns			reference to newly appended child
 		 *
 		 * @throws InvalidNameException
 		 */
-		template<typename Derived = Entity>
-		std::shared_ptr<Derived> CreateChild(const std::string& childName = "Entity");
+		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
+		std::shared_ptr<Derived> CreateChild(const std::string& childName, Args&&... args);
+
+		/**
+		 * Appends a default constructed Derived type.
+		 * O(1)
+		 *
+		 * @param name		name for this child
+		 * @param args		arguments to forward to the Derived type's ctor.
+		 * @returns			reference to newly appended child
+		 *
+		 * @throws InvalidNameException
+		 */
+		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
+		std::shared_ptr<Derived> CreateChild(std::string&& childName, Args&&... args);
+		
+		/**
+		 * Appends a default constructed Derived type.
+		 * O(1)
+		 *
+		 * @param args		arguments to forward to the Derived type's ctor.
+		 * @returns			reference to newly appended child
+		 *
+		 * @throws InvalidNameException
+		 */
+		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
+		std::shared_ptr<Derived> CreateChild(Args&&... args);
 
 		/**
 		 * Reparents the passed Entity to this one.
@@ -268,8 +294,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		template<typename Derived = Entity>
-		std::shared_ptr<Derived> Adopt(const std::string& childName, std::shared_ptr<Derived> child);
+		SharedEntity Adopt(const std::string& childName, SharedEntity child);
 
 		/**
 		 * Reparents the passed Entity to this one.
@@ -281,8 +306,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		template<typename Derived = Entity>
-		std::shared_ptr<Derived> Adopt(std::shared_ptr<Derived> child) noexcept;
+		SharedEntity Adopt(SharedEntity child);
 #pragma endregion
 
 #pragma region Remove
@@ -303,8 +327,14 @@ namespace Library
 		void RemoveChild(const std::string& childName) noexcept;
 #pragma endregion
 
+		/**
+		 * Invokes Init() on all children.
+		 */
 		virtual void Init();
-		
+
+		/**
+		 * Invokes Update() on all enabled children. 
+		 */
 		virtual void Update();
 	};
 }

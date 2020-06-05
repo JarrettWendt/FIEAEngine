@@ -137,6 +137,31 @@ Entity::iterator Entity::end() noexcept
 			p->children.Insert(name, shared_from_this());
 		}
 	}
+
+#pragma region Insert	
+	std::shared_ptr<Entity> Entity::Adopt(const std::string& childName, SharedEntity child)
+	{
+		ThrowName(childName);
+
+		if (child->Parent() != shared_from_this())
+		{
+			const auto [it, inserted] = children.Insert(childName, child);
+			if (!inserted) [[unlikely]]
+			{
+				throw InvalidNameException("child with name " + childName + " already exists");
+			}
+			assert(child == it->value);
+			child->name = childName;
+			child->parent = shared_from_this();
+		}
+		return child;
+	}
+
+	std::shared_ptr<Entity> Entity::Adopt(const SharedEntity child)
+	{
+		return Adopt(child->name, child);
+	}
+#pragma endregion
 	
 #pragma region Remove
 	void Entity::Orphan() noexcept
@@ -170,7 +195,10 @@ Entity::iterator Entity::end() noexcept
 	{
 		for (const auto& e : *this)
 		{
-			e->Update();
+			if (e->Enabled())
+			{
+				e->Update();
+			}
 		}
 	}
 }

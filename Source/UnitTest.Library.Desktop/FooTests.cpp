@@ -16,7 +16,6 @@ namespace UnitTestLibraryDesktop
 	{
 		INITIALIZE_CLEANUP
 
-
 		TEST_METHOD(HasID)
 		{
 			const Foo f;
@@ -47,11 +46,6 @@ namespace UnitTestLibraryDesktop
 			const Foo f;
 			Assert::IsNotNull(&f.AssertAs<Foo>());
 			Assert::IsNotNull(&f.AssertAs<RTTI>());
-		}
-
-		TEST_METHOD(Equals)
-		{
-			Assert::IsTrue(Foo().Equals(Foo()));
 		}
 	};
 }
