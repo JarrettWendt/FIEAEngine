@@ -70,6 +70,11 @@ namespace UnitTests
 	{
 		return const_cast<Foo*>(this)->Data();
 	}
+	
+	std::ostream& operator<<(std::ostream& stream, const Foo& foo) noexcept
+	{
+		return stream << foo.Data();
+	}
 }
 
 std::string std::to_string(const Foo& foo) noexcept

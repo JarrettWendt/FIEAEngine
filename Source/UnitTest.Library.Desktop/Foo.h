@@ -26,6 +26,8 @@ namespace UnitTests
 		[[nodiscard]] int& Data() noexcept;
 		[[nodiscard]] int Data() const noexcept;
 	};
+
+	std::ostream& operator<<(std::ostream& stream, const Foo& foo) noexcept;
 }
 
 namespace std

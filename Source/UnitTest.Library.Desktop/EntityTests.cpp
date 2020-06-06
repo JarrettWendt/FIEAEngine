@@ -76,6 +76,9 @@ namespace UnitTestLibraryDesktop
 #pragma region Transform
 		TEST_METHOD(SetLocalTransform)
 		{
+			//int x;
+			//Assert::IsTrue(std::is_same<decltype(&std::to_string(x)), std::string>);
+						
 			//std::stringstream stream;
 			//stream << Transform();
 			

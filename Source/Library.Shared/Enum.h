@@ -72,6 +72,12 @@ namespace Library
 		/// <returns>Enum of that string</returns>
 		static T FromString(const std::string& str);
 	};
+
+	template<Concept::Enumeration T>
+	std::ostream& operator<<(std::ostream& stream, const T t)
+	{
+		return stream << Enum<T>::ToString(t);
+	}
 }
 
 namespace std

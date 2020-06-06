@@ -364,6 +364,7 @@ TEST_CLASS_INITIALIZE(ClassInitialize)														\
 }																							\
 TEST_METHOD_INITIALIZE(MethodInitialize)													\
 {																							\
+	Engine::Init();																			\
 	Coroutines::StopAll();																	\
 	Engine::Update();																		\
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);													\

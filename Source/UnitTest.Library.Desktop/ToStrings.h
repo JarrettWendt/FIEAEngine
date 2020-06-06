@@ -12,28 +12,28 @@ using namespace UnitTests;
 template<>																					\
 inline std::wstring ToString<Q>(const Q& q)													\
 {																							\
-	return CppUnitTestFramework::ToString(Stringify<Q>::std(q));							\
+	return CppUnitTestFramework::ToString(Util::ToString(q));								\
 }
 
 #define SPECIALIZE_TO_STRING_PTR(Q)															\
 template<>																					\
 inline std::wstring ToString<Q>(Q* q)														\
 {																							\
-	return q ? CppUnitTestFramework::ToString(Stringify<Q*>::std(q)) : L"nullptr";			\
+	return q ? CppUnitTestFramework::ToString(Util::ToString(*q)) : L"nullptr";				\
 }
 
 #define SPECIALIZE_TO_STRING_CONST_PTR(Q)													\
 template<>																					\
 inline std::wstring ToString<Q>(const Q* q)													\
 {																							\
-	return q ? CppUnitTestFramework::ToString(Stringify<Q*>::std(q)) : L"const nullptr";	\
+	return q ? CppUnitTestFramework::ToString(Util::ToString(*q)) : L"const nullptr";		\
 }
 
 #define SPECIALIZE_TO_STRING_SHARED_PTR(Q)													\
 template<>																					\
 inline std::wstring ToString<std::shared_ptr<Q>>(const std::shared_ptr<Q>& q)				\
 {																							\
-	return CppUnitTestFramework::ToString(Stringify<std::shared_ptr<Q>>::std(q));			\
+	return q ? CppUnitTestFramework::ToString(Util::ToString(*q)) : L"null shared_ptr";		\
 }
 
 #define SPECIALIZE_TO_STRING(Q)																\
@@ -70,57 +70,12 @@ inline std::wstring ToString<Q>(const Q*)													\
 
 namespace Microsoft::VisualStudio::CppUnitTestFramework
 {
-	template<typename T>
-	struct Stringify
-	{		
-		inline static std::string std(const T& t)
-		{
-			return std::to_string(t);
-		}
-	};
-
-	template<typename T>
-	struct Stringify<T*>
-	{
-		inline static std::string std(const T* t)
-		{
-			return Stringify<T>::std(*t);
-		}
-	};
-
-	template<typename T>
-	struct Stringify<std::shared_ptr<T>>
-	{
-		inline static std::string std(const std::shared_ptr<T> t)
-		{
-			return t == nullptr ? "nullptr shared_ptr" : Stringify<T>::std(*t);
-		}
-	};
-
-	template<>
-	struct Stringify<Attributed>
-	{
-		inline static std::string std(const Attributed&)
-		{
-			return "Attributed";
-		}
-	};
-
-	template<>
-	struct Stringify<Entity>
-	{
-		inline static std::string std(const Entity&)
-		{
-			return "Entity";
-		}
-	};
-
-	//SPECIALIZE_TO_STRING(Vector2)
-	//SPECIALIZE_TO_STRING(Vector3)
-	//SPECIALIZE_TO_STRING(Vector4)
-	//SPECIALIZE_TO_STRING(Quaternion)
-	//SPECIALIZE_TO_STRING(Matrix)
-	//SPECIALIZE_TO_STRING(Transform)
+	SPECIALIZE_TO_STRING(Vector2)
+	SPECIALIZE_TO_STRING(Vector3)
+	SPECIALIZE_TO_STRING(Vector4)
+	SPECIALIZE_TO_STRING(Quaternion)
+	SPECIALIZE_TO_STRING(Matrix)
+	SPECIALIZE_TO_STRING(Transform)
 
 	SPECIALIZE_TO_STRING(Input::KeyCode)
 	SPECIALIZE_TO_STRING(Input::KeyState)
