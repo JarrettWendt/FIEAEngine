@@ -6,13 +6,23 @@
 
 namespace Library
 {
+	class Entity;
+	
 	class Engine final
 	{
-		// TODO: World
+		/** the parentmost Entity */
+		static inline std::shared_ptr<Entity> world{ nullptr };
 
 	public:
 		STATIC_CLASS(Engine)
 
+		/**
+		 * O(1)
+		 * 
+		 * @returns		the parentmost Entity
+		 */
+		static Entity& World() noexcept;
+		
 		/**
 		 * to be called by WinMain()
 		 */
@@ -28,7 +38,7 @@ namespace Library
 		/**
 		 * runs before the first Update()
 		 */
-		static void Start();
+		static void Init();
 
 		/**
 		 * the main engine loop

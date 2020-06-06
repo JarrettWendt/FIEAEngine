@@ -229,21 +229,15 @@ namespace Library
 	};
 }
 
-#define ATTRIBUTED_DECLARATIONS(BaseType)							\
-	RTTI_DECLARATIONS(BaseType)										\
+#define ATTRIBUTED_DECLARATIONS(BaseType)								\
+	RTTI_DECLARATIONS(BaseType)											\
 	friend class Library::Registry;
 
-#define ATTRIBUTED_SPECIAL_MEMBERS(DerivedType, D)					\
-protected:															\
-	explicit DerivedType(RTTI::IDType derived) : Base(derived) {}	\
-public:																\
-	DerivedType() : Base(typeID) {}									\
-	DerivedType(const DerivedType& other) = D;						\
-	DerivedType(DerivedType&& other) noexcept = D;					\
-	DerivedType& operator=(const DerivedType& other) = D;			\
-	DerivedType& operator=(DerivedType&& other) noexcept = D;		\
-	virtual ~DerivedType() = D;
-	
-		
+#define ATTRIBUTED_SPECIAL_MEMBERS(DerivedType, D)						\
+protected:																\
+	explicit DerivedType(const RTTI::IDType derived) : Base(derived) {}	\
+public:																	\
+	DerivedType() : Base(typeID) {}										\
+	MOVE_COPY_VDTOR(DerivedType, D)		
 
 #include "Attributed.inl"

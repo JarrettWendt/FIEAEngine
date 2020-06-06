@@ -14,15 +14,27 @@ namespace Library
 			{
 				float x, y, z;
 			};
-			float v[3];
+			float v[3]{};
 		};
 #pragma warning(pop)
 
 		[[nodiscard]] float& operator[](size_type i) noexcept;
 		[[nodiscard]] float operator[](size_type i) const noexcept;
 
-		[[nodiscard]] friend bool operator==(const Vector3& left, const Vector3& right);
-		[[nodiscard]] friend bool operator!=(const Vector3& left, const Vector3& right);
+#pragma region Arithmetic
+		Vector3 operator+(const Vector3& other) const noexcept;
+		Vector3 operator-(const Vector3& other) const noexcept;
+		Vector3 operator*(const Vector3& other) const noexcept;
+		Vector3 operator/(const Vector3& other) const noexcept;
+
+		Vector3& operator+=(const Vector3& other) noexcept;
+		Vector3& operator-=(const Vector3& other) noexcept;
+		Vector3& operator*=(const Vector3& other) noexcept;
+		Vector3& operator/=(const Vector3& other) noexcept;
+#pragma endregion
+
+		[[nodiscard]] friend bool operator==(const Vector3& left, const Vector3& right) noexcept;
+		[[nodiscard]] friend bool operator!=(const Vector3& left, const Vector3& right) noexcept;
 
 		friend std::ostream& operator<<(std::ostream& stream, const Vector3& v);
 	};

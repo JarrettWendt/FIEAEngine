@@ -14,6 +14,52 @@ namespace Library
 	{
 		return const_cast<Vector4*>(this)->operator[](i);
 	}
+
+#pragma region Arithmetic
+	Vector4 Vector4::operator+(const Vector4& other) const noexcept
+	{
+		return Vector4{ x + other.x, y + other.y, z + other.z, w + other.w };
+	}
+
+	Vector4 Vector4::operator-(const Vector4& other) const noexcept
+	{
+		return Vector4{ x - other.x, y - other.y, z - other.z, w - other.w };
+	}
+
+	Vector4 Vector4::operator*(const Vector4& other) const noexcept
+	{
+		return Vector4{ x * other.x, y * other.y, z * other.z, w * other.w };
+	}
+
+	Vector4 Vector4::operator/(const Vector4& other) const noexcept
+	{
+		return Vector4{ x / other.x, y / other.y, z / other.z, w / other.w };
+	}
+
+	Vector4& Vector4::operator+=(const Vector4& other) noexcept
+	{
+		*this = *this + other;
+		return *this;
+	}
+
+	Vector4& Vector4::operator-=(const Vector4& other) noexcept
+	{
+		*this = *this - other;
+		return *this;
+	}
+
+	Vector4& Vector4::operator*=(const Vector4& other) noexcept
+	{
+		*this = *this * other;
+		return *this;
+	}
+
+	Vector4& Vector4::operator/=(const Vector4& other) noexcept
+	{
+		*this = *this / other;
+		return *this;
+	}
+#pragma endregion
 	
 	bool operator==(const Vector4& left, const Vector4& right)
 	{

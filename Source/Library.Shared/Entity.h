@@ -16,7 +16,7 @@ namespace Library
 		Transform localTransform{};
 
 		/** memoized transform relative to the parent */
-		Transform relativeTransform{};
+		mutable Transform worldTransform{};
 
 		using MapType = HashMap<std::string, SharedEntity>;
 		MapType children;
@@ -30,8 +30,8 @@ namespace Library
 		[[Attribute]]
 		bool enabled{ true };
 
-		/** whether the relativeTransform is good */
-		bool transformInval{ true };
+		/** whether the worldTransform needs to be updated */
+		mutable bool transformInval{ true };
 
 	public:
 #pragma region iterator
@@ -230,6 +230,40 @@ namespace Library
 		[[nodiscard]] std::shared_ptr<const Entity> Child(const std::string& childName) const noexcept;
 #pragma endregion
 
+#pragma region Transform
+		/**
+		 * O(1)
+		 * 
+		 * @returns		this Entity's local Transform
+		 */
+		[[nodiscard]] constexpr const Transform& GetLocalTransform() const noexcept;
+
+		/**
+		 * O(1) most cases
+		 * Potentially O(n) where n is the number of parents with invalid Transforms.
+		 * Must to matrix multiplications for every iteration.
+		 * 
+		 * @returns		this Entity's world Transform
+		 */
+		[[nodiscard]] const Transform& GetWorldTransform() const noexcept;
+
+		/**
+		 * O(n) where n is the number of children.
+		 * Sets a bool on all children to mark their Transforms invalid (comes into play in GetWorldTransform()).
+		 * 
+		 * @param t		Transform to set this local one to. 
+		 */
+		void SetLocalTransform(const Transform& t) noexcept;
+
+		/**
+		 * O(n) where n is the number of children.
+		 * Sets a bool on all children to mark their Transforms invalid (comes into play in GetWorldTransform()).
+		 *
+		 * @param t		Transform to set this world one to.
+		 */
+		void SetWorldTransform(const Transform& t) noexcept;
+#pragma endregion
+		
 		/**
 		 * O(1)
 		 * 
@@ -336,6 +370,12 @@ namespace Library
 		 * Invokes Update() on all enabled children. 
 		 */
 		virtual void Update();
+
+	private:
+		/**
+		 * Marks that this Entity and all of it's childrens have invalid worldTransforms. 
+		 */
+		void InvalTransform() noexcept;
 	};
 }
 

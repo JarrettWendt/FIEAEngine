@@ -3,5 +3,6 @@
 
 namespace Library
 {
-	
+	Quaternion::Quaternion(const Vector4& v) noexcept :
+		Vector4(v) {}
 }

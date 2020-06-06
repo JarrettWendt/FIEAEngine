@@ -339,6 +339,15 @@ namespace Library::Util
 	// The problem is that operator<< becomes ambiguous for predefined types like std::string which are already ranges.
 	template<std::forward_iterator It>
 	std::ostream& StreamTo(std::ostream& stream, It first, It last);
+
+	//namespace
+	//{
+	//	template<typename T>
+	//	auto ToStringImpl(const T& t) -> decltype()
+	//}
+	//
+	//template<typename T>
+	//auto ToString(cosnt T& t) -> decltype()
 #pragma endregion
 }
 

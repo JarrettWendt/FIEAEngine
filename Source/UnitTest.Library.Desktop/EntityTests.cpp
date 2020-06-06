@@ -72,6 +72,29 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(p, cc->Parent());
 		}
 #pragma endregion
+
+#pragma region Transform
+		TEST_METHOD(SetLocalTransform)
+		{
+			//std::stringstream stream;
+			//stream << Transform();
+			
+			//const auto p = std::make_shared<Entity>();
+			//const auto c = p->CreateChild<>();
+
+			//Assert::AreEqual(p->GetLocalTransform(), p->GetWorldTransform());
+			//Assert::AreEqual(p->GetWorldTransform(), c->GetWorldTransform());
+
+			//auto t = p->GetLocalTransform();
+			//t.translation = { 0, 0, 1 };
+			//p->SetLocalTransform(t);
+
+			//Assert::AreEqual(t, p->GetLocalTransform());
+			//Assert::AreEqual(t, p->GetWorldTransform());
+			//Assert::AreEqual(t, c->GetWorldTransform());
+			//Assert::AreEqual(Transform(), c->GetLocalTransform());
+		}
+#pragma endregion
 		
 #pragma region Insert
 		TEST_METHOD(Insert)

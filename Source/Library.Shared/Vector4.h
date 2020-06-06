@@ -14,13 +14,25 @@ namespace Library
 			{
 				float x, y, z, w;
 			};
-			float v[4];
+			float v[4]{};
 		};
 #pragma warning(pop)
 		
 		[[nodiscard]] float& operator[](size_type i) noexcept;
 		[[nodiscard]] float operator[](size_type i) const noexcept;
 
+#pragma region Arithmetic
+		Vector4 operator+(const Vector4& other) const noexcept;
+		Vector4 operator-(const Vector4& other) const noexcept;
+		Vector4 operator*(const Vector4& other) const noexcept;
+		Vector4 operator/(const Vector4& other) const noexcept;
+
+		Vector4& operator+=(const Vector4& other) noexcept;
+		Vector4& operator-=(const Vector4& other) noexcept;
+		Vector4& operator*=(const Vector4& other) noexcept;
+		Vector4& operator/=(const Vector4& other) noexcept;
+#pragma endregion
+		
 		[[nodiscard]] friend bool operator==(const Vector4& left, const Vector4& right);
 		[[nodiscard]] friend bool operator!=(const Vector4& left, const Vector4& right);
 

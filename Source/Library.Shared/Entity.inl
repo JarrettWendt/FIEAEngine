@@ -13,7 +13,7 @@ namespace Library
 	{
 		return NumChildren() > 0;
 	}
-	
+
 	constexpr const std::string& Entity::GetName() const noexcept
 	{
 		return name;

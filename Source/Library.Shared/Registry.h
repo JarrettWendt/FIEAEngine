@@ -17,9 +17,6 @@ namespace Library
 			/** the name of this data member */
 			std::string name{ "" };
 
-			/** pointer to a constructor in the Reflection static class */
-			const Reflection::ConstructorWrapper* constructor{ nullptr };
-
 			/** how many of these there are */
 			size_t count{ 0 };
 
@@ -55,23 +52,6 @@ namespace Library
 		 * @return		how many attributes exist for this type in total, including all base types
 		 */
 		static size_t NumAttributes(RTTI::IDType id) noexcept;
-		
-		/**
-		 * O(1)
-		 * 
-		 * @param id	ID of an Attributed to query for
-		 * @returns		if an Attributed of this ID is in the registry
-		 */
-		//static bool Contains(RTTI::IDType id) noexcept;
-
-		/**
-		 * O(n) where n is the number of Attributes for this Attributed
-		 * 
-		 * @param id	ID of an Attributed to query for
-		 * @param name	name of an Attribute on that Attributed
-		 * @returns		whether or not that ID/name pair exist in the registry
-		 */
-		//static bool Contains(RTTI::IDType id, const std::string& name) noexcept;
 
 		/**
 		 * O(n) where n is the number of Attributes for this Attributed
@@ -83,16 +63,6 @@ namespace Library
 		 * @throws std::out_of_range if no Attribute of that ID/name pair exists
 		 */
 		static Attribute& Find(RTTI::IDType id, const std::string& name);
-
-		/**
-		 * O(1)
-		 * 
-		 * @param id	ID of an Attributed to query for
-		 * @return		the Attributes for that Attributed
-		 *
-		 * @throws std::invalid_argument if no Attribute of that ID exists
-		 */
-		//static const Attributes& Find(RTTI::IDType id);
 
 		/**
 		 * Loops through every Attribute for the given id.

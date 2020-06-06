@@ -51,7 +51,7 @@ namespace Library
 		return *this;
 	}
 
-	Attributed::~Attributed() {};
+	Attributed::~Attributed() = default;
 #pragma endregion
 
 #pragma region iterator
@@ -149,7 +149,7 @@ namespace Library
 	{
 		Registry::ForEach(derived, [&](const Registry::Attribute& attribute)
 		{
-			const auto& [name, ctor, count, byteOffset, type] = attribute;
+			const auto& [name, count, byteOffset, type] = attribute;
 			if (byteOffset)
 			{
 				// prescribed with data member
@@ -165,13 +165,15 @@ namespace Library
 	
 	void Attributed::PointerFixup(const IDType derived) noexcept
 	{
-		for (auto& [name, datum] : *this)
+		Registry::ForEach(derived, [&](const Registry::Attribute& attribute)
 		{
-			if (datum.IsExternal())
+			const auto& [name, count, byteOffset, type] = attribute;
+			if (byteOffset)
 			{
-				datum.SetStorage(ByteOffsetThis(Registry::Find(derived, name).byteOffset));
+				// prescribed with data member
+				Attribute(name).SetStorage(ByteOffsetThis(byteOffset));
 			}
-		}
+		});
 	}
 #pragma endregion
 }

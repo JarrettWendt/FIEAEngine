@@ -72,13 +72,10 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 {
 	template<typename T>
 	struct Stringify
-	{
+	{		
 		inline static std::string std(const T& t)
 		{
-			using namespace std;
-			using namespace Library;
-			using namespace Library::Util;
-			return to_string(t);
+			return std::to_string(t);
 		}
 	};
 
@@ -117,6 +114,13 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
 			return "Entity";
 		}
 	};
+
+	//SPECIALIZE_TO_STRING(Vector2)
+	//SPECIALIZE_TO_STRING(Vector3)
+	//SPECIALIZE_TO_STRING(Vector4)
+	//SPECIALIZE_TO_STRING(Quaternion)
+	//SPECIALIZE_TO_STRING(Matrix)
+	//SPECIALIZE_TO_STRING(Transform)
 
 	SPECIALIZE_TO_STRING(Input::KeyCode)
 	SPECIALIZE_TO_STRING(Input::KeyState)
