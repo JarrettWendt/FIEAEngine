@@ -19,7 +19,13 @@ namespace Library
 		return name;
 	}
 #pragma endregion
-	
+
+	constexpr const Transform& Entity::GetLocalTransform() const noexcept
+	{
+		return localTransform;
+	}
+
+#pragma region Insert
 	template<std::derived_from<Entity> Derived, typename... Args>
 	inline std::shared_ptr<Derived> Entity::CreateChild(const std::string& childName, Args&&... args)
 	{
@@ -38,4 +44,5 @@ namespace Library
 		const auto child = std::make_shared<Derived>(std::forward<Args>(args)...);
 		return Adopt(child->GetName(), child);
 	}
+#pragma endregion
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Macros.h"
+
 namespace Library
 {
 	struct Vector2

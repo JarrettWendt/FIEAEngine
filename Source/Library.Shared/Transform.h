@@ -13,12 +13,13 @@ namespace Library
 	{
 		Vector3 translation{};
 		Quaternion rotation{};
-		Vector3 scale{};
+		Vector3 scale{ Vector3::One };
 
 		SPECIAL_MEMBERS(Transform, default)
 
 		Transform(Vector3 translation, Quaternion rotation, Vector3 scale) noexcept;
 
+#pragma region operators
 #pragma region Arithmetic
 		/**
 		 * accumulates another Transform into this one
@@ -42,5 +43,6 @@ namespace Library
 		[[nodiscard]] friend bool operator!=(const Transform& left, const Transform& right);
 		
 		friend std::ostream& operator<<(std::ostream& stream, const Transform&);
+#pragma endregion
 	};
 }

@@ -376,6 +376,11 @@ namespace Library
 		 * Marks that this Entity and all of it's childrens have invalid worldTransforms. 
 		 */
 		void InvalTransform() noexcept;
+
+		/**
+		 * Marks all children to have invalid worldTransforms.
+		 */
+		void InvalChildTransforms() noexcept;
 	};
 }
 

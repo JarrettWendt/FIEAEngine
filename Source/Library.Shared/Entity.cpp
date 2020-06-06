@@ -129,38 +129,41 @@ Entity::iterator Entity::end() noexcept
 #pragma endregion
 
 #pragma region Transform
-	constexpr const Transform& Entity::GetLocalTransform() const noexcept
-	{
-		return localTransform;
-	}
-
 	const Transform& Entity::GetWorldTransform() const noexcept
 	{
 		if (transformInval)
 		{
 			if (const auto p = Parent())
 			{
-				worldTransform += p->GetWorldTransform();
+				worldTransform = localTransform + p->GetWorldTransform();
+			}
+			else
+			{
+				worldTransform = localTransform;
 			}
 			transformInval = false;
 		}
 		return worldTransform;
 	}
 
-	inline void Entity::SetLocalTransform(const Transform& t) noexcept
+	void Entity::SetLocalTransform(const Transform& t) noexcept
 	{
 		localTransform = t;
 		InvalTransform();
 	}
 
-	inline void Entity::SetWorldTransform(const Transform& t) noexcept
+	void Entity::SetWorldTransform(const Transform& t) noexcept
 	{
 		worldTransform = t;
 		if (const auto p = Parent())
 		{
 			localTransform = worldTransform - p->GetWorldTransform();
 		}
-		InvalTransform();
+		else
+		{
+			localTransform = worldTransform;
+		}
+		InvalChildTransforms();
 	}
 #pragma endregion
 	
@@ -241,6 +244,11 @@ Entity::iterator Entity::end() noexcept
 	void Entity::InvalTransform() noexcept
 	{
 		transformInval = true;
+		InvalChildTransforms();
+	}
+
+	void Entity::InvalChildTransforms() noexcept
+	{
 		for (const auto& e : *this)
 		{
 			e->InvalTransform();

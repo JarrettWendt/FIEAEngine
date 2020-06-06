@@ -74,30 +74,87 @@ namespace UnitTestLibraryDesktop
 #pragma endregion
 
 #pragma region Transform
-		TEST_METHOD(SetLocalTransform)
+		TEST_METHOD(SetLocalTransformFromParent)
+		{			
+			const auto p = std::make_shared<Entity>();
+			const auto c = p->CreateChild<>();
+
+			Assert::AreEqual(p->GetLocalTransform(), p->GetWorldTransform());
+			Assert::AreEqual(p->GetWorldTransform(), c->GetWorldTransform());
+
+			auto t = p->GetLocalTransform();
+			t.translation = { 0, 0, 1 };
+			p->SetLocalTransform(t);
+
+			Assert::AreEqual(t, p->GetLocalTransform());
+			Assert::AreEqual(t, p->GetWorldTransform());
+			Assert::AreEqual(t, c->GetWorldTransform());
+			Assert::AreEqual(Transform{}, c->GetLocalTransform());
+		}
+
+		TEST_METHOD(SetWorldTransformFromParent)
 		{
-			//int x;
-			//Assert::IsTrue(std::is_same<decltype(&std::to_string(x)), std::string>);
-						
-			//std::stringstream stream;
-			//stream << Transform();
-			
-			//const auto p = std::make_shared<Entity>();
-			//const auto c = p->CreateChild<>();
+			const auto p = std::make_shared<Entity>();
+			const auto c = p->CreateChild<>();
 
-			//Assert::AreEqual(p->GetLocalTransform(), p->GetWorldTransform());
-			//Assert::AreEqual(p->GetWorldTransform(), c->GetWorldTransform());
+			Assert::AreEqual(p->GetLocalTransform(), p->GetWorldTransform());
+			Assert::AreEqual(p->GetWorldTransform(), c->GetWorldTransform());
 
-			//auto t = p->GetLocalTransform();
-			//t.translation = { 0, 0, 1 };
-			//p->SetLocalTransform(t);
+			auto t = p->GetLocalTransform();
+			t.translation = { 0, 0, 1 };
+			p->SetWorldTransform(t);
 
-			//Assert::AreEqual(t, p->GetLocalTransform());
-			//Assert::AreEqual(t, p->GetWorldTransform());
-			//Assert::AreEqual(t, c->GetWorldTransform());
-			//Assert::AreEqual(Transform(), c->GetLocalTransform());
+			Assert::AreEqual(t, p->GetLocalTransform());
+			Assert::AreEqual(t, p->GetWorldTransform());
+			Assert::AreEqual(t, c->GetWorldTransform());
+			Assert::AreEqual(Transform{}, c->GetLocalTransform());
+		}
+		
+		TEST_METHOD(SetLocalTransformFromChild)
+		{
+			const auto p = std::make_shared<Entity>();
+			const auto c = p->CreateChild<>();
+
+			Assert::AreEqual(p->GetLocalTransform(), p->GetWorldTransform());
+			Assert::AreEqual(p->GetWorldTransform(), c->GetWorldTransform());
+
+			auto t = c->GetLocalTransform();
+			t.translation = { 0, 0, 1 };
+			c->SetLocalTransform(t);
+
+			Assert::AreEqual(Transform{}, p->GetLocalTransform());
+			Assert::AreEqual(Transform{}, p->GetWorldTransform());
+			Assert::AreEqual(t, c->GetWorldTransform());
+			Assert::AreEqual(t, c->GetLocalTransform());
+		}
+
+		TEST_METHOD(SetWorldTransformFromChild)
+		{
+			const auto p = std::make_shared<Entity>();
+			const auto c = p->CreateChild<>();
+
+			Assert::AreEqual(p->GetLocalTransform(), p->GetWorldTransform());
+			Assert::AreEqual(p->GetWorldTransform(), c->GetWorldTransform());
+
+			auto t = c->GetLocalTransform();
+			t.translation = { 0, 0, 1 };
+			c->SetWorldTransform(t);
+
+			Assert::AreEqual(Transform{}, p->GetLocalTransform());
+			Assert::AreEqual(Transform{}, p->GetWorldTransform());
+			Assert::AreEqual(t, c->GetWorldTransform());
+			Assert::AreEqual(t, c->GetLocalTransform());
 		}
 #pragma endregion
+
+		TEST_METHOD(SetName)
+		{
+			const auto p = std::make_shared<Entity>();
+			const auto c = p->CreateChild<>("child"s);
+			c->SetName("Seven");
+			Assert::AreEqual("Seven"s, c->GetName());
+			Assert::IsTrue(p->Child("Seven"));
+		}
 		
 #pragma region Insert
 		TEST_METHOD(Insert)
@@ -174,15 +231,6 @@ namespace UnitTestLibraryDesktop
 			Assert::IsFalse(s->HasChildren());
 		}
 #pragma endregion
-
-		TEST_METHOD(SetName)
-		{
-			const auto p = std::make_shared<Entity>();
-			const auto c = p->CreateChild<>("child"s);
-			c->SetName("Seven");
-			Assert::AreEqual("Seven"s, c->GetName());
-			Assert::IsTrue(p->Child("Seven"));
-		}
 
 		TEST_METHOD(Init)
 		{
