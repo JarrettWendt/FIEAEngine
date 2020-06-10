@@ -127,6 +127,45 @@ Entity::iterator Entity::end() noexcept
 		return const_cast<Entity*>(this)->Child(childName);
 	}
 #pragma endregion
+
+#pragma region Transform
+	const Transform& Entity::GetWorldTransform() const noexcept
+	{
+		if (transformInval)
+		{
+			if (const auto p = Parent())
+			{
+				worldTransform = localTransform + p->GetWorldTransform();
+			}
+			else
+			{
+				worldTransform = localTransform;
+			}
+			transformInval = false;
+		}
+		return worldTransform;
+	}
+
+	void Entity::SetLocalTransform(const Transform& t) noexcept
+	{
+		localTransform = t;
+		InvalTransform();
+	}
+
+	void Entity::SetWorldTransform(const Transform& t) noexcept
+	{
+		worldTransform = t;
+		if (const auto p = Parent())
+		{
+			localTransform = worldTransform - p->GetWorldTransform();
+		}
+		else
+		{
+			localTransform = worldTransform;
+		}
+		InvalChildTransforms();
+	}
+#pragma endregion
 	
 	void Entity::SetName(const std::string& newName) noexcept
 	{
@@ -137,6 +176,31 @@ Entity::iterator Entity::end() noexcept
 			p->children.Insert(name, shared_from_this());
 		}
 	}
+
+#pragma region Insert	
+	std::shared_ptr<Entity> Entity::Adopt(const std::string& childName, SharedEntity child)
+	{
+		ThrowName(childName);
+
+		if (child->Parent() != shared_from_this())
+		{
+			const auto [it, inserted] = children.Insert(childName, child);
+			if (!inserted) [[unlikely]]
+			{
+				throw InvalidNameException("child with name " + childName + " already exists");
+			}
+			assert(child == it->value);
+			child->name = childName;
+			child->parent = shared_from_this();
+		}
+		return child;
+	}
+
+	std::shared_ptr<Entity> Entity::Adopt(const SharedEntity child)
+	{
+		return Adopt(child->name, child);
+	}
+#pragma endregion
 	
 #pragma region Remove
 	void Entity::Orphan() noexcept
@@ -170,7 +234,24 @@ Entity::iterator Entity::end() noexcept
 	{
 		for (const auto& e : *this)
 		{
-			e->Update();
+			if (e->Enabled())
+			{
+				e->Update();
+			}
+		}
+	}
+	
+	void Entity::InvalTransform() noexcept
+	{
+		transformInval = true;
+		InvalChildTransforms();
+	}
+
+	void Entity::InvalChildTransforms() noexcept
+	{
+		for (const auto& e : *this)
+		{
+			e->InvalTransform();
 		}
 	}
 }

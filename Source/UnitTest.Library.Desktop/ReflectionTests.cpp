@@ -26,7 +26,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(s->Is<Entity>());
 
 			// just doing something to make sure we don't have a memory leak
-			s->CreateChild<>("child");
+			s->CreateChild("child"s);
 		}
 	};
 }

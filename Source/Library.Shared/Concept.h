@@ -18,6 +18,18 @@ namespace Library::Util
 namespace Library::Concept
 {
 	template<typename T>
+	concept Ostreamable = requires(std::ostream stream, T t)
+	{
+		{ stream << t }->std::convertible_to<std::ostream&>;
+	};
+
+	template<typename T>
+	concept has_std_to_string = requires(T t)
+	{
+		{ std::to_string(t) }->std::convertible_to<std::string>;
+	};
+	
+	template<typename T>
 	concept Enumeration = std::is_enum_v<T>;
 	
 	template<typename Range, typename T>

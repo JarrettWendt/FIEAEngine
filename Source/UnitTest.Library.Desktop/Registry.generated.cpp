@@ -13,19 +13,19 @@ namespace Library
 			{
 				Attributed::typeID,
 				{
-					{ "integer", Reflection::GetConstructor("int"), 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::integer), Datum::TypeOf<int>,  },
-					{ "integers", Reflection::GetConstructor("int"), 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::integers), Datum::TypeOf<int>,  },
-					{ "Float", Reflection::GetConstructor("float"), 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::Float), Datum::TypeOf<float>,  },
-					{ "floats", Reflection::GetConstructor("float"), 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::floats), Datum::TypeOf<float>,  },
-					{ "string", Reflection::GetConstructor("string"), 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::string), Datum::TypeOf<std::string>,  },
-					{ "strings", Reflection::GetConstructor("string"), 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::strings), Datum::TypeOf<std::string>,  },
-					{ "foo", Reflection::GetConstructor("Foo>"), 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::foo), Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
-					{ "foos", Reflection::GetConstructor("Foo>"), 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::foos), Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
-					{ "intWithoutMember", Reflection::GetConstructor("int"), 0, 0, Datum::TypeOf<int>,  },
-					{ "floatWithoutmember", Reflection::GetConstructor("float"), 0, 0, Datum::TypeOf<float>,  },
-					{ "stringWithoutMember", Reflection::GetConstructor("string"), 0, 0, Datum::TypeOf<std::string>,  },
-					{ "fooWithoutMember", Reflection::GetConstructor("Foo>"), 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
-					{ "recursive", Reflection::GetConstructor("AttributedFoo>"), 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::AttributedFoo>>,  },
+					{ "integer", 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::integer), Datum::TypeOf<int>,  },
+					{ "integers", 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::integers), Datum::TypeOf<int>,  },
+					{ "Float", 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::Float), Datum::TypeOf<float>,  },
+					{ "floats", 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::floats), Datum::TypeOf<float>,  },
+					{ "string", 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::string), Datum::TypeOf<std::string>,  },
+					{ "strings", 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::strings), Datum::TypeOf<std::string>,  },
+					{ "foo", 1, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::foo), Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
+					{ "foos", 10, offsetof(UnitTests::AttributedFoo, UnitTests::AttributedFoo::foos), Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
+					{ "intWithoutMember", 0, 0, Datum::TypeOf<int>,  },
+					{ "floatWithoutmember", 0, 0, Datum::TypeOf<float>,  },
+					{ "stringWithoutMember", 0, 0, Datum::TypeOf<std::string>,  },
+					{ "fooWithoutMember", 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::Foo>>,  },
+					{ "recursive", 0, 0, Datum::TypeOf<std::shared_ptr<UnitTests::AttributedFoo>>,  },
 				}
 			}
 		},
@@ -34,8 +34,8 @@ namespace Library
 			{
 				Attributed::typeID,
 				{
-					{ "name", Reflection::GetConstructor("string"), 1, offsetof(Library::Entity, Library::Entity::name), Datum::TypeOf<std::string>,  },
-					{ "enabled", Reflection::GetConstructor("bool"), 1, offsetof(Library::Entity, Library::Entity::enabled), Datum::TypeOf<bool>,  },
+					{ "name", 1, offsetof(Library::Entity, Library::Entity::name), Datum::TypeOf<std::string>,  },
+					{ "enabled", 1, offsetof(Library::Entity, Library::Entity::enabled), Datum::TypeOf<bool>,  },
 				}
 			}
 		},

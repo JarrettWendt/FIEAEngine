@@ -93,4 +93,35 @@ namespace Library::Util
 		stream << " }";
 		return stream;
 	}
+	
+	template<typename T>
+	std::string ToString(const T& t) noexcept
+	{
+		if constexpr (Concept::Ostreamable<T>)
+		{
+			std::stringstream stream;
+			stream << t;
+			return stream.str();
+		}
+		else if constexpr (Concept::has_std_to_string<T>)
+		{
+			return std::to_string(t);
+		}
+		else if constexpr (std::ranges::range<T>)
+		{
+			std::stringstream stream;
+			StreamTo(stream, t.begin(), t.end());
+			return stream.str();
+		}
+		else
+		{
+			static_assert(false, "no string conversion for type");
+		}
+	}
+	
+	template<typename T>
+	std::wstring ToWString(const T& t) noexcept
+	{
+		return std::to_wstring(ToString(t));
+	}
 }

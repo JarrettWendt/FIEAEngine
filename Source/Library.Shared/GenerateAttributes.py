@@ -42,7 +42,6 @@ class Attribute:
 	def __str__(self):
 		ret = '{ '
 		ret += '"' + self.name + '", '
-		ret += 'Reflection::GetConstructor("' + trimLeading(self.type, '::') + '"), '
 		ret += str(self.count) + ', '
 		ret += 'offsetof(' + self.attributed.scopeResolvedClass() + ', ' + self.attributed.scopeResolvedClass() + '::' + self.name + '), ' if self.isMember else '0, '
 		ret += 'Datum::TypeOf<' + self.type + '>, '

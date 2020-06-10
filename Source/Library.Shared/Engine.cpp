@@ -4,6 +4,7 @@
 #include "Engine.h"
 
 #include "Coroutine.h"
+#include "Entity.h"
 #include "EngineTime.h"
 #include "Input.h"
 
@@ -11,9 +12,14 @@
 
 namespace Library
 {
+	Entity& Engine::World() noexcept
+	{
+		return *world;
+	}
+	
 	void Engine::Main()
 	{
-		Start();
+		Init();
 		while (IsActive())
 		{
 			Update();
@@ -27,9 +33,10 @@ namespace Library
 		return ret;
 	}
 	
-	void Engine::Start()
+	void Engine::Init()
 	{
-		// TODO
+		world = std::make_shared<Entity>();
+		world->Init();
 	}
 
 	void Engine::Update()
@@ -37,6 +44,7 @@ namespace Library
 		Time::Update();
 		Input::Update();
 		Coroutines::Update();
+		world->Update();
 	}
 	
 	void Engine::Terminate()

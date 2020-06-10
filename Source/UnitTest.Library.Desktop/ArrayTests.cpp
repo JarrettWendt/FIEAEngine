@@ -830,7 +830,7 @@ namespace UnitTestLibraryDesktop
 				}
 			}
 			std::wstringstream stream;
-			stream << L"b.push a != b, a = " << ToString(a) << ", b = " << ToString(b);
+			stream << L"b.push a != b, a = " << Util::ToWString(a) << ", b = " << Util::ToWString(b);
 
 			Assert::IsTrue(a != b, stream);
 			Assert::IsFalse(a == b, L"b.push !(a == b)");

@@ -13,43 +13,36 @@ namespace Library
 	{
 		return NumChildren() > 0;
 	}
-	
+
 	constexpr const std::string& Entity::GetName() const noexcept
 	{
 		return name;
 	}
 #pragma endregion
-	
-	template<typename Derived>
-	inline std::shared_ptr<Derived> Entity::CreateChild(const std::string& childName)
-	{
-		return Adopt(childName, std::make_shared<Derived>());
-	}
-	
-	template<typename Derived>
-	inline std::shared_ptr<Derived> Entity::Adopt(const std::string& childName, std::shared_ptr<Derived> child)
-	{
-		ThrowName(childName);
 
-		if (child->Parent() != shared_from_this())
-		{
-			const auto [it, inserted] = children.Insert(childName, std::make_shared<Derived>());
-			if (!inserted) [[unlikely]]
-			{
-				throw InvalidNameException("child with name " + childName + " already exists");
-			}
-			auto ret = it->value;
-			ret->name = childName;
-			ret->parent = shared_from_this();
-			return ret;
-		}
-		// already a child
-		return child;
+	constexpr const Transform& Entity::GetLocalTransform() const noexcept
+	{
+		return localTransform;
+	}
+
+#pragma region Insert
+	template<std::derived_from<Entity> Derived, typename... Args>
+	inline std::shared_ptr<Derived> Entity::CreateChild(const std::string& childName, Args&&... args)
+	{
+		return Adopt(childName, std::make_shared<Derived>(std::forward<Args>(args)...));
+	}
+
+	template<std::derived_from<Entity> Derived, typename ...Args>
+	inline std::shared_ptr<Derived> Entity::CreateChild(std::string&& childName, Args&& ...args)
+	{
+		return Adopt(std::move(childName), std::make_shared<Derived>(std::forward<Args>(args)...));
 	}
 	
-	template<typename Derived>
-	inline std::shared_ptr<Derived> Entity::Adopt(std::shared_ptr<Derived> child) noexcept
+	template<std::derived_from<Entity> Derived, typename ...Args>
+	inline std::shared_ptr<Derived> Entity::CreateChild(Args&& ...args)
 	{
-		return Adopt(child->name, child);
+		const auto child = std::make_shared<Derived>(std::forward<Args>(args)...);
+		return Adopt(child->GetName(), child);
 	}
+#pragma endregion
 }

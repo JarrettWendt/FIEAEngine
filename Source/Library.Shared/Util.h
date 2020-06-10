@@ -324,6 +324,27 @@ namespace Library::Util
 	 * @returns			str with no whitespace
 	 */
 	std::string RemoveWhitespace(std::string str) noexcept;
+
+	// TODO: Figure out how to overload operator<< for all ranges.
+	// The problem is that operator<< becomes ambiguous for predefined types like std::string which are already ranges.
+	template<std::forward_iterator It>
+	std::ostream& StreamTo(std::ostream& stream, It first, It last);
+
+	/**
+	 * @param <T>	the type to stringify
+	 * @param t		the value to stringify
+	 * @returns		the stringification of t
+	 */
+	template<typename T>
+	std::string ToString(const T& t) noexcept;
+
+	/**
+	 * @param <T>	the type to stringify
+	 * @param t		the value to stringify
+	 * @returns		the stringification of t
+	 */
+	template<typename T>
+	std::wstring ToWString(const T& t) noexcept;
 #pragma endregion
 
 	/**
@@ -333,13 +354,6 @@ namespace Library::Util
 	 */
 	template<Concept::HasSize Class>
 	constexpr size_t GetSize(const Class& c) noexcept;
-	
-#pragma region String
-	// TODO: Figure out how to overload operator<< for all ranges.
-	// The problem is that operator<< becomes ambiguous for predefined types like std::string which are already ranges.
-	template<std::forward_iterator It>
-	std::ostream& StreamTo(std::ostream& stream, It first, It last);
-#pragma endregion
 }
 
 namespace std

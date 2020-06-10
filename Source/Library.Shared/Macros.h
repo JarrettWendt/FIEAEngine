@@ -26,10 +26,22 @@
 #define GET_ASSERT(_1, _2, NAME, ...) NAME
 #define assertm(...) GET_ASSERT(__VA_ARGS__, assertm2, assertm1)(__VA_ARGS__)
 
+ /**
+  * Macro for when you want to default or delete the copy ctor and operator=.
+  *
+  * @param Type		the name of the type
+  * @param D		default or delete
+  */
 #define COPY_SEMANTICS(Type, D)             \
 Type(const Type&) = D;					    \
 Type& operator=(const Type&) = D;
 
+/**
+ * Macro for when you want to default or delete the move ctor and operator=.
+ *
+ * @param Type		the name of the type
+ * @param D			default or delete
+ */
 #define MOVE_SEMANTICS(Type, D)				\
 Type(Type&&) noexcept = D;                  \
 Type& operator=(Type&&) noexcept = D;
@@ -37,7 +49,8 @@ Type& operator=(Type&&) noexcept = D;
 /**
  * Macro for when you've defined a custom ctor/dtor and want to default the move/copy ctor and operator=.
  *
- * @param Type		The name of the type.
+ * @param Type		the name of the type
+  * @param D		default or delete
  */
 #define MOVE_COPY(Type, D)                  \
 COPY_SEMANTICS(Type, D)                     \
@@ -46,7 +59,8 @@ MOVE_SEMANTICS(Type, D)
 /**
  * Macro for when you've defined a custom ctor and want to default the (non-virtual) dtor, move/copy ctor, and operator=.
  *
- * @param Type		The name of the type.
+ * @param Type		the name of the type
+  * @param D		default or delete
  */
 #define MOVE_COPY_DTOR(Type, D)				\
 MOVE_COPY(Type, D)							\
@@ -55,7 +69,8 @@ MOVE_COPY(Type, D)							\
 /**
  * Macro for when you've defined a custom ctor and want to default the (virtual) dtor, move/copy ctor, and operator=.
  *
- * @param Type		The name of the type.
+ * @param Type		the name of the type
+  * @param D		default or delete
  */
 #define MOVE_COPY_VDTOR(Type, D)			\
 MOVE_COPY(Type, D)							\
@@ -64,28 +79,30 @@ virtual ~Type() = D;
 /**
  * Macro for when you just want to default all the special members.
  *
- * @param Type		The name of the type.
+ * @param Type		the name of the type
+  * @param D		default or delete
  */
 #define SPECIAL_MEMBERS(Type, D)			\
-	Type() = D;							    \
-	MOVE_COPY_DTOR(Type, D)
+Type() = D;									\
+MOVE_COPY_DTOR(Type, D)
 
  /**
   * Macro for when you just want to default all the special members with a virtual dtor.
   *
-  * @param Type		The name of the type.
+  * @param Type		the name of the type
+  * @param D		default or delete
   */
 #define SPECIAL_MEMBERS_V(Type, D)		    \
-	Type() = D;							    \
-	MOVE_COPY_VDTOR(Type, D)
+Type() = D;									\
+MOVE_COPY_VDTOR(Type, D)
 
 /**
  * For when you want to be more explicit about the fact that you're making a static class.
  *
- * @param Class     The name of your static class.
+ * @param Class     the name of your static class
  */
 #define STATIC_CLASS(Class)                 \
-	SPECIAL_MEMBERS(Class, delete)
+SPECIAL_MEMBERS(Class, delete)
 
 /**
  * Defines operator!=, operator<=, operator>, and operator>= based off of operator== and operator<

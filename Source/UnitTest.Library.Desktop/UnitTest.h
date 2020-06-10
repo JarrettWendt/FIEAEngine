@@ -362,16 +362,15 @@ TEST_CLASS_INITIALIZE(ClassInitialize)														\
 	Enum<Input::KeyState>::ToString(Input::KeyState());										\
 	Enum<Input::KeyState>::FromString("up");												\
 }																							\
-																							\
-TEST_METHOD_INITIALIZE(Initialize)															\
+TEST_METHOD_INITIALIZE(MethodInitialize)													\
 {																							\
+	Engine::Init();																			\
 	Coroutines::StopAll();																	\
 	Engine::Update();																		\
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);													\
 	_CrtMemCheckpoint(&startMemState);														\
 }																							\
-																							\
-TEST_METHOD_CLEANUP(Cleanup)																\
+TEST_METHOD_CLEANUP(MethodCleanup)															\
 {																							\
 	Coroutines::StopAll();																	\
 	Engine::Update();																		\

@@ -44,31 +44,18 @@ namespace Library
 		template<typename T>
 		constexpr const T& AssertAs() const { return const_cast<RTTI*>(this)->AssertAs<T>(); }
 
-		virtual bool Equals(const RTTI&) { return false; }
-
 	protected:
 		inline static IDType nextID = 0;
 	public:
 		inline static const IDType typeID = nextID++;
 	};
 
-#define RTTI_DECLARATIONS(BaseType)																						\
-	public:																												\
-		using Base = BaseType;																							\
-		inline static const Library::RTTI::IDType typeID = nextID++;													\
-		virtual Library::RTTI::IDType TypeID() const noexcept override { return typeID; }								\
-		virtual bool HasID(Library::RTTI::IDType id) const noexcept override { return (id == typeID) || Base::HasID(id); }	\
-		virtual bool Equals(const RTTI& other) noexcept override														\
-		{																												\
-			using DerivedType = std::remove_pointer_t<decltype(this)>;													\
-			if constexpr (Library::Util::HasOperatorEqual<DerivedType>)													\
-			{																											\
-				if (auto derived = other.As<DerivedType>())																\
-				{																										\
-					return *derived == *this;																			\
-				}																										\
-			}																											\
-			return false;																								\
-		}																												\
+#define RTTI_DECLARATIONS(BaseType)															\
+	public:																					\
+		using Base = BaseType;																\
+		inline static const Library::RTTI::IDType typeID = nextID++;						\
+		virtual Library::RTTI::IDType TypeID() const noexcept override { return typeID; }	\
+		virtual bool HasID(const Library::RTTI::IDType id) const noexcept override			\
+		{ return (id == typeID) || Base::HasID(id); }										\
 	private:
 }

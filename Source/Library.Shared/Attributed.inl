@@ -18,7 +18,7 @@ namespace Library
 #pragma endregion
 	
 	template<typename T>
-	inline T* Attributed::ByteOffsetThis(size_t byteOffset) const noexcept
+	inline T* Attributed::ByteOffsetThis(const size_t byteOffset) const noexcept
 	{
 		return reinterpret_cast<T*>(reinterpret_cast<uint8_t*>(const_cast<Attributed*>(this)) + byteOffset);
 	}

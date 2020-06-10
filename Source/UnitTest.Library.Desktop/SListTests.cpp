@@ -110,7 +110,7 @@ namespace UnitTestLibraryDesktop
 			sit = slist.begin();
 			T b = *sit++;
 
-			Assert::AreNotEqual(a, b, std::wstringstream() << "Making sure pre/post increments behave differently, received " << ToString(a) << " from pre and " << ToString(b) << " from post");
+			Assert::AreNotEqual(a, b, std::wstringstream() << "Making sure pre/post increments behave differently, received " << Util::ToWString(a) << " from pre and " << Util::ToWString(b) << " from post");
 			++it;
 
 			while (sit != slist.end() && it != list.end())
@@ -162,7 +162,7 @@ namespace UnitTestLibraryDesktop
 			sit = cslist.cbegin();
 			T b = *sit++;
 
-			Assert::AreNotEqual(a, b, std::wstringstream() << "Making sure pre/post increments behave differently, received " << ToString(a) << " from pre and " << ToString(b) << " from post");
+			Assert::AreNotEqual(a, b, std::wstringstream() << "Making sure pre/post increments behave differently, received " << Util::ToWString(a) << " from pre and " << Util::ToWString(b) << " from post");
 			++it;
 
 			while (sit != cslist.cend() && it != clist.cend())
@@ -312,10 +312,10 @@ namespace UnitTestLibraryDesktop
 			{
 				bCount++;
 			}
-			std::wstringstream stream;
-			stream << L"Counted " << ToString(aCount) << " elements in a and " << ToString(bCount) << " elements in b after b = a";
+			std::stringstream stream;
+			stream << "Counted " << Util::ToString(aCount) << " elements in a and " << Util::ToString(bCount) << " elements in b after b = a";
 			Assert::AreEqual(aCount, bCount, stream);
-			stream.str(L"");
+			stream.str("");
 
 			a.Clear();
 			b.Clear();
@@ -339,11 +339,10 @@ namespace UnitTestLibraryDesktop
 			a.InsertAfter(a.end(), elementToInsert);
 			Assert::AreEqual(a, b);
 
-			stream << L"InsertAfter(end(), " << ToString(elementToInsert) << L") ";
-			stream << L"should be the same as PushBack(" << ToString(elementToInsert) << L"), ";
-			stream << L"a.Size() = " << ToString(a.Size()) << L", ";
-			stream << L"b.Size() = " << ToString(b.Size());
-			// TODO: For whatever reason this fails on QuickBuild.
+			stream << "InsertAfter(end(), " << Util::ToString(elementToInsert) << ") ";
+			stream << "should be the same as PushBack(" << Util::ToString(elementToInsert) << "), ";
+			stream << "a.Size() = " << Util::ToString(a.Size()) << ", ";
+			stream << "b.Size() = " << Util::ToString(b.Size());
 			Assert::AreEqual(a, b, stream);
 		}
 		TEMPLATE_TEST_METHOD_END(InsertAfter)
