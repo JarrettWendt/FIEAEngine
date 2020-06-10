@@ -14,7 +14,7 @@ namespace Library
 
 		Vector4(float x, float y, float z, float w) noexcept;
 		
-		Vector4(const Vector3& v, float w) noexcept;
+		Vector4(const Vector3& v, float w = 0.f) noexcept;
 		Vector4(float w, const Vector3& v) noexcept;
 
 		/**

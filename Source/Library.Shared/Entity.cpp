@@ -191,7 +191,7 @@ Entity::iterator Entity::end() noexcept
 			}
 			assert(child == it->value);
 			child->name = childName;
-			child->parent = shared_from_this();
+			child->parent = weak_from_this();
 		}
 		return child;
 	}
@@ -204,7 +204,7 @@ Entity::iterator Entity::end() noexcept
 	
 #pragma region Remove
 	void Entity::Orphan() noexcept
-	{;
+	{
 		if (auto p = Parent())
 		{
 			p->children.Remove(name);

@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "Vector4.h"
-#include "Macros.h"
 
 namespace Library
 {
+	constexpr bool SIMD = true;
+	
 #pragma region Special Members
 	Vector4::Vector4(const float x, const float y, const float z, const float w) noexcept :
 		x(x), y(y), z(z), w(w) {}
@@ -81,7 +82,6 @@ namespace Library
 		*this = *this / other;
 		return *this;
 	}
-#pragma endregion
 	
 	Vector4 operator/(const Vector4& v, const float f) noexcept
 	{
@@ -92,6 +92,7 @@ namespace Library
 	{
 		return v / f;
 	}
+#pragma endregion
 
 	bool operator==(const Vector4& left, const Vector4& right)
 	{
