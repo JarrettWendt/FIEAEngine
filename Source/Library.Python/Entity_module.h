@@ -22,4 +22,12 @@ static inline PyTypeObject PyEntityType
 	.tp_new = PyType_GenericNew
 };
 
-//PyMODINIT_FUNC PyInit_Entity();
+static inline PyModuleDef PyEntity_module
+{
+	PyModuleDef_HEAD_INIT,
+	"Entity",
+	"Entity module",
+	1
+};
+
+PyMODINIT_FUNC PyInit_Entity();

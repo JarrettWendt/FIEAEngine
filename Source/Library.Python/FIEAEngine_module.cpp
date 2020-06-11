@@ -12,10 +12,9 @@ PyMODINIT_FUNC PyInit_FIEAEngine()
 	Py_INCREF(math);
 	PyModule_AddObject(fiea, "Math", math);
 
-	//if (PyModule_AddObject(fiea, "Entity", reinterpret_cast<PyObject*>(&PyEntityType)) < 0)
-	//{
-	//	Py_DECREF(&PyEntityType);
-	//}
+	PyObject* entity = PyInit_Entity();
+	Py_INCREF(entity);
+	PyModule_AddObject(fiea, "Entity", entity);
 	
 	return fiea;
 }
