@@ -47,8 +47,8 @@ namespace Library::Math
 	bool IsPrime(size_t n);
 
 	/**
-	 * O(n)			where n = reval - num	most cases
-	 * O(n^2)		where n = retval		if the sieve must be regenerated
+	 * O(n)			where n = retval - num		most cases
+	 * O(n^2)		where n = retval			if the sieve must be regenerated
 	 *
 	 * @param num	a whole number
 	 * @returns		the next prime > n
@@ -86,7 +86,7 @@ namespace Library::Math
 	 * 
 	 * in C/C++:
 	 * -1 % 10 == 9
-	 * 1 & -10 == 1
+	 * 1 % -10 == 1
 	 */
 	template<typename T, typename M>
 	auto Mod(T t, M m) noexcept
@@ -96,7 +96,7 @@ namespace Library::Math
 		const auto r = t % m;
 		if constexpr (std::is_signed_v<decltype(r)> && std::is_signed_v<M>)
 		{
-			if ((m > 0 && r < 0) || m < 0 && r > 0)
+			if ((m > 0 && r < 0) || (m < 0 && r > 0))
 			{
 				return r + m;
 			}
