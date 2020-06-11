@@ -175,6 +175,10 @@ Entity::iterator Entity::end() noexcept
 			name = newName;
 			p->children.Insert(name, shared_from_this());
 		}
+		else
+		{
+			name = newName;
+		}
 	}
 
 #pragma region Insert	

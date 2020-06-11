@@ -222,6 +222,7 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\Library.Pytho
     <ClCompile Include="Entity_module.cpp" />
     <ClCompile Include="FIEAEngine_module.cpp" />
     <ClCompile Include="Math_module.cpp" />
+    <ClCompile Include="PyUtil.cpp" />
     <ClCompile Include="Reflection.generated.cpp" />
     <ClCompile Include="Registry.generated.cpp" />
   </ItemGroup>
@@ -229,6 +230,7 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\Library.Pytho
     <ClInclude Include="Entity_module.h" />
     <ClInclude Include="FIEAEngine_module.h" />
     <ClInclude Include="Math_module.h" />
+    <ClInclude Include="PyUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

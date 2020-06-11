@@ -40,7 +40,7 @@ PyObject* ReMap(PyObject*, PyObject* args)
 PyObject* ReMap01(PyObject*, PyObject* args)
 {
 	float x, inMin, inMax, outMin, outMax;
-	if (PyArg_ParseTuple(args, "fff", &x, &inMin, &inMax, &outMin, &outMax))
+	if (PyArg_ParseTuple(args, "fff", &x, &inMin, &inMax, &outMin, &outMax)) [[likely]]
 	{
 		return PyFloat_FromDouble(Math::ReMap01(x, inMin, inMax));
 	}

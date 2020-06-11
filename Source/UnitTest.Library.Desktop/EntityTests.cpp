@@ -155,6 +155,12 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual("Seven"s, c->GetName());
 			Assert::IsTrue(p->Child("Seven"));
 		}
+
+		TEST_METHOD(GetName)
+		{
+			const auto e = std::make_shared<Entity>();
+			Assert::AreEqual("Entity"s, e->GetName());
+		}
 		
 #pragma region Insert
 		TEST_METHOD(Insert)
