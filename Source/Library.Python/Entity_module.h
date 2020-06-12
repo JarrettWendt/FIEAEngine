@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Python.h>
+#include <structmember.h>
 
 #include "Entity.h"
 

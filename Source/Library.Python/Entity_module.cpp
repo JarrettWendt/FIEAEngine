@@ -3,8 +3,6 @@
 #include "Entity.h"
 #include "PyUtil.h"
 
-#include <structmember.h>
-
 #pragma region special members
 void PyEntity_dealloc(PyEntity* self)
 {
@@ -41,17 +39,37 @@ int PyEntity_init(PyEntity* self, PyObject* args, PyObject* kwds)
 }
 #pragma endregion
 
-#pragma region methods
-PyObject* PyEntity_GetName(PyEntity* self, PyObject*)
+#pragma region getters/setters
+PyObject* PyEntity_GetName(PyEntity* self, [[maybe_unused]] void* closure)
 {
 	return PyUtil::ToPyStr(self->e->GetName());
 }
+
+int PyEntity_SetName(PyEntity* self, PyObject* value, [[maybe_unused]] void* closure)
+{
+	std::string name;
+	if (!PyUtil::FromPyStr(value, name))
+	{
+		return -1;
+	}
+	self->e->SetName(name);
+	return 0;
+}
+#pragma endregion
+
+#pragma region methods
+
 #pragma endregion
 
 #pragma region structs
 static inline PyMethodDef PyEntity_methods[]
 {
-	{ "GetName", PyCFunction(PyEntity_GetName), METH_NOARGS, "name of this Entity" },
+	{ nullptr }
+};
+
+static PyGetSetDef PyEntity_getset[]
+{
+	{ "name", getter(PyEntity_GetName), setter(PyEntity_SetName), "name of this Entity", nullptr },
 
 	{ nullptr }
 };
@@ -78,6 +96,7 @@ static inline PyTypeObject PyEntityType
 
 	.tp_methods = PyEntity_methods,
 	.tp_members = PyEntity_members,
+	.tp_getset = PyEntity_getset,
 
 	.tp_init = initproc(PyEntity_init),
 	.tp_new = PyEntity_new,

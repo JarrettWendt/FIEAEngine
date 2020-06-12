@@ -7,13 +7,15 @@ class EntityTests(unittest.TestCase):
 
 	def testCtor(self):
 		e = Entity.Entity('hi')
-		self.assertEqual('hi', e.GetName())
+		self.assertEqual('hi', e.name)
 		e = Entity.Entity(name='hello')
-		self.assertEqual('hello', e.GetName())
+		self.assertEqual('hello', e.name)
 
-	def testGetName(self):
+	def testName(self):
 		e = Entity.Entity()
-		self.assertEqual('Entity', e.GetName())
+		self.assertEqual('Entity', e.name)
+		e.name = 'jimbob'
+		self.assertEqual('jimbob', e.name)
 
 if __name__ == '__main__':
 	unittest.main()
