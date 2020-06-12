@@ -39,3 +39,6 @@ Build/obj/*
 # ReSharper
 *.DotSettings
 *.DotSettings.*
+
+# Python
+*__pycache__*
