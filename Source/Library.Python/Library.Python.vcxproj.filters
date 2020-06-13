@@ -14,7 +14,9 @@
     <ClCompile Include="Entity_module.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="PyUtil.cpp" />
+    <ClCompile Include="PyUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="generated">

@@ -7,6 +7,10 @@
 PyMODINIT_FUNC PyInit_FIEAEngine()
 {
 	PyObject* fiea = PyModule_Create(&FIEAEngine_module);
+	if (!fiea) [[unlikely]]
+	{
+		return nullptr;
+	}
 	
 	PyObject* math = PyInit_Math();
 	Py_INCREF(math);

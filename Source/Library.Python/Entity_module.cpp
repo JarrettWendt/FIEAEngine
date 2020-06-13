@@ -107,7 +107,8 @@ static inline PyModuleDef PyEntity_module
 	PyModuleDef_HEAD_INIT,
 	"Entity",
 	"Entity module",
-	-1
+	-1,
+	nullptr
 };
 #pragma endregion
 
