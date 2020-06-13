@@ -284,9 +284,9 @@ namespace Library
 		 * Appends a default constructed Derived type.
 		 * O(1)
 		 *
-		 * @param name		name for this child
-		 * @param args		arguments to forward to the Derived type's ctor.
-		 * @returns			reference to newly appended child
+		 * @param childName		name for this child
+		 * @param args			arguments to forward to the Derived type's ctor.
+		 * @returns				reference to newly appended child
 		 *
 		 * @throws InvalidNameException
 		 */
@@ -297,9 +297,9 @@ namespace Library
 		 * Appends a default constructed Derived type.
 		 * O(1)
 		 *
-		 * @param name		name for this child
-		 * @param args		arguments to forward to the Derived type's ctor.
-		 * @returns			reference to newly appended child
+		 * @param childName		name for this child
+		 * @param args			arguments to forward to the Derived type's ctor.
+		 * @returns				reference to newly appended child
 		 *
 		 * @throws InvalidNameException
 		 */
@@ -322,9 +322,9 @@ namespace Library
 		 * Reparents the passed Entity to this one.
 		 * O(1)
 		 *
-		 * @param name		the name for the adoptee
-		 * @param child		the Entity to become a child of this one
-		 * @returns			a reference back to the passed Entity for chaining
+		 * @param childName		the name for the adoptee
+		 * @param child			the Entity to become a child of this one
+		 * @returns				a reference back to the passed Entity for chaining
 		 *
 		 * @throws InvalidNameException
 		 */

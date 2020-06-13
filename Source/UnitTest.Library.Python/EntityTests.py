@@ -33,7 +33,37 @@ class EntityTests(unittest.TestCase):
 
 	def testChild(self):
 		e = Entity.Entity()
-		self.assertFalse(e.Child('hi'))
+		self.assertIsNone(e.Child('hi'))
+
+	def testAdopt(self):
+		p = Entity.Entity()
+		c = Entity.Entity()
+		c2 = p.Adopt('child', c)
+		self.assertIs(c, c2)
+		self.assertEqual('child', c.name)
+
+		p = Entity.Entity()
+		c = Entity.Entity()
+		c2 = p.Adopt(name='child', child=c)
+		self.assertIs(c, c2)
+		self.assertEqual('child', c.name)
+
+		p = Entity.Entity()
+		c = Entity.Entity()
+		c2 = p.Adopt(c)
+		self.assertIs(c, c2)
+
+	def testOrphan(self):
+		p = Entity.Entity()
+		c = p.Adopt(Entity.Entity())
+		c.Orphan()
+		self.assertIsNone(c.parent)
+
+	def testParent(self):
+		p = Entity.Entity()
+		c = Entity.Entity()
+		c.parent = p
+		self.assertIsNotNone(c.parent)
 
 if __name__ == '__main__':
 	unittest.main()

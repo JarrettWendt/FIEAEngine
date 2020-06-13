@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ac6a1feb-aad2-4bdd-be3e-c38a34c25e48</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MathTests.py</StartupFile>
+    <StartupFile>EntityTests.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

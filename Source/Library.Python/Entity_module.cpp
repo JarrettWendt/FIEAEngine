@@ -66,6 +66,24 @@ int PyEntity_SetEnabled(PyEntity* self, PyObject* value, [[maybe_unused]] void* 
 	self->e->Enabled() = PyObject_IsTrue(value);
 	return 0;
 }
+
+PyObject* PyEntity_GetParent(PyEntity* self, [[maybe_unused]] void* closure)
+{
+	if (const auto parent = self->e->Parent())
+	{
+		PyEntity* ret = PyUtil::Alloc<PyEntity>(PyEntityType);
+		ret->e = parent;
+		Py_INCREF(ret);
+		return reinterpret_cast<PyObject*>(ret);
+	}
+	Py_RETURN_NONE;
+}
+
+int PyEntity_SetParent(PyEntity* self, PyEntity* value, [[maybe_unused]] void* closure)
+{
+	value->e->Adopt(self->e);
+	return 0;
+}
 #pragma endregion
 
 #pragma region methods
@@ -93,6 +111,46 @@ PyObject* PyEntity_Child(PyEntity* self, PyObject* arg)
 	}
 	Py_RETURN_NONE;
 }
+
+PyObject* PyEntity_Adopt(PyEntity* self, PyObject* args, PyObject* kwds)
+{
+	static const char* kwlist[] = { "name", "child", nullptr };
+	char* name{ nullptr };
+	PyEntity* child{ nullptr };
+	
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "zO", const_cast<char**>(kwlist), &name, &child))
+	{
+		if (PyArg_ParseTuple(args, "O", &child))
+		{
+			PyErr_Clear();
+		}
+	}
+	
+	if (child)
+	{
+		child->e = name ? self->e->Adopt(name, child->e) : self->e->Adopt(child->e);
+		Py_INCREF(child);
+		return reinterpret_cast<PyObject*>(child);
+	}
+	
+	Py_RETURN_NONE;
+}
+
+PyObject* PyEntity_Orphan(PyEntity* self, PyObject*)
+{
+	self->e->Orphan();
+	Py_RETURN_NONE;
+}
+
+PyObject* PyEntity_RemoveChild(PyEntity* self, PyObject* arg)
+{
+	std::string childName;
+	if (PyUtil::FromPyStr(arg, childName))
+	{
+		self->e->RemoveChild(childName);
+	}
+	Py_RETURN_NONE;
+}
 #pragma endregion
 
 #pragma region structs
@@ -101,7 +159,12 @@ static inline PyMethodDef PyEntity_methods[]
 	{ "NumChildren", PyCFunction(PyEntity_NumChildren), METH_NOARGS, "how many children this Entity has" },
 	{ "HasChildren", PyCFunction(PyEntity_HasChildren), METH_NOARGS, "how many children this Entity has" },
 	{ "Child", PyCFunction(PyEntity_Child), METH_O, "get child by name" },
-	
+
+	{ "Adopt", PyCFunction(PyEntity_Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed Entity a child of this one" },
+
+	{ "Orphan", PyCFunction(PyEntity_Orphan), METH_NOARGS, "orphans this Entity from its parent" },
+	{ "RemoveChild", PyCFunction(PyEntity_RemoveChild), METH_O, "removes child by name" },
+
 	{ nullptr }
 };
 
@@ -109,6 +172,7 @@ static PyGetSetDef PyEntity_getset[]
 {
 	{ "name", getter(PyEntity_GetName), setter(PyEntity_SetName), "name of this Entity", nullptr },
 	{ "enabled", getter(PyEntity_GetEnabled), setter(PyEntity_SetEnabled), "whether or not this Entity is enabled", nullptr },
+	{ "parent", getter(PyEntity_GetParent), setter(PyEntity_SetParent), "this Entity's parent", nullptr },
 	
 	{ nullptr }
 };
