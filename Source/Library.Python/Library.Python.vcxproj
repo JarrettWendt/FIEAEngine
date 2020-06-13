@@ -232,6 +232,9 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\Library.Pytho
     <ClInclude Include="Math_module.h" />
     <ClInclude Include="PyUtil.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PyUtil.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

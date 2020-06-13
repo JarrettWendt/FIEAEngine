@@ -12,4 +12,6 @@ struct PyEntity
 	std::shared_ptr<Library::Entity> e;
 };
 
+extern PyTypeObject PyEntityType;
+
 PyMODINIT_FUNC PyInit_Entity();

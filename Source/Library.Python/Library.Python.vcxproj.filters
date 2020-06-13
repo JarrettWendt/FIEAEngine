@@ -44,4 +44,9 @@
       <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PyUtil.inl">
+      <Filter>Util</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ void PyEntity_dealloc(PyEntity* self)
 
 PyObject* PyEntity_new(PyTypeObject* type, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
 {
-	if (PyEntity* self = reinterpret_cast<PyEntity*>(type->tp_alloc(type, 0)))
+	if (PyEntity* self = PyUtil::Alloc<PyEntity>(type))
 	{
 		self->e = std::make_shared<Library::Entity>();
 		return reinterpret_cast<PyObject*>(self);
@@ -55,22 +55,61 @@ int PyEntity_SetName(PyEntity* self, PyObject* value, [[maybe_unused]] void* clo
 	self->e->SetName(name);
 	return 0;
 }
+
+PyObject* PyEntity_GetEnabled(PyEntity* self, [[maybe_unused]] void* closure)
+{
+	return PyBool_FromLong(self->e->Enabled());
+}
+
+int PyEntity_SetEnabled(PyEntity* self, PyObject* value, [[maybe_unused]] void* closure)
+{
+	self->e->Enabled() = PyObject_IsTrue(value);
+	return 0;
+}
 #pragma endregion
 
 #pragma region methods
+PyObject* PyEntity_NumChildren(PyEntity* self, PyObject*)
+{
+	return PyLong_FromSize_t(self->e->NumChildren());
+}
 
+PyObject* PyEntity_HasChildren(PyEntity* self, PyObject*)
+{
+	return PyBool_FromLong(self->e->HasChildren());
+}
+
+PyObject* PyEntity_Child(PyEntity* self, PyObject* arg)
+{
+	std::string childName;
+	if (PyUtil::FromPyStr(arg, childName))
+	{
+		if (const auto child = self->e->Child(childName))
+		{
+			PyEntity* ret = PyUtil::Alloc<PyEntity>(PyEntityType);
+			ret->e = self->e->Child(childName);
+			return reinterpret_cast<PyObject*>(ret);
+		}
+	}
+	Py_RETURN_NONE;
+}
 #pragma endregion
 
 #pragma region structs
 static inline PyMethodDef PyEntity_methods[]
 {
+	{ "NumChildren", PyCFunction(PyEntity_NumChildren), METH_NOARGS, "how many children this Entity has" },
+	{ "HasChildren", PyCFunction(PyEntity_HasChildren), METH_NOARGS, "how many children this Entity has" },
+	{ "Child", PyCFunction(PyEntity_Child), METH_O, "get child by name" },
+	
 	{ nullptr }
 };
 
 static PyGetSetDef PyEntity_getset[]
 {
 	{ "name", getter(PyEntity_GetName), setter(PyEntity_SetName), "name of this Entity", nullptr },
-
+	{ "enabled", getter(PyEntity_GetEnabled), setter(PyEntity_SetEnabled), "whether or not this Entity is enabled", nullptr },
+	
 	{ nullptr }
 };
 
@@ -79,7 +118,7 @@ static PyMemberDef PyEntity_members[]
 	{ nullptr }
 };
 
-static inline PyTypeObject PyEntityType
+PyTypeObject PyEntityType
 {
 	.ob_base = { PyObject_HEAD_INIT(nullptr) 0 },
 
