@@ -42,3 +42,7 @@ Build/obj/*
 
 # Python
 *__pycache__*
+
+# reflection
+*.generated.*
+*.generated.*
