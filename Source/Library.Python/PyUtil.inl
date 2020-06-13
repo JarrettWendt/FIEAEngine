@@ -3,21 +3,21 @@
 
 namespace PyUtil
 {
-	template<typename Object, typename Type>
-	Object* Construct(Type& type) noexcept
+	template<typename T>
+	T* Construct(PyTypeObject& type) noexcept
 	{
-		return reinterpret_cast<Object*>(PyObject_CallObject(reinterpret_cast<PyObject*>(&type), nullptr));
+		return reinterpret_cast<T*>(PyObject_CallObject(reinterpret_cast<PyObject*>(&type), nullptr));
 	}
 	
-	template<typename Object, typename Type>
-	Object* Alloc(Type& type) noexcept
+	template<typename T>
+	T* Alloc(PyTypeObject& type) noexcept
 	{
-		return Alloc<Object>(&type);
+		return Alloc<T>(&type);
 	}
 	
-	template<typename Object, typename Type>
-	Object* Alloc(Type* type) noexcept
+	template<typename T>
+	T* Alloc(PyTypeObject* type) noexcept
 	{
-		return reinterpret_cast<Object*>(type->tp_alloc(type, 0));
+		return reinterpret_cast<T*>(type->tp_alloc(type, 0));
 	}
 }
