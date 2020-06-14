@@ -52,36 +52,36 @@ PyObject* PyEntity::richcompare(PyEntity* other, const int op)
 #pragma endregion
 
 #pragma region getters/setters
-PyObject* PyEntity_GetName(PyEntity* self, [[maybe_unused]] void* closure)
+PyObject* PyEntity::GetName([[maybe_unused]] void* closure)
 {
-	return PyUtil::ToPyStr(self->e->GetName());
+	return PyUtil::ToPyStr(e->GetName());
 }
 
-int PyEntity_SetName(PyEntity* self, PyObject* value, [[maybe_unused]] void* closure)
+int PyEntity::SetName(PyObject* value, [[maybe_unused]] void* closure)
 {
 	std::string name;
 	if (!PyUtil::FromPyStr(value, name))
 	{
 		return -1;
 	}
-	self->e->SetName(name);
+	e->SetName(name);
 	return 0;
 }
 
-PyObject* PyEntity_GetEnabled(PyEntity* self, [[maybe_unused]] void* closure)
+PyObject* PyEntity::GetEnabled([[maybe_unused]] void* closure)
 {
-	return PyBool_FromLong(self->e->Enabled());
+	return PyBool_FromLong(e->Enabled());
 }
 
-int PyEntity_SetEnabled(PyEntity* self, PyObject* value, [[maybe_unused]] void* closure)
+int PyEntity::SetEnabled(PyObject* value, [[maybe_unused]] void* closure)
 {
-	self->e->Enabled() = PyObject_IsTrue(value);
+	e->Enabled() = PyObject_IsTrue(value);
 	return 0;
 }
 
-PyObject* PyEntity_GetParent(PyEntity* self, [[maybe_unused]] void* closure)
+PyObject* PyEntity::GetParent([[maybe_unused]] void* closure)
 {
-	if (const auto parent = self->e->Parent())
+	if (const auto parent = e->Parent())
 	{
 		PyEntity* ret = PyUtil::Alloc<PyEntity>(PyEntityType);
 		ret->e = parent;
@@ -91,40 +91,40 @@ PyObject* PyEntity_GetParent(PyEntity* self, [[maybe_unused]] void* closure)
 	Py_RETURN_NONE;
 }
 
-int PyEntity_SetParent(PyEntity* self, PyEntity* value, [[maybe_unused]] void* closure)
+int PyEntity::SetParent(PyEntity* value, [[maybe_unused]] void* closure)
 {
-	value->e->Adopt(self->e);
+	value->e->Adopt(e);
 	return 0;
 }
 #pragma endregion
 
 #pragma region methods
-PyObject* PyEntity_NumChildren(PyEntity* self, PyObject*)
+PyObject* PyEntity::NumChildren()
 {
-	return PyLong_FromSize_t(self->e->NumChildren());
+	return PyLong_FromSize_t(e->NumChildren());
 }
 
-PyObject* PyEntity_HasChildren(PyEntity* self, PyObject*)
+PyObject* PyEntity::HasChildren()
 {
-	return PyBool_FromLong(self->e->HasChildren());
+	return PyBool_FromLong(e->HasChildren());
 }
 
-PyObject* PyEntity_Child(PyEntity* self, PyObject* arg)
+PyObject* PyEntity::Child(PyObject* arg)
 {
 	std::string childName;
 	if (PyUtil::FromPyStr(arg, childName))
 	{
-		if (const auto child = self->e->Child(childName))
+		if (const auto child = e->Child(childName))
 		{
 			PyEntity* ret = PyUtil::Alloc<PyEntity>(PyEntityType);
-			ret->e = self->e->Child(childName);
+			ret->e = e->Child(childName);
 			return reinterpret_cast<PyObject*>(ret);
 		}
 	}
 	Py_RETURN_NONE;
 }
 
-PyObject* PyEntity_Adopt(PyEntity* self, PyObject* args, PyObject* kwds)
+PyObject* PyEntity::Adopt(PyObject* args, PyObject* kwds)
 {
 	static const char* kwlist[] = { "name", "child", nullptr };
 	char* name{ nullptr };
@@ -140,7 +140,7 @@ PyObject* PyEntity_Adopt(PyEntity* self, PyObject* args, PyObject* kwds)
 	
 	if (child)
 	{
-		child->e = name ? self->e->Adopt(name, child->e) : self->e->Adopt(child->e);
+		child->e = name ? e->Adopt(name, child->e) : e->Adopt(child->e);
 		Py_INCREF(child);
 		return reinterpret_cast<PyObject*>(child);
 	}
@@ -148,31 +148,31 @@ PyObject* PyEntity_Adopt(PyEntity* self, PyObject* args, PyObject* kwds)
 	Py_RETURN_NONE;
 }
 
-PyObject* PyEntity_Orphan(PyEntity* self, PyObject*)
+PyObject* PyEntity::Orphan()
 {
-	self->e->Orphan();
+	e->Orphan();
 	Py_RETURN_NONE;
 }
 
-PyObject* PyEntity_RemoveChild(PyEntity* self, PyObject* arg)
+PyObject* PyEntity::RemoveChild(PyObject* arg)
 {
 	std::string childName;
 	if (PyUtil::FromPyStr(arg, childName))
 	{
-		self->e->RemoveChild(childName);
+		e->RemoveChild(childName);
 	}
 	Py_RETURN_NONE;
 }
 
-PyObject* PyEntity_Init(PyEntity* self, PyObject*)
+PyObject* PyEntity::Init()
 {
-	self->e->Init();
+	e->Init();
 	Py_RETURN_NONE;
 }
 
-PyObject* PyEntity_Update(PyEntity* self, PyObject*)
+PyObject* PyEntity::Update()
 {
-	self->e->Update();
+	e->Update();
 	Py_RETURN_NONE;
 }
 #pragma endregion
@@ -180,26 +180,26 @@ PyObject* PyEntity_Update(PyEntity* self, PyObject*)
 #pragma region structs
 static inline PyMethodDef PyEntity_methods[]
 {
-	{ "NumChildren", PyCFunction(PyEntity_NumChildren), METH_NOARGS, "how many children this Entity has" },
-	{ "HasChildren", PyCFunction(PyEntity_HasChildren), METH_NOARGS, "how many children this Entity has" },
-	{ "Child", PyCFunction(PyEntity_Child), METH_O, "get child by name" },
+	{ "NumChildren", Library::Util::ForceCast<PyCFunction>(&PyEntity::NumChildren), METH_NOARGS, "how many children this Entity has" },
+	{ "HasChildren", Library::Util::ForceCast<PyCFunction>(&PyEntity::HasChildren), METH_NOARGS, "how many children this Entity has" },
+	{ "Child", Library::Util::ForceCast<PyCFunction>(&PyEntity::Child), METH_O, "get child by name" },
 
-	{ "Adopt", PyCFunction(PyEntity_Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed Entity a child of this one" },
+	{ "Adopt", Library::Util::ForceCast<PyCFunction>(&PyEntity::Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed Entity a child of this one" },
 
-	{ "Orphan", PyCFunction(PyEntity_Orphan), METH_NOARGS, "orphans this Entity from its parent" },
-	{ "RemoveChild", PyCFunction(PyEntity_RemoveChild), METH_O, "removes child by name" },
+	{ "Orphan", Library::Util::ForceCast<PyCFunction>(&PyEntity::Orphan), METH_NOARGS, "orphans this Entity from its parent" },
+	{ "RemoveChild", Library::Util::ForceCast<PyCFunction>(&PyEntity::RemoveChild), METH_O, "removes child by name" },
 
-	{ "_Init", PyCFunction(PyEntity_Init), METH_NOARGS, "initialization ran after construction before the first Update" },
-	{ "_Update", PyCFunction(PyEntity_Update), METH_NOARGS, "initialization ran after construction before the first Update" },
+	{ "_Init", Library::Util::ForceCast<PyCFunction>(&PyEntity::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
+	{ "_Update", Library::Util::ForceCast<PyCFunction>(&PyEntity::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
 	
 	{ nullptr }
 };
 
 static PyGetSetDef PyEntity_getset[]
 {
-	{ "name", getter(PyEntity_GetName), setter(PyEntity_SetName), "name of this Entity", nullptr },
-	{ "enabled", getter(PyEntity_GetEnabled), setter(PyEntity_SetEnabled), "whether or not this Entity is enabled", nullptr },
-	{ "parent", getter(PyEntity_GetParent), setter(PyEntity_SetParent), "this Entity's parent", nullptr },
+	{ "name", Library::Util::ForceCast<getter>(&PyEntity::GetName), Library::Util::ForceCast<setter>(&PyEntity::SetName), "name of this Entity", nullptr },
+	{ "enabled", Library::Util::ForceCast<getter>(&PyEntity::GetEnabled), Library::Util::ForceCast<setter>(&PyEntity::SetEnabled), "whether or not this Entity is enabled", nullptr },
+	{ "parent", Library::Util::ForceCast<getter>(&PyEntity::GetParent), Library::Util::ForceCast<setter>(&PyEntity::SetParent), "this Entity's parent", nullptr },
 	
 	{ nullptr }
 };
