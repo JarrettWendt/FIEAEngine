@@ -3,264 +3,227 @@
 #include "Entity.h"
 #include "PyUtil.h"
 
+namespace Library::py
+{
 #pragma region special members
-void PyEntity::dealloc(PyEntity* self)
-{
-	self->e = nullptr;
-	Py_TYPE(self)->tp_free(reinterpret_cast<PyObject*>(self));
-}
-
-PyEntity* PyEntity::_new(PyTypeObject* type, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
-{
-	if (PyEntity* self = PyUtil::Alloc<PyEntity>(type))
+	void Entity::dealloc(Entity* self)
 	{
-		self->e = std::make_shared<Library::Entity>();
-		return self;
-	}
-	return nullptr;
-}
-
-int PyEntity::init(PyEntity* self, PyObject* args, PyObject* kwds)
-{
-	static const char* kwlist[] = { "name", nullptr };
-	char* name{ nullptr };
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|z", const_cast<char**>(kwlist), &name)) [[unlikely]]
-	{
-		return -1;
+		self->e = nullptr;
+		Py_TYPE(self)->tp_free(reinterpret_cast<PyObject*>(self));
 	}
 
-	if (name) [[unlikely]]
+	Entity* Entity::_new(PyTypeObject* t, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
 	{
-		self->e->SetName(name);
+		if (Entity* self = PyUtil::Alloc<Entity>(t))
+		{
+			self->e = std::make_shared<Library::Entity>();
+			return self;
+		}
+		return nullptr;
 	}
-	
-	return 0;
-}
 
-PyObject* PyEntity::richcompare(PyEntity* other, const int op)
-{
-	bool b;
-	switch (op)
+	int Entity::init(Entity* self, PyObject* args, PyObject* kwds)
 	{
-	case Py_EQ: b = e == other->e || e && *e == *other->e; break;
-	case Py_NE: b = e != other->e || e && *e != *other->e; break;
-	default: Py_RETURN_NONE;
+		static const char* kwlist[] = { "name", nullptr };
+		char* name{ nullptr };
+
+		if (!PyArg_ParseTupleAndKeywords(args, kwds, "|z", const_cast<char**>(kwlist), &name)) [[unlikely]]
+		{
+			return -1;
+		}
+
+		if (name) [[unlikely]]
+		{
+			self->e->SetName(name);
+		}
+
+		return 0;
 	}
-	Py_RETURN_BOOL(b);
-}
+
+	PyObject* Entity::richcompare(Entity* other, const int op)
+	{
+		bool b;
+		switch (op)
+		{
+		case Py_EQ: b = e == other->e || e && *e == *other->e; break;
+		case Py_NE: b = e != other->e || e && *e != *other->e; break;
+		default: Py_RETURN_NONE;
+		}
+		Py_RETURN_BOOL(b);
+	}
 #pragma endregion
 
 #pragma region getters/setters
-PyObject* PyEntity::GetName([[maybe_unused]] void* closure)
-{
-	return PyUtil::ToPyStr(e->GetName());
-}
-
-int PyEntity::SetName(PyObject* value, [[maybe_unused]] void* closure)
-{
-	std::string name;
-	if (!PyUtil::FromPyStr(value, name))
+	PyObject* Entity::GetName([[maybe_unused]] void* closure)
 	{
-		return -1;
+		return PyUtil::ToPyStr(e->GetName());
 	}
-	e->SetName(name);
-	return 0;
-}
 
-PyObject* PyEntity::GetEnabled([[maybe_unused]] void* closure)
-{
-	return PyBool_FromLong(e->Enabled());
-}
-
-int PyEntity::SetEnabled(PyObject* value, [[maybe_unused]] void* closure)
-{
-	e->Enabled() = PyObject_IsTrue(value);
-	return 0;
-}
-
-PyObject* PyEntity::GetParent([[maybe_unused]] void* closure)
-{
-	if (const auto parent = e->Parent())
+	int Entity::SetName(PyObject* value, [[maybe_unused]] void* closure)
 	{
-		PyEntity* ret = PyUtil::Alloc<PyEntity>(PyEntityType);
-		ret->e = parent;
-		Py_INCREF(ret);
-		return reinterpret_cast<PyObject*>(ret);
+		std::string name;
+		if (!PyUtil::FromPyStr(value, name))
+		{
+			return -1;
+		}
+		e->SetName(name);
+		return 0;
 	}
-	Py_RETURN_NONE;
-}
 
-int PyEntity::SetParent(PyEntity* value, [[maybe_unused]] void* closure)
-{
-	value->e->Adopt(e);
-	return 0;
-}
+	PyObject* Entity::GetEnabled([[maybe_unused]] void* closure)
+	{
+		return PyBool_FromLong(e->Enabled());
+	}
+
+	int Entity::SetEnabled(PyObject* value, [[maybe_unused]] void* closure)
+	{
+		e->Enabled() = PyObject_IsTrue(value);
+		return 0;
+	}
+
+	PyObject* Entity::GetParent([[maybe_unused]] void* closure)
+	{
+		if (const auto parent = e->Parent())
+		{
+			Entity* ret = PyUtil::Alloc<Entity>(type);
+			ret->e = parent;
+			Py_INCREF(ret);
+			return reinterpret_cast<PyObject*>(ret);
+		}
+		Py_RETURN_NONE;
+	}
+
+	int Entity::SetParent(Entity* value, [[maybe_unused]] void* closure)
+	{
+		value->e->Adopt(e);
+		return 0;
+	}
 #pragma endregion
 
 #pragma region methods
-PyObject* PyEntity::NumChildren()
-{
-	return PyLong_FromSize_t(e->NumChildren());
-}
-
-PyObject* PyEntity::HasChildren()
-{
-	return PyBool_FromLong(e->HasChildren());
-}
-
-PyObject* PyEntity::Child(PyObject* arg)
-{
-	std::string childName;
-	if (PyUtil::FromPyStr(arg, childName))
+	PyObject* Entity::NumChildren()
 	{
-		if (const auto child = e->Child(childName))
+		return PyLong_FromSize_t(e->NumChildren());
+	}
+
+	PyObject* Entity::HasChildren()
+	{
+		return PyBool_FromLong(e->HasChildren());
+	}
+
+	PyObject* Entity::Child(PyObject* arg)
+	{
+		std::string childName;
+		if (PyUtil::FromPyStr(arg, childName))
 		{
-			PyEntity* ret = PyUtil::Alloc<PyEntity>(PyEntityType);
-			ret->e = e->Child(childName);
-			return reinterpret_cast<PyObject*>(ret);
+			if (const auto child = e->Child(childName))
+			{
+				Entity* ret = PyUtil::Alloc<Entity>(type);
+				ret->e = e->Child(childName);
+				return reinterpret_cast<PyObject*>(ret);
+			}
 		}
+		Py_RETURN_NONE;
 	}
-	Py_RETURN_NONE;
-}
 
-PyObject* PyEntity::Adopt(PyObject* args, PyObject* kwds)
-{
-	static const char* kwlist[] = { "name", "child", nullptr };
-	char* name{ nullptr };
-	PyEntity* child{ nullptr };
-	
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "zO", const_cast<char**>(kwlist), &name, &child))
+	PyObject* Entity::Adopt(PyObject* args, PyObject* kwds)
 	{
-		if (PyArg_ParseTuple(args, "O", &child))
+		static const char* kwlist[] = { "name", "child", nullptr };
+		char* name{ nullptr };
+		Entity* child{ nullptr };
+
+		if (!PyArg_ParseTupleAndKeywords(args, kwds, "zO", const_cast<char**>(kwlist), &name, &child))
 		{
-			PyErr_Clear();
+			if (PyArg_ParseTuple(args, "O", &child))
+			{
+				PyErr_Clear();
+			}
 		}
+
+		if (child)
+		{
+			child->e = name ? e->Adopt(name, child->e) : e->Adopt(child->e);
+			Py_INCREF(child);
+			return reinterpret_cast<PyObject*>(child);
+		}
+
+		Py_RETURN_NONE;
 	}
-	
-	if (child)
+
+	PyObject* Entity::Orphan()
 	{
-		child->e = name ? e->Adopt(name, child->e) : e->Adopt(child->e);
-		Py_INCREF(child);
-		return reinterpret_cast<PyObject*>(child);
+		e->Orphan();
+		Py_RETURN_NONE;
 	}
-	
-	Py_RETURN_NONE;
-}
 
-PyObject* PyEntity::Orphan()
-{
-	e->Orphan();
-	Py_RETURN_NONE;
-}
-
-PyObject* PyEntity::RemoveChild(PyObject* arg)
-{
-	std::string childName;
-	if (PyUtil::FromPyStr(arg, childName))
+	PyObject* Entity::RemoveChild(PyObject* arg)
 	{
-		e->RemoveChild(childName);
+		std::string childName;
+		if (PyUtil::FromPyStr(arg, childName))
+		{
+			e->RemoveChild(childName);
+		}
+		Py_RETURN_NONE;
 	}
-	Py_RETURN_NONE;
-}
 
-PyObject* PyEntity::Init()
-{
-	e->Init();
-	Py_RETURN_NONE;
-}
+	PyObject* Entity::Init()
+	{
+		e->Init();
+		Py_RETURN_NONE;
+	}
 
-PyObject* PyEntity::Update()
-{
-	e->Update();
-	Py_RETURN_NONE;
-}
+	PyObject* Entity::Update()
+	{
+		e->Update();
+		Py_RETURN_NONE;
+	}
 #pragma endregion
 
-#pragma region structs
-static inline PyMethodDef PyEntity_methods[]
-{
-	{ "NumChildren", Library::Util::ForceCast<PyCFunction>(&PyEntity::NumChildren), METH_NOARGS, "how many children this Entity has" },
-	{ "HasChildren", Library::Util::ForceCast<PyCFunction>(&PyEntity::HasChildren), METH_NOARGS, "how many children this Entity has" },
-	{ "Child", Library::Util::ForceCast<PyCFunction>(&PyEntity::Child), METH_O, "get child by name" },
+	PyTypeObject Entity::type
+	{
+		.ob_base = { PyObject_HEAD_INIT(nullptr) 0 },
 
-	{ "Adopt", Library::Util::ForceCast<PyCFunction>(&PyEntity::Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed Entity a child of this one" },
+		.tp_name = "Entity",
 
-	{ "Orphan", Library::Util::ForceCast<PyCFunction>(&PyEntity::Orphan), METH_NOARGS, "orphans this Entity from its parent" },
-	{ "RemoveChild", Library::Util::ForceCast<PyCFunction>(&PyEntity::RemoveChild), METH_O, "removes child by name" },
+		.tp_basicsize = sizeof(Entity),
+		.tp_itemsize = 0,
 
-	{ "_Init", Library::Util::ForceCast<PyCFunction>(&PyEntity::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
-	{ "_Update", Library::Util::ForceCast<PyCFunction>(&PyEntity::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
-	
-	{ nullptr }
-};
+		.tp_dealloc = destructor(dealloc),
 
-static PyGetSetDef PyEntity_getset[]
-{
-	{ "name", Library::Util::ForceCast<getter>(&PyEntity::GetName), Library::Util::ForceCast<setter>(&PyEntity::SetName), "name of this Entity", nullptr },
-	{ "enabled", Library::Util::ForceCast<getter>(&PyEntity::GetEnabled), Library::Util::ForceCast<setter>(&PyEntity::SetEnabled), "whether or not this Entity is enabled", nullptr },
-	{ "parent", Library::Util::ForceCast<getter>(&PyEntity::GetParent), Library::Util::ForceCast<setter>(&PyEntity::SetParent), "this Entity's parent", nullptr },
-	
-	{ nullptr }
-};
+		.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
 
-static PyMemberDef PyEntity_members[]
-{
-	{ nullptr }
-};
+		.tp_doc = "Python port of C++ Entity",
 
-PyTypeObject PyEntityType
-{
-	.ob_base = { PyObject_HEAD_INIT(nullptr) 0 },
+		.tp_richcompare = Library::Util::ForceCast<richcmpfunc>(&richcompare),
 
-	.tp_name = "Entity",
+		.tp_methods = methods,
+		.tp_members = members,
+		.tp_getset = getset,
 
-	.tp_basicsize = sizeof(PyEntity),
-	.tp_itemsize = 0,
-
-	.tp_dealloc = destructor(PyEntity::dealloc),
-
-	.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-
-	.tp_doc = "Python port of C++ Entity",
-
-	.tp_richcompare = Library::Util::ForceCast<richcmpfunc>(&PyEntity::richcompare),
-
-	.tp_methods = PyEntity_methods,
-	.tp_members = PyEntity_members,
-	.tp_getset = PyEntity_getset,
-
-	.tp_init = initproc(PyEntity::init),
-	.tp_new = newfunc(PyEntity::_new),
-};
-
-static inline PyModuleDef PyEntity_module
-{
-	PyModuleDef_HEAD_INIT,
-	"Entity",
-	"Entity module",
-	-1,
-	nullptr
-};
-#pragma endregion
+		.tp_init = initproc(init),
+		.tp_new = newfunc(_new),
+	};
+}
 
 PyMODINIT_FUNC PyInit_Entity()
 {
-	if (PyType_Ready(&PyEntityType) < 0) [[unlikely]]
+	using namespace Library::py;
+	
+	if (PyType_Ready(&Entity::type) < 0) [[unlikely]]
 	{
 		return nullptr;
 	}
 
-	PyObject* m = PyModule_Create(&PyEntity_module);
+	PyObject* m = PyModule_Create(&Entity::module);
 	if (!m) [[unlikely]]
 	{
 		return nullptr;
 	}
 
-	Py_INCREF(&PyEntityType);
-	if (PyModule_AddObject(m, "Entity", reinterpret_cast<PyObject*>(&PyEntityType)) < 0) [[unlikely]]
+	Py_INCREF(&Entity::type);
+	if (PyModule_AddObject(m, "Entity", reinterpret_cast<PyObject*>(&Entity::type)) < 0) [[unlikely]]
 	{
-		Py_DECREF(&PyEntityType);
+		Py_DECREF(&Entity::type);
 		Py_DECREF(m);
 		return nullptr;
 	}
