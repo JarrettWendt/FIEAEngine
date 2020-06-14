@@ -54,12 +54,12 @@ namespace Library::py
 #pragma endregion
 
 #pragma region getters/setters
-	PyObject* EntityBinding::GetName([[maybe_unused]] void* closure)
+	PyObject* EntityBinding::GetName()
 	{
 		return PyUtil::ToPyStr(e->GetName());
 	}
 
-	int EntityBinding::SetName(PyObject* value, [[maybe_unused]] void* closure)
+	int EntityBinding::SetName(PyObject* value)
 	{
 		std::string name;
 		if (!PyUtil::FromPyStr(value, name))
@@ -70,18 +70,18 @@ namespace Library::py
 		return 0;
 	}
 
-	PyObject* EntityBinding::GetEnabled([[maybe_unused]] void* closure)
+	PyObject* EntityBinding::GetEnabled()
 	{
 		return PyBool_FromLong(e->Enabled());
 	}
 
-	int EntityBinding::SetEnabled(PyObject* value, [[maybe_unused]] void* closure)
+	int EntityBinding::SetEnabled(PyObject* value)
 	{
 		e->Enabled() = PyObject_IsTrue(value);
 		return 0;
 	}
 
-	PyObject* EntityBinding::GetParent([[maybe_unused]] void* closure)
+	PyObject* EntityBinding::GetParent()
 	{
 		if (const auto parent = e->Parent())
 		{
@@ -93,7 +93,7 @@ namespace Library::py
 		Py_RETURN_NONE;
 	}
 
-	int EntityBinding::SetParent(EntityBinding* value, [[maybe_unused]] void* closure)
+	int EntityBinding::SetParent(EntityBinding* value)
 	{
 		value->e->Adopt(e);
 		return 0;
@@ -203,30 +203,28 @@ namespace Library::py
 		.tp_init = initproc(init),
 		.tp_new = newfunc(_new),
 	};
-}
 
-PyMODINIT_FUNC PyInit_Entity()
-{
-	using namespace Library::py;
-	
-	if (PyType_Ready(&EntityBinding::type) < 0) [[unlikely]]
-	{
-		return nullptr;
-	}
+	PyMODINIT_FUNC Init_Entity()
+	{		
+		if (PyType_Ready(&EntityBinding::type) < 0) [[unlikely]]
+		{
+			return nullptr;
+		}
 
-	PyObject* m = PyModule_Create(&EntityBinding::module);
-	if (!m) [[unlikely]]
-	{
-		return nullptr;
-	}
+		PyObject* m = PyModule_Create(&EntityBinding::module);
+		if (!m) [[unlikely]]
+		{
+			return nullptr;
+		}
 
-	Py_INCREF(&EntityBinding::type);
-	if (PyModule_AddObject(m, "Entity", reinterpret_cast<PyObject*>(&EntityBinding::type)) < 0) [[unlikely]]
-	{
-		Py_DECREF(&EntityBinding::type);
-		Py_DECREF(m);
-		return nullptr;
+		Py_INCREF(&EntityBinding::type);
+		if (PyModule_AddObject(m, "Entity", reinterpret_cast<PyObject*>(&EntityBinding::type)) < 0) [[unlikely]]
+		{
+			Py_DECREF(&EntityBinding::type);
+			Py_DECREF(m);
+			return nullptr;
+		}
+		
+		return m;
 	}
-	
-	return m;
 }

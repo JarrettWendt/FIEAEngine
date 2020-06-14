@@ -48,5 +48,6 @@
     <None Include="PyUtil.inl">
       <Filter>Util</Filter>
     </None>
+    <None Include="ReadMe.md" />
   </ItemGroup>
 </Project>

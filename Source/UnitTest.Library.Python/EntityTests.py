@@ -38,11 +38,11 @@ class EntityTests(unittest.TestCase):
 
 	def testNumChildren(self):
 		e = Entity.Entity()
-		self.assertEqual(0, e.NumChildren())
+		self.assertEqual(0, e.numChildren)
 
 	def testHasChildren(self):
 		e = Entity.Entity()
-		self.assertFalse(e.HasChildren())
+		self.assertFalse(e.hasChildren)
 
 	def testChild(self):
 		e = Entity.Entity()

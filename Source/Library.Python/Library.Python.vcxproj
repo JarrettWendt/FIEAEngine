@@ -234,6 +234,7 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\Library.Pytho
   </ItemGroup>
   <ItemGroup>
     <None Include="PyUtil.inl" />
+    <None Include="ReadMe.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,7 +16,7 @@ PyMODINIT_FUNC PyInit_FIEAEngine()
 	Py_INCREF(math);
 	PyModule_AddObject(fiea, "Math", math);
 
-	PyObject* entity = PyInit_Entity();
+	PyObject* entity = Library::py::Init_Entity();
 	Py_INCREF(entity);
 	PyModule_AddObject(fiea, "Entity", entity);
 	
