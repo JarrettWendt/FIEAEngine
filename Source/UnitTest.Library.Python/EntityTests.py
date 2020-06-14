@@ -4,7 +4,6 @@ import unittest
 from FIEAEngine import Entity
 
 class MyPyEntity(Entity.Entity):
-
 	def _Update(self):
 		super()._Update()
 

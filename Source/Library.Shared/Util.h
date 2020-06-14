@@ -41,7 +41,7 @@ namespace Library::Util
 	 * @returns			bytes of f casted to a To
 	 */
 	template<typename To, typename From>
-	To ForceCast(From f) noexcept;
+	To UnionCast(From f) noexcept;
 
 	/**
 	 * @param <T>	type to look for

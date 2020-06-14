@@ -6,7 +6,7 @@
 namespace Library::Util
 {
 	template<typename To, typename From>
-	To ForceCast(From f) noexcept
+	To UnionCast(From f) noexcept
 	{
 		union
 		{

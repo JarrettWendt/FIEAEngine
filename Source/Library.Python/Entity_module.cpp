@@ -4,25 +4,25 @@
 #include "PyUtil.h"
 
 namespace Library::py
-{
+{	
 #pragma region special members
-	void Entity::dealloc(Entity* self)
+	void EntityBinding::dealloc(EntityBinding* self)
 	{
 		self->e = nullptr;
 		Py_TYPE(self)->tp_free(reinterpret_cast<PyObject*>(self));
 	}
 
-	Entity* Entity::_new(PyTypeObject* t, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
+	EntityBinding* EntityBinding::_new(PyTypeObject* t, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
 	{
-		if (Entity* self = PyUtil::Alloc<Entity>(t))
+		if (EntityBinding* self = PyUtil::Alloc<EntityBinding>(t))
 		{
-			self->e = std::make_shared<Library::Entity>();
+			self->e = std::make_shared<Entity>();
 			return self;
 		}
 		return nullptr;
 	}
 
-	int Entity::init(Entity* self, PyObject* args, PyObject* kwds)
+	int EntityBinding::init(EntityBinding* self, PyObject* args, PyObject* kwds)
 	{
 		static const char* kwlist[] = { "name", nullptr };
 		char* name{ nullptr };
@@ -40,7 +40,7 @@ namespace Library::py
 		return 0;
 	}
 
-	PyObject* Entity::richcompare(Entity* other, const int op)
+	PyObject* EntityBinding::richcompare(EntityBinding* other, const int op)
 	{
 		bool b;
 		switch (op)
@@ -54,12 +54,12 @@ namespace Library::py
 #pragma endregion
 
 #pragma region getters/setters
-	PyObject* Entity::GetName([[maybe_unused]] void* closure)
+	PyObject* EntityBinding::GetName([[maybe_unused]] void* closure)
 	{
 		return PyUtil::ToPyStr(e->GetName());
 	}
 
-	int Entity::SetName(PyObject* value, [[maybe_unused]] void* closure)
+	int EntityBinding::SetName(PyObject* value, [[maybe_unused]] void* closure)
 	{
 		std::string name;
 		if (!PyUtil::FromPyStr(value, name))
@@ -70,22 +70,22 @@ namespace Library::py
 		return 0;
 	}
 
-	PyObject* Entity::GetEnabled([[maybe_unused]] void* closure)
+	PyObject* EntityBinding::GetEnabled([[maybe_unused]] void* closure)
 	{
 		return PyBool_FromLong(e->Enabled());
 	}
 
-	int Entity::SetEnabled(PyObject* value, [[maybe_unused]] void* closure)
+	int EntityBinding::SetEnabled(PyObject* value, [[maybe_unused]] void* closure)
 	{
 		e->Enabled() = PyObject_IsTrue(value);
 		return 0;
 	}
 
-	PyObject* Entity::GetParent([[maybe_unused]] void* closure)
+	PyObject* EntityBinding::GetParent([[maybe_unused]] void* closure)
 	{
 		if (const auto parent = e->Parent())
 		{
-			Entity* ret = PyUtil::Alloc<Entity>(type);
+			EntityBinding* ret = PyUtil::Alloc<EntityBinding>(type);
 			ret->e = parent;
 			Py_INCREF(ret);
 			return reinterpret_cast<PyObject*>(ret);
@@ -93,7 +93,7 @@ namespace Library::py
 		Py_RETURN_NONE;
 	}
 
-	int Entity::SetParent(Entity* value, [[maybe_unused]] void* closure)
+	int EntityBinding::SetParent(EntityBinding* value, [[maybe_unused]] void* closure)
 	{
 		value->e->Adopt(e);
 		return 0;
@@ -101,24 +101,24 @@ namespace Library::py
 #pragma endregion
 
 #pragma region methods
-	PyObject* Entity::NumChildren()
+	PyObject* EntityBinding::NumChildren()
 	{
 		return PyLong_FromSize_t(e->NumChildren());
 	}
 
-	PyObject* Entity::HasChildren()
+	PyObject* EntityBinding::HasChildren()
 	{
 		return PyBool_FromLong(e->HasChildren());
 	}
 
-	PyObject* Entity::Child(PyObject* arg)
+	PyObject* EntityBinding::Child(PyObject* arg)
 	{
 		std::string childName;
 		if (PyUtil::FromPyStr(arg, childName))
 		{
 			if (const auto child = e->Child(childName))
 			{
-				Entity* ret = PyUtil::Alloc<Entity>(type);
+				EntityBinding* ret = PyUtil::Alloc<EntityBinding>(type);
 				ret->e = e->Child(childName);
 				return reinterpret_cast<PyObject*>(ret);
 			}
@@ -126,11 +126,11 @@ namespace Library::py
 		Py_RETURN_NONE;
 	}
 
-	PyObject* Entity::Adopt(PyObject* args, PyObject* kwds)
+	PyObject* EntityBinding::Adopt(PyObject* args, PyObject* kwds)
 	{
 		static const char* kwlist[] = { "name", "child", nullptr };
 		char* name{ nullptr };
-		Entity* child{ nullptr };
+		EntityBinding* child{ nullptr };
 
 		if (!PyArg_ParseTupleAndKeywords(args, kwds, "zO", const_cast<char**>(kwlist), &name, &child))
 		{
@@ -150,13 +150,13 @@ namespace Library::py
 		Py_RETURN_NONE;
 	}
 
-	PyObject* Entity::Orphan()
+	PyObject* EntityBinding::Orphan()
 	{
 		e->Orphan();
 		Py_RETURN_NONE;
 	}
 
-	PyObject* Entity::RemoveChild(PyObject* arg)
+	PyObject* EntityBinding::RemoveChild(PyObject* arg)
 	{
 		std::string childName;
 		if (PyUtil::FromPyStr(arg, childName))
@@ -166,26 +166,26 @@ namespace Library::py
 		Py_RETURN_NONE;
 	}
 
-	PyObject* Entity::Init()
+	PyObject* EntityBinding::Init()
 	{
-		e->Init();
+		e->As<Entity>()->Init();
 		Py_RETURN_NONE;
 	}
 
-	PyObject* Entity::Update()
+	PyObject* EntityBinding::Update()
 	{
-		e->Update();
+		e->As<Entity>()->Update();
 		Py_RETURN_NONE;
 	}
 #pragma endregion
 
-	PyTypeObject Entity::type
+	PyTypeObject EntityBinding::type
 	{
 		.ob_base = { PyObject_HEAD_INIT(nullptr) 0 },
 
 		.tp_name = "Entity",
 
-		.tp_basicsize = sizeof(Entity),
+		.tp_basicsize = sizeof(EntityBinding),
 		.tp_itemsize = 0,
 
 		.tp_dealloc = destructor(dealloc),
@@ -194,7 +194,7 @@ namespace Library::py
 
 		.tp_doc = "Python port of C++ Entity",
 
-		.tp_richcompare = Library::Util::ForceCast<richcmpfunc>(&richcompare),
+		.tp_richcompare = Library::Util::UnionCast<richcmpfunc>(&richcompare),
 
 		.tp_methods = methods,
 		.tp_members = members,
@@ -209,21 +209,21 @@ PyMODINIT_FUNC PyInit_Entity()
 {
 	using namespace Library::py;
 	
-	if (PyType_Ready(&Entity::type) < 0) [[unlikely]]
+	if (PyType_Ready(&EntityBinding::type) < 0) [[unlikely]]
 	{
 		return nullptr;
 	}
 
-	PyObject* m = PyModule_Create(&Entity::module);
+	PyObject* m = PyModule_Create(&EntityBinding::module);
 	if (!m) [[unlikely]]
 	{
 		return nullptr;
 	}
 
-	Py_INCREF(&Entity::type);
-	if (PyModule_AddObject(m, "Entity", reinterpret_cast<PyObject*>(&Entity::type)) < 0) [[unlikely]]
+	Py_INCREF(&EntityBinding::type);
+	if (PyModule_AddObject(m, "Entity", reinterpret_cast<PyObject*>(&EntityBinding::type)) < 0) [[unlikely]]
 	{
-		Py_DECREF(&Entity::type);
+		Py_DECREF(&EntityBinding::type);
 		Py_DECREF(m);
 		return nullptr;
 	}

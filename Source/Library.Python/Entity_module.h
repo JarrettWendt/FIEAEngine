@@ -7,24 +7,32 @@
 
 namespace Library::py
 {
-	struct Entity
+	[[Reflectable]];
+	class Entity : public Library::Entity
+	{
+		ATTRIBUTED_DECLARATIONS(Library::Entity)
+		ATTRIBUTED_SPECIAL_MEMBERS(Entity, default)
+		friend struct EntityBinding;
+	};
+	
+	struct EntityBinding
 	{
 		PyObject_HEAD
 
 		std::shared_ptr<Library::Entity> e;
 
-		static void dealloc(Entity* self);
-		static Entity* _new(PyTypeObject* t, PyObject* args, PyObject* kwds);
-		static int init(Entity* self, PyObject* args, PyObject* kwds);
+		static void dealloc(EntityBinding* self);
+		static EntityBinding* _new(PyTypeObject* t, PyObject* args, PyObject* kwds);
+		static int init(EntityBinding* self, PyObject* args, PyObject* kwds);
 
-		PyObject* richcompare(Entity* other, int op);
+		PyObject* richcompare(EntityBinding* other, int op);
 
 		PyObject* GetName(void* closure);
 		int SetName(PyObject* value, void* closure);
 		PyObject* GetEnabled(void* closure);
 		int SetEnabled(PyObject* value, void* closure);
 		PyObject* GetParent(void* closure);
-		int SetParent(Entity* value, void* closure);
+		int SetParent(EntityBinding* value, void* closure);
 
 		PyObject* NumChildren();
 		PyObject* HasChildren();
@@ -37,26 +45,26 @@ namespace Library::py
 
 		static inline PyMethodDef methods[]
 		{
-			{ "NumChildren", Library::Util::ForceCast<PyCFunction>(&Entity::NumChildren), METH_NOARGS, "how many children this Entity has" },
-			{ "HasChildren", Library::Util::ForceCast<PyCFunction>(&Entity::HasChildren), METH_NOARGS, "how many children this Entity has" },
-			{ "Child", Library::Util::ForceCast<PyCFunction>(&Entity::Child), METH_O, "get child by name" },
+			{ "NumChildren", Util::UnionCast<PyCFunction>(&EntityBinding::NumChildren), METH_NOARGS, "how many children this EntityBinding has" },
+			{ "HasChildren", Util::UnionCast<PyCFunction>(&EntityBinding::HasChildren), METH_NOARGS, "how many children this EntityBinding has" },
+			{ "Child", Util::UnionCast<PyCFunction>(&EntityBinding::Child), METH_O, "get child by name" },
 
-			{ "Adopt", Library::Util::ForceCast<PyCFunction>(&Entity::Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed Entity a child of this one" },
+			{ "Adopt", Util::UnionCast<PyCFunction>(&EntityBinding::Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed EntityBinding a child of this one" },
 
-			{ "Orphan", Library::Util::ForceCast<PyCFunction>(&Entity::Orphan), METH_NOARGS, "orphans this Entity from its parent" },
-			{ "RemoveChild", Library::Util::ForceCast<PyCFunction>(&Entity::RemoveChild), METH_O, "removes child by name" },
+			{ "Orphan", Util::UnionCast<PyCFunction>(&EntityBinding::Orphan), METH_NOARGS, "orphans this EntityBinding from its parent" },
+			{ "RemoveChild", Util::UnionCast<PyCFunction>(&EntityBinding::RemoveChild), METH_O, "removes child by name" },
 
-			{ "_Init", Library::Util::ForceCast<PyCFunction>(&Entity::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
-			{ "_Update", Library::Util::ForceCast<PyCFunction>(&Entity::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
+			{ "_Init", Util::UnionCast<PyCFunction>(&EntityBinding::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
+			{ "_Update", Util::UnionCast<PyCFunction>(&EntityBinding::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
 
 			{ nullptr }
 		};
 
 		static inline PyGetSetDef getset[]
 		{
-			{ "name", Library::Util::ForceCast<getter>(&Entity::GetName), Library::Util::ForceCast<setter>(&Entity::SetName), "name of this Entity", nullptr },
-			{ "enabled", Library::Util::ForceCast<getter>(&Entity::GetEnabled), Library::Util::ForceCast<setter>(&Entity::SetEnabled), "whether or not this Entity is enabled", nullptr },
-			{ "parent", Library::Util::ForceCast<getter>(&Entity::GetParent), Library::Util::ForceCast<setter>(&Entity::SetParent), "this Entity's parent", nullptr },
+			{ "name", Util::UnionCast<getter>(&EntityBinding::GetName), Util::UnionCast<setter>(&EntityBinding::SetName), "name of this EntityBinding", nullptr },
+			{ "enabled", Util::UnionCast<getter>(&EntityBinding::GetEnabled), Util::UnionCast<setter>(&EntityBinding::SetEnabled), "whether or not this EntityBinding is enabled", nullptr },
+			{ "parent", Util::UnionCast<getter>(&EntityBinding::GetParent), Util::UnionCast<setter>(&EntityBinding::SetParent), "this EntityBinding's parent", nullptr },
 
 			{ nullptr }
 		};
