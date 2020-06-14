@@ -4,7 +4,19 @@
 #include "Util.h"
 
 namespace Library::Util
-{	
+{
+	template<typename To, typename From>
+	To ForceCast(From f) noexcept
+	{
+		union
+		{
+			To to;
+			From from;
+		};
+		from = f;
+		return to;
+	}
+	
 	template<typename T, typename ...Ts>
 	constexpr bool IsOneOf() noexcept
 	{

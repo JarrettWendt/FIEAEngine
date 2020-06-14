@@ -4,23 +4,23 @@
 #include "PyUtil.h"
 
 #pragma region special members
-void PyEntity_dealloc(PyEntity* self)
+void PyEntity::dealloc(PyEntity* self)
 {
 	self->e = nullptr;
 	Py_TYPE(self)->tp_free(reinterpret_cast<PyObject*>(self));
 }
 
-PyObject* PyEntity_new(PyTypeObject* type, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
+PyEntity* PyEntity::_new(PyTypeObject* type, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
 {
 	if (PyEntity* self = PyUtil::Alloc<PyEntity>(type))
 	{
 		self->e = std::make_shared<Library::Entity>();
-		return reinterpret_cast<PyObject*>(self);
+		return self;
 	}
 	return nullptr;
 }
 
-int PyEntity_init(PyEntity* self, PyObject* args, PyObject* kwds)
+int PyEntity::init(PyEntity* self, PyObject* args, PyObject* kwds)
 {
 	static const char* kwlist[] = { "name", nullptr };
 	char* name{ nullptr };
@@ -38,13 +38,13 @@ int PyEntity_init(PyEntity* self, PyObject* args, PyObject* kwds)
 	return 0;
 }
 
-PyObject* PyEntity_richcompare(PyEntity* self, PyEntity* other, const int op)
+PyObject* PyEntity::richcompare(PyEntity* other, const int op)
 {
 	bool b;
 	switch (op)
 	{
-	case Py_EQ: b = self->e == other->e || self->e && *self->e == *other->e; break;
-	case Py_NE: b = self->e != other->e || self->e && *self->e != *other->e; break;
+	case Py_EQ: b = e == other->e || e && *e == *other->e; break;
+	case Py_NE: b = e != other->e || e && *e != *other->e; break;
 	default: Py_RETURN_NONE;
 	}
 	Py_RETURN_BOOL(b);
@@ -218,20 +218,20 @@ PyTypeObject PyEntityType
 	.tp_basicsize = sizeof(PyEntity),
 	.tp_itemsize = 0,
 
-	.tp_dealloc = destructor(PyEntity_dealloc),
+	.tp_dealloc = destructor(PyEntity::dealloc),
 
 	.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
 
 	.tp_doc = "Python port of C++ Entity",
 
-	.tp_richcompare = richcmpfunc(PyEntity_richcompare),
+	.tp_richcompare = Library::Util::ForceCast<richcmpfunc>(&PyEntity::richcompare),
 
 	.tp_methods = PyEntity_methods,
 	.tp_members = PyEntity_members,
 	.tp_getset = PyEntity_getset,
 
-	.tp_init = initproc(PyEntity_init),
-	.tp_new = PyEntity_new,
+	.tp_init = initproc(PyEntity::init),
+	.tp_new = newfunc(PyEntity::_new),
 };
 
 static inline PyModuleDef PyEntity_module

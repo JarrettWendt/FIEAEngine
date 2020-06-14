@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include <functional>	// std::function
 #include <sstream>		// std::stringstream
-#include <ranges>		// std::ranges::range
 #include <iterator>		// std::output_iterator
 
 #include "Concept.h"
@@ -32,6 +30,18 @@ namespace Library::Util
 	{
 		size_t operator()(size_t size, size_t capacity) noexcept;
 	};
+
+	/**
+	 * For when you can't be bothered with any cast semantics.
+	 * Uses a union to force the cast.
+	 *
+	 * @param <To>		destination type
+	 * @param <From>	source type
+	 * @param f			source value
+	 * @returns			bytes of f casted to a To
+	 */
+	template<typename To, typename From>
+	To ForceCast(From f) noexcept;
 
 	/**
 	 * @param <T>	type to look for
