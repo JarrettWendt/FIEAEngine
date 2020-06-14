@@ -3,6 +3,20 @@
 import unittest
 from FIEAEngine import Entity
 
+class MyPyEntity(Entity.Entity):
+
+	def _Update(self):
+		super()._Update()
+
+class MyPyEntityTests(unittest.TestCase):
+
+	def testCtor(self):
+		e = MyPyEntity()
+
+	def testUpdate(self):
+		e = MyPyEntity()
+		e._Update()
+
 class EntityTests(unittest.TestCase):
 
 	def testCtor(self):

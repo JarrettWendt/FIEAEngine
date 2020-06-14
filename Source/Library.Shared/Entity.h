@@ -381,6 +381,8 @@ namespace Library
 		[[nodiscard]] friend bool operator!=(const Entity& a, const Entity& b) noexcept;
 #pragma endregion
 
+		// TODO: These should be protected
+	public:
 		/**
 		 * Invokes Init() on all children.
 		 */

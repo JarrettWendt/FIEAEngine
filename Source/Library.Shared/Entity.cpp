@@ -226,6 +226,18 @@ Entity::iterator Entity::end() noexcept
 	}
 #pragma endregion
 
+#pragma region operators
+	bool operator==(const Entity& a, const Entity& b) noexcept
+	{
+		return operator==(static_cast<const Attributed&>(a), static_cast<const Attributed&>(b));
+	}
+
+	bool operator!=(const Entity& a, const Entity& b) noexcept
+	{
+		return !operator==(a, b);
+	}
+#pragma endregion
+
 	void Entity::Init()
 	{
 		for (const auto& e : *this)
@@ -244,7 +256,8 @@ Entity::iterator Entity::end() noexcept
 			}
 		}
 	}
-	
+
+#pragma region Helpers
 	void Entity::InvalTransform() noexcept
 	{
 		transformInval = true;
@@ -258,13 +271,5 @@ Entity::iterator Entity::end() noexcept
 			e->InvalTransform();
 		}
 	}
-	bool operator==(const Entity& a, const Entity& b) noexcept
-	{
-		return operator==(static_cast<const Attributed&>(a), static_cast<const Attributed&>(b));
-	}
-	
-	bool operator!=(const Entity& a, const Entity& b) noexcept
-	{
-		return !operator==(a, b);
-	}
+#pragma endregion
 }

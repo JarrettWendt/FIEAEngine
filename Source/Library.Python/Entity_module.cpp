@@ -163,6 +163,18 @@ PyObject* PyEntity_RemoveChild(PyEntity* self, PyObject* arg)
 	}
 	Py_RETURN_NONE;
 }
+
+PyObject* PyEntity_Init(PyEntity* self, PyObject*)
+{
+	self->e->Init();
+	Py_RETURN_NONE;
+}
+
+PyObject* PyEntity_Update(PyEntity* self, PyObject*)
+{
+	self->e->Update();
+	Py_RETURN_NONE;
+}
 #pragma endregion
 
 #pragma region structs
@@ -177,6 +189,9 @@ static inline PyMethodDef PyEntity_methods[]
 	{ "Orphan", PyCFunction(PyEntity_Orphan), METH_NOARGS, "orphans this Entity from its parent" },
 	{ "RemoveChild", PyCFunction(PyEntity_RemoveChild), METH_O, "removes child by name" },
 
+	{ "_Init", PyCFunction(PyEntity_Init), METH_NOARGS, "initialization ran after construction before the first Update" },
+	{ "_Update", PyCFunction(PyEntity_Update), METH_NOARGS, "initialization ran after construction before the first Update" },
+	
 	{ nullptr }
 };
 
