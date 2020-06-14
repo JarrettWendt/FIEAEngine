@@ -367,7 +367,7 @@ namespace Library
 		 *
 		 * @param a		rhs
 		 * @param b		lhs
-		 * @returns		whether these Attributeds are the same
+		 * @returns		whether these Entities are the same
 		 */
 		[[nodiscard]] friend bool operator==(const Entity& a, const Entity& b) noexcept;
 
@@ -376,7 +376,7 @@ namespace Library
 		 *
 		 * @param a		rhs
 		 * @param b		lhs
-		 * @returns		whether these Attributeds are not the same
+		 * @returns		whether these Entities are not the same
 		 */
 		[[nodiscard]] friend bool operator!=(const Entity& a, const Entity& b) noexcept;
 #pragma endregion
@@ -393,7 +393,7 @@ namespace Library
 
 	private:
 		/**
-		 * Marks that this Entity and all of it's childrens have invalid worldTransforms. 
+		 * Marks that this Entity and all of its children have invalid worldTransforms. 
 		 */
 		void InvalTransform() noexcept;
 
