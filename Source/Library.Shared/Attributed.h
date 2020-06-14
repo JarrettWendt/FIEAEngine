@@ -158,7 +158,7 @@ namespace Library
 
 #pragma region operators
 		/**
-		 * O(n)
+		 * O(n) where n is the number of attributes
 		 *
 		 * @param a		rhs
 		 * @param b		lhs
@@ -167,7 +167,7 @@ namespace Library
 		[[nodiscard]] friend bool operator==(const Attributed& a, const Attributed& b) noexcept;
 
 		/**
-		 * O(n)
+		 * O(n) where n is the number of attributes
 		 *
 		 * @param a		rhs
 		 * @param b		lhs

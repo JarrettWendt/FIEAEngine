@@ -37,6 +37,18 @@ int PyEntity_init(PyEntity* self, PyObject* args, PyObject* kwds)
 	
 	return 0;
 }
+
+PyObject* PyEntity_richcompare(PyEntity* self, PyEntity* other, const int op)
+{
+	bool b;
+	switch (op)
+	{
+	case Py_EQ: b = self->e == other->e || self->e && *self->e == *other->e; break;
+	case Py_NE: b = self->e != other->e || self->e && *self->e != *other->e; break;
+	default: Py_RETURN_NONE;
+	}
+	Py_RETURN_BOOL(b);
+}
 #pragma endregion
 
 #pragma region getters/setters
@@ -196,6 +208,8 @@ PyTypeObject PyEntityType
 	.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
 
 	.tp_doc = "Python port of C++ Entity",
+
+	.tp_richcompare = richcmpfunc(PyEntity_richcompare),
 
 	.tp_methods = PyEntity_methods,
 	.tp_members = PyEntity_members,

@@ -65,5 +65,12 @@ class EntityTests(unittest.TestCase):
 		c.parent = p
 		self.assertIsNotNone(c.parent)
 
+	def testRichCompare(self):
+		a = Entity.Entity()
+		b = Entity.Entity()
+		self.assertEqual(a, b)
+		a.Adopt(b)
+		self.assertNotEqual(a, b)
+
 if __name__ == '__main__':
 	unittest.main()

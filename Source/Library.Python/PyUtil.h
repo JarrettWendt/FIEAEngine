@@ -42,4 +42,14 @@ namespace PyUtil
 	T* Alloc(PyTypeObject* type) noexcept;
 }
 
+#define Py_RETURN_BOOL(b)	\
+	if (b)					\
+	{						\
+		Py_RETURN_TRUE;		\
+	}						\
+	else					\
+	{						\
+		Py_RETURN_FALSE;	\
+	}
+
 #include "PyUtil.inl"

@@ -361,6 +361,26 @@ namespace Library
 		void RemoveChild(const std::string& childName) noexcept;
 #pragma endregion
 
+#pragma region operators
+		/**
+		 * O(n) where n is the number of attributes
+		 *
+		 * @param a		rhs
+		 * @param b		lhs
+		 * @returns		whether these Attributeds are the same
+		 */
+		[[nodiscard]] friend bool operator==(const Entity& a, const Entity& b) noexcept;
+
+		/**
+		 * O(n) where n is the number of attributes
+		 *
+		 * @param a		rhs
+		 * @param b		lhs
+		 * @returns		whether these Attributeds are not the same
+		 */
+		[[nodiscard]] friend bool operator!=(const Entity& a, const Entity& b) noexcept;
+#pragma endregion
+
 		/**
 		 * Invokes Init() on all children.
 		 */

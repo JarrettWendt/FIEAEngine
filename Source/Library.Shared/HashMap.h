@@ -628,7 +628,8 @@ namespace Library
 		 * The number of buckets does not matter, only the elements.
 		 * O(n)
 		 * 
-		 * @param other		the container to compare this against
+		 * @param left		lhs
+		 * @param right		rhs
 		 * @return true		if both containers contain all the same elements
 		 * @return false	otherwise
 		 */
@@ -659,7 +660,8 @@ namespace Library
 		 * The number of buckets does not matter, only the elements.
 		 * O(n)
 		 *
-		 * @param other		the container to compare this against
+		 * @param left		lhs
+		 * @param right		rhs
 		 * @return true		if the containers do not contain all the same elements
 		 * @return false	otherwise
 		 */
