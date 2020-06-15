@@ -4,7 +4,11 @@ import unittest
 from FIEAEngine import Entity
 
 class MyPyEntity(Entity.Entity):
+
+	updateRunCount = 0
+
 	def _Update(self):
+		MyPyEntity.updateRunCount = MyPyEntity.updateRunCount + 1
 		super()._Update()
 
 class MyPyEntityTests(unittest.TestCase):
@@ -15,6 +19,11 @@ class MyPyEntityTests(unittest.TestCase):
 	def testUpdate(self):
 		e = MyPyEntity()
 		e._Update()
+
+	def testOverride(self):
+		e = MyPyEntity()
+		e.InvokeUpdate()
+		self.assertEqual(1, MyPyEntity.updateRunCount)
 
 class EntityTests(unittest.TestCase):
 

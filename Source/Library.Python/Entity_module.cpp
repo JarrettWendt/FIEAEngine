@@ -177,6 +177,14 @@ namespace Library::py
 		e->As<Entity>()->Update();
 		Py_RETURN_NONE;
 	}
+	
+	PyObject* EntityBinding::InvokeUpdate()
+	{
+		// TODO: This needs to be moved to PyEntity
+		PyObject* method = PyObject_GetAttrString(reinterpret_cast<PyObject*>(this), "_Update");
+		PyObject* ret = PyObject_CallObject(method, nullptr);
+		return ret;
+	}
 #pragma endregion
 
 	PyTypeObject EntityBinding::type

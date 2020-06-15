@@ -48,6 +48,8 @@ namespace Library::py
 		PyObject* Init();
 		PyObject* Update();
 
+		PyObject* InvokeUpdate();
+
 		static inline PyMethodDef methods[]
 		{
 			{ "Child", Util::UnionCast<PyCFunction>(&EntityBinding::Child), METH_O, "get child by name" },
@@ -60,6 +62,8 @@ namespace Library::py
 			{ "_Init", Util::UnionCast<PyCFunction>(&EntityBinding::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
 			{ "_Update", Util::UnionCast<PyCFunction>(&EntityBinding::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
 
+			{ "InvokeUpdate", Util::UnionCast<PyCFunction>(&EntityBinding::InvokeUpdate), METH_NOARGS, "test" },
+			
 			{ nullptr }
 		};
 
