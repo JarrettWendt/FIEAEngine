@@ -2,6 +2,12 @@
 
 Python bindings for Library.Shared.
 
+### Environment Variables
+The Library.Python project requires the header and library files of your Python installation in order to compile and link. I achieved this through an environment variable named `PythonDir` which you should set to the path of your Python installation. For example, on my system I have:
+| Environment Variable | Value                     |
+|----------------------|---------------------------|
+| PythonDir            | C:\Program Files\Python38 |
+
 ### "Hacky" things being done
 Class bindings are being put into an actual class rather than a group of free functions. For example, rather than having the free function
 ```c++
