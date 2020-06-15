@@ -1,7 +1,7 @@
 #pragma once
 #include "PyUtil.h"
 
-namespace PyUtil
+namespace Library::py::Util
 {
 	template<typename T>
 	T* Construct(PyTypeObject& type) noexcept

@@ -17,6 +17,9 @@
     <ClCompile Include="PyUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="shared_ptr.cpp">
+      <Filter>shared_ptr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="generated">
@@ -31,6 +34,9 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{c83f7001-8a59-4e83-ba54-3e33c937da79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shared_ptr">
+      <UniqueIdentifier>{38c4356e-c0ba-49a8-8cf5-fe9b8512e3fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math_module.h">
@@ -42,6 +48,9 @@
     <ClInclude Include="FIEAEngine_module.h" />
     <ClInclude Include="PyUtil.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="shared_ptr.h">
+      <Filter>shared_ptr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

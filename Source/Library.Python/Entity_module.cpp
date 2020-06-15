@@ -4,7 +4,23 @@
 #include "PyUtil.h"
 
 namespace Library::py
-{	
+{
+#pragma region py::Entity
+	void Entity::Init()
+	{
+		// Don't invoke Base::Init, that's handled in EntityBinding::Init
+		PyObject* method = PyObject_GetAttrString(&*pyObject, "_Init");
+		PyObject_CallObject(method, nullptr);
+	}
+	
+	void Entity::Update()
+	{
+		// Don't invoke Base::Update, that's handled in EntityBinding::Update
+		PyObject* method = PyObject_GetAttrString(&*pyObject, "_Update");
+		PyObject_CallObject(method, nullptr);
+	}
+#pragma endregion
+	
 #pragma region special members
 	void EntityBinding::dealloc(EntityBinding* self)
 	{
@@ -14,9 +30,11 @@ namespace Library::py
 
 	EntityBinding* EntityBinding::_new(PyTypeObject* t, [[maybe_unused]] PyObject* args, [[maybe_unused]] PyObject* kwds)
 	{
-		if (EntityBinding* self = PyUtil::Alloc<EntityBinding>(t))
+		if (EntityBinding* self = Util::Alloc<EntityBinding>(t))
 		{
-			self->e = std::make_shared<Entity>();
+			auto e = std::make_shared<Entity>();
+			e->pyObject = self;
+			self->e = e;
 			return self;
 		}
 		return nullptr;
@@ -56,13 +74,13 @@ namespace Library::py
 #pragma region getters/setters
 	PyObject* EntityBinding::GetName()
 	{
-		return PyUtil::ToPyStr(e->GetName());
+		return Util::ToPyStr(e->GetName());
 	}
 
 	int EntityBinding::SetName(PyObject* value)
 	{
 		std::string name;
-		if (!PyUtil::FromPyStr(value, name))
+		if (!Util::FromPyStr(value, name))
 		{
 			return -1;
 		}
@@ -85,7 +103,7 @@ namespace Library::py
 	{
 		if (const auto parent = e->Parent())
 		{
-			EntityBinding* ret = PyUtil::Alloc<EntityBinding>(type);
+			EntityBinding* ret = Util::Alloc<EntityBinding>(type);
 			ret->e = parent;
 			Py_INCREF(ret);
 			return reinterpret_cast<PyObject*>(ret);
@@ -114,13 +132,13 @@ namespace Library::py
 	PyObject* EntityBinding::Child(PyObject* arg)
 	{
 		std::string childName;
-		if (PyUtil::FromPyStr(arg, childName))
+		if (Util::FromPyStr(arg, childName))
 		{
 			if (const auto child = e->Child(childName))
 			{
-				EntityBinding* ret = PyUtil::Alloc<EntityBinding>(type);
+				EntityBinding* ret = Util::Alloc<EntityBinding>(type);
 				ret->e = e->Child(childName);
-				return reinterpret_cast<PyObject*>(ret);
+				return ret;
 			}
 		}
 		Py_RETURN_NONE;
@@ -144,7 +162,7 @@ namespace Library::py
 		{
 			child->e = name ? e->Adopt(name, child->e) : e->Adopt(child->e);
 			Py_INCREF(child);
-			return reinterpret_cast<PyObject*>(child);
+			return child;
 		}
 
 		Py_RETURN_NONE;
@@ -159,7 +177,7 @@ namespace Library::py
 	PyObject* EntityBinding::RemoveChild(PyObject* arg)
 	{
 		std::string childName;
-		if (PyUtil::FromPyStr(arg, childName))
+		if (Util::FromPyStr(arg, childName))
 		{
 			e->RemoveChild(childName);
 		}
@@ -168,22 +186,32 @@ namespace Library::py
 
 	PyObject* EntityBinding::Init()
 	{
-		e->As<Entity>()->Init();
+		// We never want to invoke py::Entity::Init from here because that
+		// invokes the python _Init which will cause infinite recursion.
+		if (e->Is<py::Entity>())
+		{
+			e->Library::Entity::Init();
+		}
+		else
+		{
+			e->Init();
+		}
 		Py_RETURN_NONE;
 	}
 
 	PyObject* EntityBinding::Update()
 	{
-		e->As<Entity>()->Update();
+		// We never want to invoke py::Entity::Update from here because that
+		// invokes the python _Update which will cause infinite recursion.
+		if (e->Is<py::Entity>())
+		{
+			e->Library::Entity::Update();
+		}
+		else
+		{
+			e->Update();
+		}
 		Py_RETURN_NONE;
-	}
-	
-	PyObject* EntityBinding::InvokeUpdate()
-	{
-		// TODO: This needs to be moved to PyEntity
-		PyObject* method = PyObject_GetAttrString(reinterpret_cast<PyObject*>(this), "_Update");
-		PyObject* ret = PyObject_CallObject(method, nullptr);
-		return ret;
 	}
 #pragma endregion
 

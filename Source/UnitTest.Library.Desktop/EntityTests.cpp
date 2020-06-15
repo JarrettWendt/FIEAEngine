@@ -20,8 +20,8 @@ namespace UnitTestLibraryDesktop
 		{
 			std::weak_ptr<Entity> ptr;
 			{
-				const auto foo = std::make_shared<Entity>();
-				ptr = foo;
+				const auto e = std::make_shared<Entity>();
+				ptr = e;
 			}
 			Assert::IsTrue(ptr.expired());
 		}

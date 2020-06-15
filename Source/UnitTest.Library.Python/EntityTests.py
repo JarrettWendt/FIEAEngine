@@ -18,12 +18,11 @@ class MyPyEntityTests(unittest.TestCase):
 
 	def testUpdate(self):
 		e = MyPyEntity()
+		oldCount = MyPyEntity.updateRunCount
+		c = e.Adopt(MyPyEntity())
+		c.Adopt(MyPyEntity())
 		e._Update()
-
-	def testOverride(self):
-		e = MyPyEntity()
-		e.InvokeUpdate()
-		self.assertEqual(1, MyPyEntity.updateRunCount)
+		self.assertEqual(oldCount + 3, MyPyEntity.updateRunCount)
 
 class EntityTests(unittest.TestCase):
 

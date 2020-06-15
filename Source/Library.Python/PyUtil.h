@@ -2,7 +2,7 @@
 
 #include <Python.h>
 
-namespace PyUtil
+namespace Library::py::Util
 {
 	/**
 	 * @param str	string to convert to a python string

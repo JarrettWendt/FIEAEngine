@@ -1,6 +1,11 @@
 #pragma once
 #include "Attributed.h"
 
+namespace Library::py
+{
+	class EntityBinding;
+}
+
 namespace Library
 {
 	[[Reflectable]];
@@ -9,6 +14,7 @@ namespace Library
 		ATTRIBUTED_DECLARATIONS(Attributed)
 		ATTRIBUTED_SPECIAL_MEMBERS(Entity, default)
 		friend class Engine;
+		friend py::EntityBinding;
 
 		using SharedEntity = std::shared_ptr<Entity>;
 		

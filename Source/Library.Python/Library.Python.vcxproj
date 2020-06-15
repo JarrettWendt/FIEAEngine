@@ -225,12 +225,14 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)..\Library.Pytho
     <ClCompile Include="PyUtil.cpp" />
     <ClCompile Include="Reflection.generated.cpp" />
     <ClCompile Include="Registry.generated.cpp" />
+    <ClCompile Include="shared_ptr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity_module.h" />
     <ClInclude Include="FIEAEngine_module.h" />
     <ClInclude Include="Math_module.h" />
     <ClInclude Include="PyUtil.h" />
+    <ClInclude Include="shared_ptr.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PyUtil.inl" />

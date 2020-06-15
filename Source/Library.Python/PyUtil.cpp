@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PyUtil.h"
 
-namespace PyUtil
+namespace Library::py::Util
 {
 	PyObject* ToPyStr(const std::string& str) noexcept
 	{
