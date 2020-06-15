@@ -19,17 +19,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Exception.cpp">
       <Filter>Util\Exception</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp">
-      <Filter>Engine\Input</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)EngineTime.cpp">
-      <Filter>Engine\Time</Filter>
+      <Filter>Util\Time</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Coroutine.cpp">
-      <Filter>Engine\Coroutine</Filter>
+      <Filter>Util\Coroutine</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Attributed.cpp">
       <Filter>Hierarchy\Attributed</Filter>
@@ -115,14 +109,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)EventManager.h">
       <Filter>Events\EventManager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Input.h">
-      <Filter>Engine\Input</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)EngineTime.h">
-      <Filter>Engine\Time</Filter>
+      <Filter>Util\Time</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h">
       <Filter>Containers\Stack</Filter>
@@ -131,7 +119,7 @@
       <Filter>Containers\Queue</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Coroutine.h">
-      <Filter>Engine\Coroutine</Filter>
+      <Filter>Util\Coroutine</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Literals.h">
       <Filter>Util\Literals</Filter>
@@ -213,15 +201,6 @@
     <Filter Include="Util\Exception">
       <UniqueIdentifier>{93cefbc5-3be8-4405-bb97-26fff72bdf37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{e527557c-9727-490f-bc62-e1dd6de1d200}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Input">
-      <UniqueIdentifier>{b6f0ec46-08b2-4aed-a834-8dc59a2511eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Time">
-      <UniqueIdentifier>{045481a8-deae-4e84-893e-41f8f3f5322f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Containers\Stack">
       <UniqueIdentifier>{3abbb888-d333-46f3-9d2f-44408453cb63}</UniqueIdentifier>
     </Filter>
@@ -230,9 +209,6 @@
     </Filter>
     <Filter Include="Util\Literals">
       <UniqueIdentifier>{92430b2a-b750-4584-87e8-0a7372ed39b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Coroutine">
-      <UniqueIdentifier>{278562ba-03b3-4e8b-88db-5ae722d093d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Hierarchy">
       <UniqueIdentifier>{bd2d08a7-78fd-45d9-bad6-e7e79cfaae5d}</UniqueIdentifier>
@@ -269,6 +245,12 @@
     </Filter>
     <Filter Include="Math\Matrix">
       <UniqueIdentifier>{eb84e228-b528-425d-9d1f-43d2903d4c9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Coroutine">
+      <UniqueIdentifier>{278562ba-03b3-4e8b-88db-5ae722d093d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Time">
+      <UniqueIdentifier>{045481a8-deae-4e84-893e-41f8f3f5322f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +291,7 @@
       <Filter>Events\EventManager</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)EngineTime.inl">
-      <Filter>Engine\Time</Filter>
+      <Filter>Util\Time</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Stack.inl">
       <Filter>Containers\Stack</Filter>
@@ -318,7 +300,7 @@
       <Filter>Containers\Queue</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Coroutine.inl">
-      <Filter>Engine\Coroutine</Filter>
+      <Filter>Util\Coroutine</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)LibMath.inl">
       <Filter>Math</Filter>

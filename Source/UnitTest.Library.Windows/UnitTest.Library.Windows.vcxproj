@@ -23,43 +23,48 @@
   </PropertyGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{2EB23726-A051-47E2-ABCF-70B7818B7A9E}</ProjectGuid>
-    <RootNamespace>GameDesktop</RootNamespace>
+    <ProjectGuid>{DD4918F7-50E9-4872-9D41-0C7EF3D77F0A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>UnitTestLibraryDesktop</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Library.Python</ProjectName>
+    <ProjectSubType>NativeUnitTestProject</ProjectSubType>
+    <ProjectName>UnitTest.Library.Windows</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\Library.Shared\Library.Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -79,168 +84,209 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>5030;4706</DisableSpecificWarnings>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5030; 4706; 4834; 26478; 4189</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
     </Link>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
     <CustomBuildStep>
       <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
 py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
-      <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-    </PreBuildEvent>
+    <CustomBuildStep>
+      <Outputs>does_not_exist.txt</Outputs>
+      <Inputs>
+      </Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>5030;4706</DisableSpecificWarnings>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5030; 4706; 4834; 26478; 4189</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
     </Link>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
     <CustomBuildStep>
       <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
 py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
-      <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-    </PreBuildEvent>
+    <CustomBuildStep>
+      <Outputs>does_not_exist.txt</Outputs>
+      <Inputs>
+      </Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>5030;4706</DisableSpecificWarnings>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5030; 4706; 4834; 26478; 4189</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
     <CustomBuildStep>
       <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
 py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
-      <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-    </PreBuildEvent>
+    <CustomBuildStep>
+      <Outputs>does_not_exist.txt</Outputs>
+      <Inputs>
+      </Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>5030;4706</DisableSpecificWarnings>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5030; 4706; 4834; 26478; 4189</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
     <CustomBuildStep>
       <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
 py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
-      <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-    </PreBuildEvent>
+    <CustomBuildStep>
+      <Outputs>does_not_exist.txt</Outputs>
+      <Inputs>
+      </Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Entity_module.cpp" />
-    <ClCompile Include="FIEAEngine_module.cpp" />
-    <ClCompile Include="Math_module.cpp" />
-    <ClCompile Include="PyUtil.cpp" />
+    <ClCompile Include="ArrayTests.cpp" />
+    <ClCompile Include="AttributedTests.cpp" />
+    <ClCompile Include="ConceptTests.cpp" />
+    <ClCompile Include="CoroutineTests.cpp" />
+    <ClCompile Include="DatumTests.cpp" />
+    <ClCompile Include="EngineTests.cpp" />
+    <ClCompile Include="EntityTests.cpp" />
+    <ClCompile Include="EnumTests.cpp" />
+    <ClCompile Include="EventManagerTests.cpp" />
+    <ClCompile Include="EventTests.cpp" />
+    <ClCompile Include="Foo.cpp" />
+    <ClCompile Include="FooTests.cpp" />
+    <ClCompile Include="HashMapTests.cpp" />
+    <ClCompile Include="HashTests.cpp" />
+    <ClCompile Include="InputTests.cpp" />
+    <ClCompile Include="MathTests.cpp" />
+    <ClCompile Include="MemoryTests.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="QueueTests.cpp" />
+    <ClCompile Include="RandomTests.cpp" />
     <ClCompile Include="Reflection.generated.cpp" />
+    <ClCompile Include="ReflectionTests.cpp" />
     <ClCompile Include="Registry.generated.cpp" />
-    <ClCompile Include="shared_ptr.cpp" />
+    <ClCompile Include="RegistryTests.cpp" />
+    <ClCompile Include="SListTests.cpp" />
+    <ClCompile Include="StackTests.cpp" />
+    <ClCompile Include="TimeTests.cpp" />
+    <ClCompile Include="UtilTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity_module.h" />
-    <ClInclude Include="FIEAEngine_module.h" />
-    <ClInclude Include="Math_module.h" />
-    <ClInclude Include="PyUtil.h" />
-    <ClInclude Include="shared_ptr.h" />
+    <ClInclude Include="AttributedFoo.h" />
+    <ClInclude Include="Digit.h" />
+    <ClInclude Include="Foo.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="ToStrings.h" />
+    <ClInclude Include="UnitTest.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PyUtil.inl" />
-    <None Include="ReadMe.md" />
+    <None Include="..\Library.Shared\.editorconfig" />
+    <None Include="Random.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library.Windows\Library.Windows.vcxproj">
+      <Project>{4f89730b-de78-4dd4-b6cc-83b4d42183af}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

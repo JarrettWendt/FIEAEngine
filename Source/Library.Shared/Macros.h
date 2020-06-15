@@ -17,6 +17,7 @@
  * @param msg   the message you want to pair with this assert (required)
  */
 #ifdef _DEBUG
+#include <cassert>
 #define assertm1(msg) assert(false && msg)
 #define assertm2(exp, msg) assert(exp && msg)
 #else

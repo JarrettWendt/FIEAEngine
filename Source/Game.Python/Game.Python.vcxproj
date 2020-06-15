@@ -23,33 +23,33 @@
   </PropertyGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{2EB23726-A051-47E2-ABCF-70B7818B7A9E}</ProjectGuid>
+    <ProjectGuid>{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}</ProjectGuid>
     <RootNamespace>GameDesktop</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Library.Python</ProjectName>
+    <ProjectName>Game.Python</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -59,7 +59,6 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\Library.Shared\Library.Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -80,23 +79,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
-    <TargetExt>.pyd</TargetExt>
-    <TargetName>FIEAEngine</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,7 +100,6 @@
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,9 +107,8 @@
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
-py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
+      <Command>
+      </Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -138,7 +127,6 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,9 +134,8 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
-py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
+      <Command>
+      </Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -169,7 +156,6 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -179,9 +165,8 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
-py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
+      <Command>
+      </Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -202,7 +187,6 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -212,9 +196,8 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
-
-py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
+      <Command>
+      </Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -223,24 +206,21 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Entity_module.cpp" />
-    <ClCompile Include="FIEAEngine_module.cpp" />
-    <ClCompile Include="Math_module.cpp" />
-    <ClCompile Include="PyUtil.cpp" />
-    <ClCompile Include="Reflection.generated.cpp" />
-    <ClCompile Include="Registry.generated.cpp" />
-    <ClCompile Include="shared_ptr.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity_module.h" />
-    <ClInclude Include="FIEAEngine_module.h" />
-    <ClInclude Include="Math_module.h" />
-    <ClInclude Include="PyUtil.h" />
-    <ClInclude Include="shared_ptr.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PyUtil.inl" />
-    <None Include="ReadMe.md" />
+    <ProjectReference Include="..\Library.Python\Library.Python.vcxproj">
+      <Project>{4f89730b-de78-4dd4-b6cc-83b4d42183af}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
