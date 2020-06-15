@@ -1,3 +1,5 @@
+// MIT License Copyright(c) 2020 Jarrett Wendt
+
 #include "pch.h"
 #include "Entity_module.h"
 #include "Entity.h"
@@ -117,7 +119,7 @@ namespace Library::py
 		return 0;
 	}
 #pragma endregion
-
+	
 #pragma region methods
 	PyObject* EntityBinding::NumChildren()
 	{

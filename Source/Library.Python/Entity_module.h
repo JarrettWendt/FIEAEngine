@@ -1,3 +1,5 @@
+// MIT License Copyright(c) 2020 Jarrett Wendt
+
 #pragma once
 
 #include <Python.h>
@@ -8,9 +10,13 @@
 #include "shared_ptr.h"
 
 namespace Library::py
-{
+{	
 	PyMODINIT_FUNC Init_Entity();
-	
+
+	/**
+	 * All Python Entities will inherit from py::Entity.
+	 * So they won't have their own unique RTTI::IDType, but they will at least share py::Entity::typeID.
+	 */
 	[[Reflectable]];
 	class Entity : public Library::Entity
 	{
@@ -23,7 +29,11 @@ namespace Library::py
 		virtual void Init() override;
 		virtual void Update() override;
 	};
-	
+
+	/**
+	 * The actual class that will be instantiated for every python Entity.
+	 * References a Library::Entity, not necessarily a py::Entity.
+	 */
 	class EntityBinding : protected PyObject
 	{
 		friend PyObject* Init_Entity();
