@@ -252,6 +252,9 @@
     <Filter Include="Util\Time">
       <UniqueIdentifier>{045481a8-deae-4e84-893e-41f8f3f5322f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Python">
+      <UniqueIdentifier>{8fe5fec6-5875-4adb-af2e-7fc16f9293b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)VariantArray.inl">

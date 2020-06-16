@@ -4,7 +4,7 @@
 #include "Entity_module.h"
 #include "Math_module.h"
 
-PyMODINIT_FUNC PyInit_FIEAEngine()
+PyObject* PyInit_FIEAEngine() noexcept
 {
 	PyObject* fiea = PyModule_Create(&FIEAEngine_module);
 	if (!fiea) [[unlikely]]

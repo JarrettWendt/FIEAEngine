@@ -223,9 +223,15 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Library.Python\Library.Python.vcxproj">
+      <Project>{2eb23726-a051-47e2-abcf-70b7818b7a9e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Library.Windows\Library.Windows.vcxproj">
       <Project>{4f89730b-de78-4dd4-b6cc-83b4d42183af}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Init.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

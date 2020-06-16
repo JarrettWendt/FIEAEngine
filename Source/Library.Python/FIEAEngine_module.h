@@ -14,4 +14,4 @@ static inline PyModuleDef FIEAEngine_module
 	nullptr
 };
 
-PyMODINIT_FUNC PyInit_FIEAEngine();
+PyObject* PyInit_FIEAEngine() noexcept;

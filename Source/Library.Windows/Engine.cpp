@@ -10,6 +10,7 @@
 
 #include <Python.h>
 #include <Windows.h>
+#include "../Library.Python/FIEAEngine_module.h"
 
 namespace Library
 {
@@ -21,11 +22,6 @@ namespace Library
 	void Engine::Main(const Args& args)
 	{
 		Init(args);
-		
-		PyRun_SimpleString(R"(
-from time import time, ctime
-print('Today is', ctime(time()))
-)");
 		
 		while (IsActive())
 		{
@@ -48,7 +44,14 @@ print('Today is', ctime(time()))
 		const auto wProgramName = Py_DecodeLocale(args[0], nullptr);
 		programName = std::to_string(wProgramName);
 		Py_SetProgramName(wProgramName);
+
+		//PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
+		
 		Py_Initialize();
+		
+		FILE* f;
+		fopen_s(&f, "Init.py", "r");
+		PyRun_SimpleFile(f, "Init.py");
 	}
 
 	void Engine::Update()

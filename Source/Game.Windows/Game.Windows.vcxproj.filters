@@ -24,4 +24,7 @@
       <Filter>pch</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Init.py" />
+  </ItemGroup>
 </Project>
