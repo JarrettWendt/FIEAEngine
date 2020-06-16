@@ -218,7 +218,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library.Desktop\Library.Desktop.vcxproj">
+    <ProjectReference Include="..\Library.Windows\Library.Windows.vcxproj">
       <Project>{4f89730b-de78-4dd4-b6cc-83b4d42183af}</Project>
     </ProjectReference>
   </ItemGroup>
