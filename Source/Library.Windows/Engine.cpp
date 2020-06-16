@@ -41,9 +41,12 @@ namespace Library
 		world = std::make_shared<Entity>();
 		world->Init();
 
-		const auto wProgramName = Py_DecodeLocale(args[0], nullptr);
-		programName = std::to_string(wProgramName);
-		Py_SetProgramName(wProgramName);
+		if (!args.empty())
+		{
+			const auto wProgramName = Py_DecodeLocale(args[0], nullptr);
+			programName = std::to_string(wProgramName);
+			Py_SetProgramName(wProgramName);
+		}
 
 		PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
 		

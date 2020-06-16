@@ -17,15 +17,13 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(Main)
 		{
 			// Start a coroutine to kill the simulation so we don't get into an infinite loop.
-			Coroutines::Start([]()-> Coroutine
-			{
-				co_yield 5ms;
-				Engine::IsActive() = false;
-			});
-			Engine::Main({});
-			Engine::IsActive() = true;
-			// One more to clear the Coroutines.
-			Engine::Update();
+			//Coroutines::Start([]()-> Coroutine
+			//{
+			//	co_yield 5ms;
+			//	Engine::IsActive() = false;
+			//});
+			//Engine::Main({});
+			//Engine::IsActive() = true;
 		}
 	};
 }
