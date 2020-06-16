@@ -4,11 +4,19 @@
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Reflection.generated.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
+    <ClCompile Include="Registry.generated.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
       <UniqueIdentifier>{a5ac2737-40e7-459d-a4c8-cd9ac5955e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="generated">
+      <UniqueIdentifier>{dce4c1e3-a277-4280-8faf-466cda3f76fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

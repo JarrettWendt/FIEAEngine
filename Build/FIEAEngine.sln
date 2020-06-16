@@ -14,8 +14,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library.Python", "..\Source
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "UnitTest.Library.Python", "..\Source\UnitTest.Library.Python\UnitTest.Library.Python.pyproj", "{AC6A1FEB-AAD2-4BDD-BE3E-C38A34C25E48}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game.Python", "..\Source\Game.Python\Game.Python.vcxproj", "{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library.Windows", "..\Source\Library.Windows\Library.Windows.vcxproj", "{4F89730B-DE78-4DD4-B6CC-83B4D42183AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest.Library.Windows", "..\Source\UnitTest.Library.Windows\UnitTest.Library.Windows.vcxproj", "{DD4918F7-50E9-4872-9D41-0C7EF3D77F0A}"
@@ -53,16 +51,6 @@ Global
 		{AC6A1FEB-AAD2-4BDD-BE3E-C38A34C25E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC6A1FEB-AAD2-4BDD-BE3E-C38A34C25E48}.Release|x64.ActiveCfg = Release|Any CPU
 		{AC6A1FEB-AAD2-4BDD-BE3E-C38A34C25E48}.Release|x86.ActiveCfg = Release|Any CPU
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Debug|x64.ActiveCfg = Debug|x64
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Debug|x64.Build.0 = Debug|x64
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Debug|x86.ActiveCfg = Debug|Win32
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Debug|x86.Build.0 = Debug|Win32
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Release|Any CPU.ActiveCfg = Release|Win32
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Release|x64.ActiveCfg = Release|x64
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Release|x64.Build.0 = Release|x64
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Release|x86.ActiveCfg = Release|Win32
-		{F56BEAB8-28DB-4F5F-99D9-A6707E8924B6}.Release|x86.Build.0 = Release|Win32
 		{4F89730B-DE78-4DD4-B6CC-83B4D42183AF}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{4F89730B-DE78-4DD4-B6CC-83B4D42183AF}.Debug|x64.ActiveCfg = Debug|x64
 		{4F89730B-DE78-4DD4-B6CC-83B4D42183AF}.Debug|x64.Build.0 = Debug|x64

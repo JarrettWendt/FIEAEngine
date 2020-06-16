@@ -12,10 +12,12 @@ namespace Library
 	{
 		/** the parentmost Entity */
 		static inline std::shared_ptr<Entity> world{ nullptr };
-
+		static inline std::string programName{};
+		
 	public:
 		STATIC_CLASS(Engine)
-
+		using Args = gsl::span<const char*>;
+		
 		/**
 		 * O(1)
 		 * 
@@ -26,7 +28,7 @@ namespace Library
 		/**
 		 * to be called by WinMain()
 		 */
-		static void Main();
+		static void Main(const Args& args);
 
 		/**
 		 * setting this to false will terminate the simulation
@@ -38,7 +40,7 @@ namespace Library
 		/**
 		 * runs before the first Update()
 		 */
-		static void Init();
+		static void Init(const Args& args);
 
 		/**
 		 * the main engine loop

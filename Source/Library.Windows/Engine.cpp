@@ -8,6 +8,7 @@
 #include "EngineTime.h"
 #include "Input.h"
 
+#include <Python.h>
 #include <Windows.h>
 
 namespace Library
@@ -17,9 +18,15 @@ namespace Library
 		return *world;
 	}
 	
-	void Engine::Main()
+	void Engine::Main(const Args& args)
 	{
-		Init();
+		Init(args);
+		
+		PyRun_SimpleString(R"(
+from time import time, ctime
+print('Today is', ctime(time()))
+)");
+		
 		while (IsActive())
 		{
 			Update();
@@ -33,10 +40,15 @@ namespace Library
 		return ret;
 	}
 	
-	void Engine::Init()
+	void Engine::Init(const Args& args)
 	{
 		world = std::make_shared<Entity>();
 		world->Init();
+
+		const auto wProgramName = Py_DecodeLocale(args[0], nullptr);
+		programName = std::to_string(wProgramName);
+		Py_SetProgramName(wProgramName);
+		Py_Initialize();
 	}
 
 	void Engine::Update()
@@ -49,7 +61,11 @@ namespace Library
 	
 	void Engine::Terminate()
 	{
-		// TODO
+		world = nullptr;
+		if (Py_FinalizeEx() < 0)
+		{
+			std::terminate();
+		}
 	}
 	
 	LRESULT CALLBACK Engine::WndProc([[maybe_unused]] void* hWnd, const UINT uMsg, const WPARAM wParam, [[maybe_unused]] const LPARAM lParam)

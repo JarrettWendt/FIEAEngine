@@ -398,7 +398,7 @@ namespace std
 	}
 
 #pragma warning(push)
-#pragma warning(disable: 4505)		// Unreference local function has been removed.
+#pragma warning(disable: 4505)		// Unreferenced local function has been removed.
 	[[nodiscard]] static std::string to_string(const char c)
 	{
 		return std::string(1, c);
@@ -407,6 +407,19 @@ namespace std
 	[[nodiscard]] constexpr const std::string& to_string(const std::string& str)
 	{
 		return str;
+	}
+
+	[[nodiscard]] static std::string to_string(const std::wstring& str)
+	{
+#pragma warning(push)
+#pragma warning(disable: 4244)	// possible loss of data
+		return std::string(str.begin(), str.end());
+#pragma warning(pop)
+	}
+
+	[[nodiscard]] static std::string to_string(const wchar_t* str)
+	{
+		return std::to_string(std::wstring(str));
 	}
 
 	[[nodiscard]] static std::wstring to_wstring(const std::string& str)

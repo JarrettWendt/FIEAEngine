@@ -22,7 +22,7 @@ namespace UnitTestLibraryDesktop
 				co_yield 5ms;
 				Engine::IsActive() = false;
 			});
-			Engine::Main();
+			Engine::Main({});
 			Engine::IsActive() = true;
 			// One more to clear the Coroutines.
 			Engine::Update();

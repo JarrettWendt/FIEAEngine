@@ -99,7 +99,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PythonDir)\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,8 +107,9 @@
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
+
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -126,7 +127,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PythonDir)\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,8 +135,9 @@
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
+
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -155,7 +157,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PythonDir)\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,8 +167,9 @@
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
+
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -186,7 +189,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:throwingNew /await %(AdditionalOptions)</AdditionalOptions>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(PythonDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PythonDir)\include;$(ProjectDir)..\Library.Shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -196,8 +199,9 @@
       <AdditionalLibraryDirectories>$(PythonDir)\libs</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>py "$(ProjectDir)..\Library.Shared\GenerateAttributes.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"
+
+py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir)..\Library.Shared"</Command>
       <Outputs>does_not_exist.txt</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
@@ -212,7 +216,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Reflection.generated.cpp" />
+    <ClCompile Include="Registry.generated.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

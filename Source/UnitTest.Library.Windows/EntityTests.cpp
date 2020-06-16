@@ -241,13 +241,13 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(Init)
 		{
 			Engine::IsActive() = false;
-			Engine::Main();
+			Engine::Main({});
 		}
 
 		TEST_METHOD(Update)
 		{
 			Coroutines::Start([]()->Coroutine { Engine::IsActive() = false; co_return; });
-			Engine::Main();
+			Engine::Main({});
 		}
 
 #pragma region RTTI
