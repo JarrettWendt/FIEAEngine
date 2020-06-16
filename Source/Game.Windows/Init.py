@@ -3,14 +3,13 @@
 from time import time, ctime
 print('Today is', ctime(time()))
 
-from FIEAEngine import Entity
+from FIEAEngine import Engine, Entity
 
 class SquarePrinter(Entity.Entity):
 	def _Update(self):
-		super().Update()
-		print('.---.')
+		print(' ___ ')
 		print('|   |')
-		print('|   |')
-		print("'---'")
+		print('|___|')
+		super()._Update()
 
-
+Engine.World().Adopt(SquarePrinter())

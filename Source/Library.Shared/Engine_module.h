@@ -4,7 +4,7 @@
 
 #include <Python.h>
 
-namespace Library::py::Math
+namespace Library::py::Engine
 {
 	PyObject* InitModule();
 }

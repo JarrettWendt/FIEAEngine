@@ -11,7 +11,7 @@
 
 namespace Library::py
 {	
-	PyMODINIT_FUNC Init_Entity();
+	PyObject* InitEntityModule();
 
 	/**
 	 * All Python Entities will inherit from py::Entity.
@@ -34,9 +34,11 @@ namespace Library::py
 	 * The actual class that will be instantiated for every python Entity.
 	 * References a Library::Entity, not necessarily a py::Entity.
 	 */
-	class EntityBinding : protected PyObject
+	class EntityBinding
 	{
-		friend PyObject* Init_Entity();
+		PyObject_HEAD
+		
+		friend PyObject* InitEntityModule();
 
 		std::shared_ptr<Library::Entity> e;
 		
@@ -104,5 +106,8 @@ namespace Library::py
 			-1,
 			nullptr
 		};
+
+	public:
+		static EntityBinding* FromEntity(std::shared_ptr<Library::Entity> entity) noexcept;
 	};
 }

@@ -36,10 +36,13 @@
 #include "SList.h"
 #include "Stack.h"
 #include "Queue.h"
+// Engine
+#include "Coroutine.h"
+#include "Engine.h"
+#include "EngineTime.h"
+#include "Input.h"
 // Util
 #include "Concept.h"
-#include "Coroutine.h"
-#include "EngineTime.h"
 #include "Literals.h"
 #include "LibMath.h"
 #include "Util.h"
@@ -51,10 +54,6 @@
 // Hierarchy
 #include "Attributed.h"
 #include "Entity.h"
-
-// Library.Windows
-#include "../Library.Windows/Engine.h"
-#include "../Library.Windows/Input.h"
 
 // UnitTests
 #include "Digit.h"

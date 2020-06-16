@@ -1,3 +1,5 @@
+// MIT License Copyright (c) 2020 Jarrett Wendt
+
 #include "pch.h"
 #include "Math_module.h"
 
@@ -66,9 +68,9 @@ namespace Library::py::Math
 		0,
 		methods
 	};
-}
 
-PyMODINIT_FUNC PyInit_Math()
-{
-	return PyModule_Create(&Library::py::Math::module);
+	PyObject* InitModule()
+	{
+		return PyModule_Create(&module);
+	}
 }

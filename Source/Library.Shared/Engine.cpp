@@ -39,6 +39,7 @@ namespace Library
 	void Engine::Init(const Args& args)
 	{
 		world = std::make_shared<Entity>();
+		world->SetName("World");
 		world->Init();
 
 		if (!args.empty())

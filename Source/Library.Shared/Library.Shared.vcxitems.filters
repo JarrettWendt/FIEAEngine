@@ -20,10 +20,10 @@
       <Filter>Util\Exception</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)EngineTime.cpp">
-      <Filter>Util\Time</Filter>
+      <Filter>Engine\Time</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Coroutine.cpp">
-      <Filter>Util\Coroutine</Filter>
+      <Filter>Engine\Coroutine</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Attributed.cpp">
       <Filter>Hierarchy\Attributed</Filter>
@@ -69,6 +69,18 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Entity_module.cpp">
       <Filter>Python\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine_module.cpp">
+      <Filter>Python\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PyException.cpp">
+      <Filter>Python\Exception</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +137,7 @@
       <Filter>Events\EventManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)EngineTime.h">
-      <Filter>Util\Time</Filter>
+      <Filter>Engine\Time</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h">
       <Filter>Containers\Stack</Filter>
@@ -134,7 +146,7 @@
       <Filter>Containers\Queue</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Coroutine.h">
-      <Filter>Util\Coroutine</Filter>
+      <Filter>Engine\Coroutine</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Literals.h">
       <Filter>Util\Literals</Filter>
@@ -183,6 +195,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Entity_module.h">
       <Filter>Python\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_module.h">
+      <Filter>Python\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PyException.h">
+      <Filter>Python\Exception</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,12 +300,6 @@
     <Filter Include="Math\Matrix">
       <UniqueIdentifier>{eb84e228-b528-425d-9d1f-43d2903d4c9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\Coroutine">
-      <UniqueIdentifier>{278562ba-03b3-4e8b-88db-5ae722d093d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Util\Time">
-      <UniqueIdentifier>{045481a8-deae-4e84-893e-41f8f3f5322f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Python">
       <UniqueIdentifier>{8fe5fec6-5875-4adb-af2e-7fc16f9293b3}</UniqueIdentifier>
     </Filter>
@@ -296,6 +314,24 @@
     </Filter>
     <Filter Include="Python\Entity">
       <UniqueIdentifier>{dd3c0c9c-8e13-4171-945f-3e6c0b4445ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python\Engine">
+      <UniqueIdentifier>{39e657eb-1560-40d0-94ea-ec516d8d9988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{78191a03-28da-4de4-912b-480d11ff4752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Coroutine">
+      <UniqueIdentifier>{278562ba-03b3-4e8b-88db-5ae722d093d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Time">
+      <UniqueIdentifier>{045481a8-deae-4e84-893e-41f8f3f5322f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{36ebe16f-02af-4333-ac3e-30a1d3e19693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python\Exception">
+      <UniqueIdentifier>{fe7f97b4-f53c-4a01-b34d-c60a2158c661}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -336,7 +372,7 @@
       <Filter>Events\EventManager</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)EngineTime.inl">
-      <Filter>Util\Time</Filter>
+      <Filter>Engine\Time</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Stack.inl">
       <Filter>Containers\Stack</Filter>
@@ -345,7 +381,7 @@
       <Filter>Containers\Queue</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Coroutine.inl">
-      <Filter>Util\Coroutine</Filter>
+      <Filter>Engine\Coroutine</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)LibMath.inl">
       <Filter>Math</Filter>

@@ -172,13 +172,9 @@ Entity::iterator Entity::end() noexcept
 		if (auto p = Parent())
 		{
 			p->children.Remove(name);
-			name = newName;
-			p->children.Insert(name, shared_from_this());
+			p->children.Insert(newName, shared_from_this());
 		}
-		else
-		{
-			name = newName;
-		}
+		name = newName;
 	}
 
 #pragma region Insert	

@@ -4,6 +4,7 @@
 #include "Entity_module.h"
 #include "Entity.h"
 #include "PyUtil.h"
+#include "PyException.h"
 
 namespace Library::py
 {
@@ -20,6 +21,7 @@ namespace Library::py
 		// Don't invoke Base::Update, that's handled in EntityBinding::Update
 		PyObject* method = PyObject_GetAttrString(&*pyObject, "_Update");
 		PyObject_CallObject(method, nullptr);
+		Exception::HandleErrors();
 	}
 #pragma endregion
 	
@@ -35,7 +37,7 @@ namespace Library::py
 		if (EntityBinding* self = Util::Alloc<EntityBinding>(t))
 		{
 			auto e = std::make_shared<Entity>();
-			e->pyObject = self;
+			e->pyObject = reinterpret_cast<PyObject*>(self);
 			self->e = e;
 			return self;
 		}
@@ -105,10 +107,7 @@ namespace Library::py
 	{
 		if (const auto parent = e->Parent())
 		{
-			EntityBinding* ret = Util::Alloc<EntityBinding>(type);
-			ret->e = parent;
-			Py_INCREF(ret);
-			return reinterpret_cast<PyObject*>(ret);
+			return reinterpret_cast<PyObject*>(FromEntity(parent));
 		}
 		Py_RETURN_NONE;
 	}
@@ -140,7 +139,7 @@ namespace Library::py
 			{
 				EntityBinding* ret = Util::Alloc<EntityBinding>(type);
 				ret->e = e->Child(childName);
-				return ret;
+				return reinterpret_cast<PyObject*>(ret);
 			}
 		}
 		Py_RETURN_NONE;
@@ -164,7 +163,7 @@ namespace Library::py
 		{
 			child->e = name ? e->Adopt(name, child->e) : e->Adopt(child->e);
 			Py_INCREF(child);
-			return child;
+			return reinterpret_cast<PyObject*>(child);
 		}
 
 		Py_RETURN_NONE;
@@ -216,6 +215,14 @@ namespace Library::py
 		Py_RETURN_NONE;
 	}
 #pragma endregion
+	
+	EntityBinding* EntityBinding::FromEntity(const std::shared_ptr<Library::Entity> entity) noexcept
+	{
+		EntityBinding* ret = Util::Alloc<EntityBinding>(type);
+		ret->e = std::move(entity);
+		Py_INCREF(ret);
+		return ret;
+	}
 
 	PyTypeObject EntityBinding::type
 	{
@@ -242,7 +249,7 @@ namespace Library::py
 		.tp_new = newfunc(_new),
 	};
 
-	PyMODINIT_FUNC Init_Entity()
+	PyObject* InitEntityModule()
 	{		
 		if (PyType_Ready(&EntityBinding::type) < 0) [[unlikely]]
 		{
