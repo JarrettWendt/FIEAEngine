@@ -55,6 +55,21 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Matrix.cpp">
       <Filter>Math\Matrix</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FIEAEngine_module.cpp">
+      <Filter>Python</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PyUtil.cpp">
+      <Filter>Python\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Math_module.cpp">
+      <Filter>Python\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)shared_ptr.cpp">
+      <Filter>Python\shared_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Entity_module.cpp">
+      <Filter>Python\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
@@ -153,6 +168,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Matrix.h">
       <Filter>Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FIEAEngine_module.h">
+      <Filter>Python</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PyUtil.h">
+      <Filter>Python\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Math_module.h">
+      <Filter>Python\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shared_ptr.h">
+      <Filter>Python\shared_ptr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Entity_module.h">
+      <Filter>Python\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +285,18 @@
     <Filter Include="Python">
       <UniqueIdentifier>{8fe5fec6-5875-4adb-af2e-7fc16f9293b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Python\Util">
+      <UniqueIdentifier>{85a42346-c4a7-4e1a-99b8-e7f9837adef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python\Math">
+      <UniqueIdentifier>{7c6f2041-46a9-4d12-b5c2-96ca97df8dec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python\shared_ptr">
+      <UniqueIdentifier>{13c9ae78-dc30-4155-a1bb-e4caba000931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python\Entity">
+      <UniqueIdentifier>{dd3c0c9c-8e13-4171-945f-3e6c0b4445ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)VariantArray.inl">
@@ -329,6 +371,9 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Entity.inl">
       <Filter>Hierarchy\Entity</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)PyUtil.inl">
+      <Filter>Python\Util</Filter>
     </None>
   </ItemGroup>
 </Project>

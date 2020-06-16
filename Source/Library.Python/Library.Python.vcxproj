@@ -223,24 +223,8 @@ py "$(ProjectDir)..\Library.Shared\Reflection.py" "$(ProjectDir)." "$(ProjectDir
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Entity_module.cpp" />
-    <ClCompile Include="FIEAEngine_module.cpp" />
-    <ClCompile Include="Math_module.cpp" />
-    <ClCompile Include="PyUtil.cpp" />
     <ClCompile Include="Reflection.generated.cpp" />
     <ClCompile Include="Registry.generated.cpp" />
-    <ClCompile Include="shared_ptr.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Entity_module.h" />
-    <ClInclude Include="FIEAEngine_module.h" />
-    <ClInclude Include="Math_module.h" />
-    <ClInclude Include="PyUtil.h" />
-    <ClInclude Include="shared_ptr.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PyUtil.inl" />
-    <None Include="ReadMe.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,7 +10,7 @@
 
 #include <Python.h>
 #include <Windows.h>
-#include "../Library.Python/FIEAEngine_module.h"
+#include "FIEAEngine_module.h"
 
 namespace Library
 {
@@ -45,7 +45,7 @@ namespace Library
 		programName = std::to_string(wProgramName);
 		Py_SetProgramName(wProgramName);
 
-		//PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
+		PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
 		
 		Py_Initialize();
 		
