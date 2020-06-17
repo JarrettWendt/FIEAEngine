@@ -41,6 +41,15 @@ namespace Library::py::Util
 	 */
 	template<typename T>
 	T* Alloc(PyTypeObject* type) noexcept;
+
+	std::string ToString(PyObject* obj) noexcept;
+
+	/**
+	 * @param uni		A PyObject that we already know succeeds PyUnicode_Check
+	 *
+	 * @asserts	PyUnicode_Check
+	 */
+	std::string ToString(PyUnicodeObject* uni) noexcept;
 }
 
 #define Py_RETURN_BOOL(b)	\

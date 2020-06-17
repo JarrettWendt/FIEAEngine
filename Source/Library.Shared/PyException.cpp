@@ -7,18 +7,17 @@ namespace Library::py
 {
 	void Exception::HandleErrors()
 	{
-		PyObject* type, *value, *traceback;
-		PyErr_Fetch(&type, &value, &traceback);
+		PyObject* type, * value;
+		PyTracebackObject* traceback;
+		PyErr_Fetch(&type, &value, reinterpret_cast<PyObject**>(&traceback));
 		if (type)
 		{
-			std::string str;
-			py::Exception e{ "caught error, but failed to stringify it" };
-			if (Util::FromPyStr(PyObject_Str(value), str))
-			{
-				e = py::Exception(str);
-			}
+			std::stringstream stream;
+			stream << "file: " << Util::ToString(traceback->tb_frame->f_code->co_filename) << std::endl;
+			stream << "line: " << traceback->tb_lineno << std::endl;
+			stream << "error: " << Util::ToString(value);
 			PyErr_Clear();
-			throw e;
+			throw py::Exception(stream.str());
 		}
 	}
 }

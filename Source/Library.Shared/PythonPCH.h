@@ -17,6 +17,7 @@
 #endif
 
 #include <Python.h>
+#include <frameobject.h>
 #include <structmember.h>
 
 #ifdef _DEBUG_WAS_DEFINED
