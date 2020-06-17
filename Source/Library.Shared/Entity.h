@@ -19,6 +19,8 @@ namespace Library
 		friend py::EntityBinding;
 
 		using SharedEntity = std::shared_ptr<Entity>;
+		class iterator;
+		class const_iterator;
 		
 	private:
 		Transform localTransform{};
@@ -28,7 +30,7 @@ namespace Library
 
 		using MapType = HashMap<std::string, SharedEntity>;
 		MapType children;
-		
+
 		[[Attribute]]
 		std::string name{ "Entity" };
 		
@@ -43,8 +45,6 @@ namespace Library
 
 	public:
 #pragma region iterator
-		class const_iterator;
-
 		class iterator final
 		{
 			friend class Entity;
@@ -411,6 +411,11 @@ namespace Library
 		 * Marks all children to have invalid worldTransforms.
 		 */
 		void InvalChildTransforms() noexcept;
+
+		/**
+		 * Orphans this Entity now, as opposed to on the next Update().
+		 */
+		void OrphanNow() noexcept;
 	};
 }
 

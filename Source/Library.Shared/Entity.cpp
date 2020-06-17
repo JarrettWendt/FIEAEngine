@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Entity.h"
+#include "Engine.h"
 
 namespace Library
 {
@@ -205,11 +206,7 @@ Entity::iterator Entity::end() noexcept
 #pragma region Remove	
 	void Entity::Orphan() noexcept
 	{
-		if (auto p = Parent())
-		{
-			p->children.Remove(name);
-			parent = {};
-		}
+		Engine::pendingOrphans.PushBack(weak_from_this());
 	}
 
 	void Entity::RemoveChild(const std::string& childName) noexcept
@@ -243,9 +240,16 @@ Entity::iterator Entity::end() noexcept
 	}
 
 	void Entity::Update()
-	{		
-		for (const auto& e : *this)
+	{
+		// This strange method of iterating through the children is to avoid iterator invalidation when a child Orphans itself.
+		
+		auto it = begin();
+		
+		while (it)
 		{
+			auto jt = it++;
+			const auto& e = *jt;
+			
 			if (e->Enabled())
 			{
 				e->Update();
@@ -265,6 +269,15 @@ Entity::iterator Entity::end() noexcept
 		for (const auto& e : *this)
 		{
 			e->InvalTransform();
+		}
+	}
+	
+	void Entity::OrphanNow() noexcept
+	{
+		if (auto p = Parent())
+		{
+			p->children.Remove(name);
+			parent = {};
 		}
 	}
 #pragma endregion

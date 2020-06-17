@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Macros.h"
+#include "SList.h"
 
 namespace Library
 {
@@ -10,9 +11,13 @@ namespace Library
 	
 	class Engine final
 	{
+		friend Entity;
+		
 		/** the parentmost Entity */
 		static inline std::shared_ptr<Entity> world{ nullptr };
 		static inline std::string programName{};
+		// TODO: This should be replaced with a garbage collector
+		static inline SList<std::weak_ptr<Entity>> pendingOrphans{};
 		
 	public:
 		STATIC_CLASS(Engine)

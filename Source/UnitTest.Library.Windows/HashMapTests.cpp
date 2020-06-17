@@ -447,6 +447,41 @@ namespace UnitTestLibraryDesktop
 #pragma endregion
 
 #pragma region Remove
+		TEST_METHOD(RemoveMidIterate)
+		{
+			// Test inspired from example code on https://en.cppreference.com/w/cpp/container/unordered_map/erase
+			using Container = HashMap<int, std::string>;
+			Container c
+			{
+				{1, "one"},
+				{2, "two"},
+				{3, "three"},
+				{4, "four"},
+				{5, "five"},
+				{6, "six"}
+			};
+
+			// erase all odd numbers from c
+			for (auto it = c.begin(); it != c.end(); )
+			{
+				if (it->key % 2)
+				{
+					it = c.Remove(it);
+				}
+				else
+				{
+					++it;
+				}
+			}
+
+			Assert::AreEqual(Container
+				{
+					{2, "two"},
+					{4, "four"},
+					{6, "six"}
+				}, c);
+		}
+		
 		TEMPLATE_TEST_METHOD_BEGIN(Clear)
 		{
 		}
