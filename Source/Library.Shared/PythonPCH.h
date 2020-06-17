@@ -16,7 +16,7 @@
 #undef _DEBUG
 #endif
 
-#include "Python.h"
+#include <Python.h>
 #include <structmember.h>
 
 #ifdef _DEBUG_WAS_DEFINED
