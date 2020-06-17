@@ -1,6 +1,7 @@
-#pragma once
+// MIT License Copyright(c) 2020 Jarrett Wendt
 
-#include <Python.h>
+#pragma once
+#include "PythonPCH.h"
 
 static inline PyModuleDef FIEAEngine_module
 {

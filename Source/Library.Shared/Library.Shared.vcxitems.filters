@@ -208,6 +208,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PyException.h">
       <Filter>Python\Exception</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PythonPCH.h">
+      <Filter>Python</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">

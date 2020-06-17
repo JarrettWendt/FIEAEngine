@@ -1,8 +1,6 @@
 #include "pch.h"
+#include "PythonPCH.h"
 #include "PyException.h"
-
-#include <Python.h>
-
 #include "PyUtil.h"
 
 namespace Library::py

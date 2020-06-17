@@ -2,11 +2,8 @@
 
 #pragma once
 
-#include <Python.h>
-#include <structmember.h>
-
+#include "PythonPCH.h"
 #include "Entity.h"
-
 #include "shared_ptr.h"
 
 namespace Library::py

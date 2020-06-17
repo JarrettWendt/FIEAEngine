@@ -78,6 +78,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Matrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PyException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PythonPCH.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PyUtil.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Quaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Queue.h" />
