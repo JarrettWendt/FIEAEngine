@@ -64,12 +64,14 @@ class Particle(Entity.Entity):
 		self.x = randint(0, ScreenManager.screen.width)
 		self.y = 0
 		self.speed = 5 * random()
+		self.childCounter = 0
 	
 	def _Update(self):
 		newY = self.y + self.speed * Time.Delta()
 		# if we reached a new index, add a new sub-particle
 		if int(self.y) < int(newY) and self.numChildren < Particle.maxChildren:
-			self.Adopt(self.name + 'SubParticle' + str(self.numChildren), SubParticle(self.speed, self.x, self.y))
+			self.childCounter += 1
+			self.Adopt(self.name + 'SubParticle' + str(self.childCounter), SubParticle(self.speed, self.x, self.y))
 		self.y = newY
 		# destroy this particle when we reach far enough below the screen
 		if self.y - Particle.maxChildren > ScreenManager.screen.height:
@@ -78,10 +80,16 @@ class Particle(Entity.Entity):
 
 # Manages Particles
 class ParticleSystem(Entity.Entity):
+	maxChildren = 100
+
+	def __init__(self):
+		self.childCounter = 0
+
 	def _Update(self):
-		if self.numChildren < 100:
-			self.Adopt('Particle' + str(self.numChildren), Particle())
+		if self.numChildren < ParticleSystem.maxChildren:
+			self.childCounter += 1
+			self.Adopt('Particle' + str(self.childCounter), Particle())
 		super()._Update()
 
 Engine.World().Adopt('ScreenManager', ScreenManager())
-Engine.World().Adopt(ParticleSystem())
+Engine.World().Adopt('ParticleSystem', ParticleSystem())

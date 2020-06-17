@@ -336,7 +336,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		SharedEntity Adopt(std::string childName, SharedEntity child);
+		SharedEntity Adopt(const std::string& childName, SharedEntity child);
 
 		/**
 		 * Reparents the passed Entity to this one.
@@ -351,10 +351,11 @@ namespace Library
 		SharedEntity Adopt(SharedEntity child);
 #pragma endregion
 
-#pragma region Remove
+#pragma region Remove		
 		/**
 		 * Orphans this Entity from its parent.
 		 * Does nothing if it is already an orphan.
+		 * Doesn't take effect until the next Update().
 		 * O(1)
 		 */
 		void Orphan() noexcept;
