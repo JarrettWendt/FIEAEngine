@@ -82,6 +82,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PyException.cpp">
       <Filter>Python\Exception</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Time_module.cpp">
+      <Filter>Python\Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
@@ -211,6 +214,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PythonPCH.h">
       <Filter>Python</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Time_module.h">
+      <Filter>Python\Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -335,6 +341,9 @@
     </Filter>
     <Filter Include="Python\Exception">
       <UniqueIdentifier>{fe7f97b4-f53c-4a01-b34d-c60a2158c661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python\Time">
+      <UniqueIdentifier>{4ad6f1b8-0b55-4fcf-90b4-e018115f5ee0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -336,7 +336,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		SharedEntity Adopt(const std::string& childName, SharedEntity child);
+		SharedEntity Adopt(std::string childName, SharedEntity child);
 
 		/**
 		 * Reparents the passed Entity to this one.

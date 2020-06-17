@@ -5,6 +5,7 @@
 #include "Engine_module.h"
 #include "Entity_module.h"
 #include "Math_module.h"
+#include "Time_module.h"
 
 PyObject* PyInit_FIEAEngine() noexcept
 {
@@ -19,6 +20,10 @@ PyObject* PyInit_FIEAEngine() noexcept
 	PyObject* engine = Engine::InitModule();
 	Py_INCREF(engine);
 	PyModule_AddObject(fiea, "Engine", engine);
+
+	PyObject* time = Time::InitModule();
+	Py_INCREF(time);
+	PyModule_AddObject(fiea, "Time", time);
 	
 	PyObject* math = Math::InitModule();
 	Py_INCREF(math);

@@ -53,16 +53,16 @@ namespace Library
 		
 		Py_Initialize();
 
-		// This is the way running a python file is _supposed_ to work.
-		// However this causes an error in debug builds.
-		// Reading the file as a string and executing that string seems to work though.
-		//FILE* f;
-		//fopen_s(&f, "Init.py", "r");
-		//PyRun_SimpleFile(f, "Init.py");
-
+#ifdef _DEBUG
 		const std::ifstream file{ "Init.py" };
 		const std::string str = (std::stringstream{} << file.rdbuf()).str();
 		PyRun_SimpleString(str.c_str());
+#else
+		// TODO: This is the way running a python file is _supposed_ to work.
+		FILE* f;
+		fopen_s(&f, "Init.py", "r");
+		PyRun_SimpleFile(f, "Init.py");
+#endif
 	}
 
 	void Engine::Update()

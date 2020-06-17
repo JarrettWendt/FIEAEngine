@@ -178,16 +178,19 @@ Entity::iterator Entity::end() noexcept
 	}
 
 #pragma region Insert	
-	std::shared_ptr<Entity> Entity::Adopt(const std::string& childName, SharedEntity child)
+	std::shared_ptr<Entity> Entity::Adopt(std::string childName, SharedEntity child)
 	{
 		ThrowName(childName);
 
 		if (child->Parent() != shared_from_this())
 		{
-			const auto [it, inserted] = children.Insert(childName, child);
-			if (!inserted) [[unlikely]]
+			auto [it, inserted] = children.Insert(childName, child);
+			while (!inserted) [[unlikely]]
 			{
-				throw InvalidNameException("child with name " + childName + " already exists");
+				//throw InvalidNameException("child with name " + childName + " already exists");
+				// HACK
+				childName += '_';
+				std::tie(it, inserted) = children.Insert(childName, child);
 			}
 			assert(child == it->value);
 			child->name = childName;
