@@ -26,5 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Init.py" />
+    <None Include="Terminate.py" />
   </ItemGroup>
 </Project>

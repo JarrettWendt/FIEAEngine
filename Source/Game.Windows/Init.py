@@ -1,15 +1,13 @@
 # MIT License Copyright (c) 2020 Jarrett Wendt
 
-from time import time, ctime
-print('Today is', ctime(time()))
-
 from FIEAEngine import Engine, Entity
 
-class SquarePrinter(Entity.Entity):
+class RunningMan(Entity.Entity):
+	def Print(self):
+		print('bleh')
+	
 	def _Update(self):
-		print(' ___ ')
-		print('|   |')
-		print('|___|')
+		self.Print()
 		super()._Update()
 
-Engine.World().Adopt(SquarePrinter())
+Engine.World().Adopt(RunningMan())

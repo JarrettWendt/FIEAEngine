@@ -9,11 +9,13 @@ namespace Library::py
 {
 	void Exception::HandleErrors()
 	{
-		if (PyObject* error = PyErr_Occurred())
+		PyObject* type, *value, *traceback;
+		PyErr_Fetch(&type, &value, &traceback);
+		if (type)
 		{
 			std::string str;
 			py::Exception e{ "caught error, but failed to stringify it" };
-			if (Util::FromPyStr(PyObject_Str(error), str))
+			if (Util::FromPyStr(PyObject_Str(value), str))
 			{
 				e = py::Exception(str);
 			}
