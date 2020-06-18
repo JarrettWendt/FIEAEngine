@@ -1,9 +1,11 @@
+// MIT License Copyright (c) 2020 Jarrett Wendt
+
 #include "pch.h"
 #include "Entity.h"
 #include "Engine.h"
 
 namespace Library
-{
+{	
 #pragma region iterator
 #pragma region non-const
 	Entity::iterator::iterator(const MapType::iterator it) noexcept :
@@ -129,7 +131,7 @@ Entity::iterator Entity::end() noexcept
 	}
 #pragma endregion
 
-#pragma region Transform
+#pragma region Transform	
 	const Transform& Entity::GetWorldTransform() const noexcept
 	{
 		if (transformInval)
@@ -147,13 +149,13 @@ Entity::iterator Entity::end() noexcept
 		return worldTransform;
 	}
 
-	void Entity::SetLocalTransform(const Transform& t) noexcept
+	void Entity::SetLocalTransform(const Library::Transform& t) noexcept
 	{
 		localTransform = t;
 		InvalTransform();
 	}
 
-	void Entity::SetWorldTransform(const Transform& t) noexcept
+	void Entity::SetWorldTransform(const Library::Transform& t) noexcept
 	{
 		worldTransform = t;
 		if (const auto p = Parent())
@@ -241,15 +243,8 @@ Entity::iterator Entity::end() noexcept
 
 	void Entity::Update()
 	{
-		// This strange method of iterating through the children is to avoid iterator invalidation when a child Orphans itself.
-		
-		auto it = begin();
-		
-		while (it)
-		{
-			auto jt = it++;
-			const auto& e = *jt;
-			
+		for (const auto& e : *this)
+		{			
 			if (e->Enabled())
 			{
 				e->Update();

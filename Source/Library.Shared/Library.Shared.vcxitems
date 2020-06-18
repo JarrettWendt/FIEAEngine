@@ -48,6 +48,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)shared_ptr.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Time_module.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Transform_module.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Util.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Vector2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Vector3.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Time_module.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Transform_module.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Util.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)VariantArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector2.h" />

@@ -43,7 +43,7 @@ namespace Library
 		/** whether the worldTransform needs to be updated */
 		mutable bool transformInval{ true };
 
-	public:
+	public:		
 #pragma region iterator
 		class iterator final
 		{
@@ -238,13 +238,13 @@ namespace Library
 		[[nodiscard]] std::shared_ptr<const Entity> Child(const std::string& childName) const noexcept;
 #pragma endregion
 
-#pragma region Transform
+#pragma region Transform		
 		/**
 		 * O(1)
 		 * 
 		 * @returns		this Entity's local Transform
 		 */
-		[[nodiscard]] constexpr const Transform& GetLocalTransform() const noexcept;
+		[[nodiscard]] constexpr const Library::Transform& GetLocalTransform() const noexcept;
 
 		/**
 		 * O(1) most cases
@@ -253,7 +253,7 @@ namespace Library
 		 * 
 		 * @returns		this Entity's world Transform
 		 */
-		[[nodiscard]] const Transform& GetWorldTransform() const noexcept;
+		[[nodiscard]] const Library::Transform& GetWorldTransform() const noexcept;
 
 		/**
 		 * O(n) where n is the number of children.
@@ -261,7 +261,7 @@ namespace Library
 		 * 
 		 * @param t		Transform to set this local one to. 
 		 */
-		void SetLocalTransform(const Transform& t) noexcept;
+		void SetLocalTransform(const Library::Transform& t) noexcept;
 
 		/**
 		 * O(n) where n is the number of children.
@@ -269,7 +269,7 @@ namespace Library
 		 *
 		 * @param t		Transform to set this world one to.
 		 */
-		void SetWorldTransform(const Transform& t) noexcept;
+		void SetWorldTransform(const Library::Transform& t) noexcept;
 #pragma endregion
 		
 		/**
