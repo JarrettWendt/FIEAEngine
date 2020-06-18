@@ -12,6 +12,7 @@ class ScreenManager(Entity.Entity):
 
 	def __init__(self):
 		ScreenManager.screen = Screen.open()
+		self.name = 'ScreenManager'
 	
 	def __del__(self):
 		screen.close()
@@ -83,6 +84,7 @@ class ParticleSystem(Entity.Entity):
 	maxChildren = 100
 
 	def __init__(self):
+		self.name = 'ParticleSystem'
 		self.childCounter = 0
 
 	def _Update(self):
@@ -91,5 +93,5 @@ class ParticleSystem(Entity.Entity):
 			self.Adopt('Particle' + str(self.childCounter), Particle())
 		super()._Update()
 
-Engine.World().Adopt('ScreenManager', ScreenManager())
-Engine.World().Adopt('ParticleSystem', ParticleSystem())
+Engine.World().Adopt(ScreenManager())
+Engine.World().Adopt(ParticleSystem())
