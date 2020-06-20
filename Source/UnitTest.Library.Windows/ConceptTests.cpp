@@ -13,15 +13,21 @@ using Rand = UnitTests::Random<T>;
 
 namespace UnitTestLibraryDesktop
 {	
-	TEST_CLASS(UtilTests)
+	TEST_CLASS(ConceptTests)
 	{
 		template<typename T>
 		using Container = SList<T>;
 
 		INITIALIZE_CLEANUP
 
-		TEST_METHOD(Predicate)
+		TEST_METHOD(Integral)
 		{
+			Assert::IsTrue(std::integral<int>);
+			Assert::IsFalse(std::integral<float>);
+		}
+		
+		TEST_METHOD(Predicate)
+		{			
 			Assert::IsTrue(std::predicate<std::equal_to<int>, int, int>);
 		}
 

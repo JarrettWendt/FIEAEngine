@@ -216,15 +216,13 @@ namespace UnitTestLibraryDesktop
 #pragma region Remove
 		TEST_METHOD(Orphan)
 		{
-			auto s = std::make_shared<Entity>();
-			s->Orphan();
-			Assert::IsFalse(s->Parent());
-			
-			auto p = std::make_shared<Entity>();
-			p->Adopt(s);
-			Assert::IsTrue(s->Parent());
-			s->Orphan();
-			Assert::IsFalse(s->Parent());
+			auto p = Engine::World().CreateChild<>();			
+			auto c = p->CreateChild<>();
+			Assert::IsTrue(c->Parent());
+			c->Orphan();
+			Engine::Update();
+			Assert::IsFalse(c->Parent());
+			p->Orphan();
 		}
 
 		TEST_METHOD(Remove)
