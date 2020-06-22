@@ -23,16 +23,17 @@ class ScreenManager(Entity.Entity):
 
 # A Particle is made up of these
 class SubParticle(Entity.Entity):
+	color = Screen.COLOUR_GREEN
 	Attr = namedtuple("Attr", ['colour', 'attr'])
 	attrs =	[
 		Attr(Screen.COLOUR_BLACK, Screen.A_NORMAL),
-		Attr(Screen.COLOUR_GREEN, Screen.A_NORMAL),
-		Attr(Screen.COLOUR_GREEN, Screen.A_NORMAL),
-		Attr(Screen.COLOUR_GREEN, Screen.A_NORMAL),
-		Attr(Screen.COLOUR_GREEN, Screen.A_NORMAL),
-		Attr(Screen.COLOUR_GREEN, Screen.A_BOLD),
-		Attr(Screen.COLOUR_GREEN, Screen.A_BOLD),
-		Attr(Screen.COLOUR_GREEN, Screen.A_BOLD),
+		Attr(color, Screen.A_NORMAL),
+		Attr(color, Screen.A_NORMAL),
+		Attr(color, Screen.A_NORMAL),
+		Attr(color, Screen.A_NORMAL),
+		Attr(color, Screen.A_BOLD),
+		Attr(color, Screen.A_BOLD),
+		Attr(color, Screen.A_BOLD),
 		Attr(Screen.COLOUR_WHITE, Screen.A_BOLD),
 		Attr(Screen.COLOUR_WHITE, Screen.A_REVERSE),
 	]
