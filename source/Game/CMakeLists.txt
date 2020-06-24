@@ -16,6 +16,5 @@ target_link_libraries(${TARGET_NAME} Library)
 find_package(Microsoft.GSL CONFIG REQUIRED)
 target_link_libraries(Microsoft.GSL::GSL)
 
-# python reflection
-add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND py ${LIBRARY_SOURCE_DIR}/GenerateAttributes.py ${CMAKE_CURRENT_SOURCE_DIR} ${LIBRARY_SOURCE_DIR})
-add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND py ${LIBRARY_SOURCE_DIR}/Reflection.py ${CMAKE_CURRENT_SOURCE_DIR} ${LIBRARY_SOURCE_DIR})
+add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${PythonCommand} ${LIBRARY_SOURCE_DIR}/GenerateAttributes.py ${CMAKE_CURRENT_SOURCE_DIR} ${LIBRARY_SOURCE_DIR})
+add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${PythonCommand} ${LIBRARY_SOURCE_DIR}/Reflection.py ${CMAKE_CURRENT_SOURCE_DIR} ${LIBRARY_SOURCE_DIR})

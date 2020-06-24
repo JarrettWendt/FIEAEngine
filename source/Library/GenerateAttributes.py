@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os, sys
 from pathlib import Path
 
@@ -113,7 +115,10 @@ class Attributed:
 		return self.namespace + '::' + self.className
 
 rootPaths = [os.path.abspath(arg) for arg in sys.argv[1:]] if len(sys.argv) > 1 else [os.path.abspath('..')]
-destFile = rootPaths[0] + '\.generated\Registry.generated.cpp'
+destFile = rootPaths[0] + '/.generated/Registry.generated.cpp'
+
+print("Generating Reflectable Attributes for Attributeds under paths " + str(rootPaths))
+print("Will export to " + str(destFile))
 
 attributeds = []
 

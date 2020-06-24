@@ -4,6 +4,8 @@
 #include "Util.h"
 #include "LibMath.h"
 
+using namespace std::string_literals;
+
 namespace Library::Util
 {
 	size_t DefaultReserveStrategy::operator()(const size_t size, const size_t capacity) noexcept
@@ -92,6 +94,39 @@ namespace Library::Util
 	{
 		str.erase(std::remove_if(str.begin(), str.end(), isspace), str.end());
 		return str;
+	}
+	
+	std::string ReplaceAll(std::string str, const std::string& from, const std::string& to)
+	{
+	    size_t start_pos = 0;
+	    while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+	    {
+	        str.replace(start_pos, from.length(), to);
+	        start_pos += to.length();
+	    }
+	    return str;
+	}
+
+	std::string FixDirectorySeparators(std::string filepath) noexcept
+	{
+		const std::string delim = std::to_string(std::filesystem::path::preferred_separator);
+		const std::string notdelim = delim == "/" ? "\\" : delim;;
+		
+		filepath = ReplaceAll(filepath, "\\\\", delim);
+		filepath = ReplaceAll(filepath, "//", delim);
+		filepath = ReplaceAll(filepath, notdelim, delim);
+		
+		return filepath;
+	}
+	
+	std::string WindowsToWSLDir(std::string absfilepath) noexcept
+	{
+		if (absfilepath[0] != '/')
+		{
+			const char driveLetter = absfilepath[0];
+			absfilepath.replace(0, 2, "/mnt/"s + char(std::tolower(driveLetter)));
+		}		
+		return absfilepath;
 	}
 #pragma endregion
 }

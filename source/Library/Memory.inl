@@ -3,6 +3,7 @@
 #pragma once
 #include "Memory.h"
 #include "Macros.h"
+#include <cstring>
 
 namespace Library::Memory
 {

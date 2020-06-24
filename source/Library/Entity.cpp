@@ -99,16 +99,6 @@ Entity::iterator Entity::end() noexcept
 #pragma endregion
 	
 #pragma region Properties
-	constexpr bool& Entity::Enabled() noexcept
-	{
-		return enabled;
-	}
-	
-	constexpr bool Entity::Enabled() const noexcept
-	{
-		return const_cast<Entity*>(this)->Enabled();
-	}
-
 	std::shared_ptr<Entity> Entity::Parent() noexcept
 	{
 		return parent.lock();

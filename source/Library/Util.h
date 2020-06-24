@@ -320,6 +320,29 @@ namespace Library::Util
 	 */
 	template<typename T>
 	std::wstring ToWString(const T& t) noexcept;
+
+	/**
+	 * @param str		string to look through
+	 * @param from		substring to replace
+	 * @param to		replacement
+	 * @returns newly created string with replaced values
+	 */
+	std::string ReplaceAll(std::string str, const std::string &from, const std::string &to);
+	
+	/**
+	 * @param filepath	a file path with mixed or incorrect '/' or '\\' based on platform
+	 * @returns a file path with directory separators fixed based on platform
+	 */
+	std::string FixDirectorySeparators(std::string filepath) noexcept;
+
+	/**
+	 * Converts a path with a Windows drive letter to WSL notation.
+	 * For example: "C:" to "/mnt/c"
+	 *
+	 * @param absfilepath	an absolute filepath
+	 * @returns	the path with the drive letter converted to WSL notation 
+	 */
+	std::string WindowsToWSLDir(std::string absfilepath) noexcept;
 #pragma endregion
 
 	/**

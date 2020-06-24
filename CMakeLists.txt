@@ -10,9 +10,16 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-message("VERBOSE using python directory \"$ENV{PythonDir}\"")
-include_directories($ENV{PythonDir}/include)
-link_directories($ENV{PythonDir}/libs)
+message("VERBOSE using python include directory \"$ENV{PYTHON_INCLUDE_DIR}\"")
+message("VERBOSE using python library directory \"$ENV{PYTHON_LIBRARY_DIR}\"")
+include_directories($ENV{PYTHON_INCLUDE_DIR})
+link_directories($ENV{PYTHON_LIBRARY_DIR})
+
+if (WIN32)
+	set(PythonCommand py)
+else()
+	set(PythonCommand python3)
+endif()
 
 add_compile_options(-Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes)
 

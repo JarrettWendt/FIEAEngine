@@ -4,6 +4,16 @@
 namespace Library
 {
 #pragma region Properties
+	constexpr bool& Entity::Enabled() noexcept
+	{
+		return enabled;
+	}
+	
+	constexpr bool Entity::Enabled() const noexcept
+	{
+		return const_cast<Entity*>(this)->Enabled();
+	}
+	
 	constexpr size_t Entity::NumChildren() const noexcept
 	{
 		return children.Size();

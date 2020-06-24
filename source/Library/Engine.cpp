@@ -1,4 +1,3 @@
-#include "Engine.h"
 // MIT License Copyright (c) 2020 Jarrett Wendt
 
 #include "pch.h"
@@ -14,7 +13,6 @@
 #include <Windows.h>
 #endif
 #include "python/modules/FIEAEngine.h"
-#include <filesystem>
 
 namespace Library
 {
@@ -51,16 +49,20 @@ namespace Library
 		
 		Py_Initialize();
 
+		std::string init = Util::FixDirectorySeparators(pythonSourceDirectory + initFileName);
+
+#ifndef _WIN32
+		init = Util::WindowsToWSLDir(init);
+#endif
+		
 #ifdef _DEBUG
-		const std::string bleh = std::filesystem::current_path().string();
-		const std::ifstream file{ pythonSourceDirectory + initFileName };
+		const std::ifstream file{ init };
 		const std::string str = (std::stringstream{} << file.rdbuf()).str();
 		PyRun_SimpleString(str.c_str());
 #else
 		// TODO: This is the way running a python file is _supposed_ to work.
-		FILE* f;
-		fopen_s(&f, (pythonSourceDirectory + initFileName).c_str(), "r");
-		PyRun_SimpleFile(f, initFileName.c_str());
+		FILE* f = std::fopen(init.c_str(), "r");
+		PyRun_SimpleFile(f, init.c_str());
 #endif
 	}
 
