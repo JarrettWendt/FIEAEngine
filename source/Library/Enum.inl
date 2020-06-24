@@ -70,12 +70,18 @@ namespace Library
 	template<Concept::Enumeration T>
 	inline const std::string& Enum<T>::ToString(T t)
 	{
-		static_assert(false, "No specialization");
+		// TODO: On linux this fails even when the function is never called
+#if _WIN32
+		static_assert(false, "No specialization for Enum::ToString");
+#endif
 	}
 
 	template<Concept::Enumeration T>
 	inline T Enum<T>::FromString(const std::string& str)
 	{
-		static_assert(false, "No specialization");
+		// TODO: On linux this fails even when the function is never called
+#if _WIN32
+		static_assert(false, "No specialization for Enum::FromString");
+#endif
 	}
 }

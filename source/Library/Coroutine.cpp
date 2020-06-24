@@ -126,8 +126,13 @@ namespace Library
 		for (const auto& [key, pair] : asyncCoroutines)
 		{
 			const auto& [func, future] = pair;
+#ifdef _WIN32
 			// semantically same as .wait_for(1ns) == std::future_status::ready
 			if (future._Is_ready())
+#else
+			using namespace std::chrono_literals;
+			if (future.wait_for(1ns) == std::future_status::ready)
+#endif
 			{
 				Stop(key);
 			}

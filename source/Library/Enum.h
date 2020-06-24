@@ -85,7 +85,7 @@ namespace std
 	template<Library::Concept::Enumeration T>
 	[[nodiscard]] std::string to_string(const T t)
 	{
-		return Enum<T>::ToString(t);
+		return Library::Enum<T>::ToString(t);
 	}
 }
 

@@ -44,7 +44,7 @@
 				},
 				{
 					"name": "CMAKE_EXE_LINKER_FLAGS",
-					"value": "-stdlib=libstdc++",
+					"value": "-stdlib=libstdc++ -lpthread",
 					"type": "STRING"
 				}
 			]

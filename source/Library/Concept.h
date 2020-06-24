@@ -61,10 +61,16 @@ namespace Library::Concept
 
 	template<typename T>
 	concept has_value_type = requires { typename T::value_type; };
+		
+	template <class It, class = void>
+	inline constexpr bool IsIterator = false;
 
+	template <class It>
+	inline constexpr bool IsIterator<It, std::void_t<typename std::iterator_traits<It>::iterator_category>> = true;
+		
 	// TODO: <experimental/ranges/iterator> has this
 	template<typename It>
-	concept Iterator = std::_Is_iterator_v<It>;
+	concept Iterator = IsIterator<It>;
 
 	template<typename Left, typename Right = Left>
 	concept LessThanComparable = requires(Left l, Right r)

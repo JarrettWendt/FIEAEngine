@@ -2,7 +2,12 @@
 
 #pragma once
 
+#ifdef _WIN32
 #include <experimental/coroutine>
+#else
+#include <coroutine>
+#endif
+
 #include <future>
 #include <mutex>
 
@@ -12,20 +17,30 @@
 
 namespace Library
 {
+	
 	/**
 	 * the type which a Coroutine function should return
 	 */
 	class Coroutine final
 	{
 		friend class Coroutines;
+#ifdef _WIN32
 		using SuspendAlways = std::experimental::suspend_always;
 		using SuspendNever = std::experimental::suspend_never;
+#else
+		using SuspendAlways = std::suspend_always;
+		using SuspendNever = std::suspend_never;
+#endif
 
 	public:
 		struct promise_type
 		{
 			friend class Coroutine;
+#ifdef _WIN32
 			using Handle = std::experimental::coroutine_handle<promise_type>;
+#else
+			using Handle = std::coroutine_handle<promise_type>;
+#endif
 
 			Time::Seconds yieldValue{};
 

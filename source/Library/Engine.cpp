@@ -9,7 +9,9 @@
 #include "EngineTime.h"
 #include "Input.h"
 
+#ifdef _WIN32
 #include <Windows.h>
+#endif
 //#include "FIEAEngine_module.h"
 
 namespace Library
@@ -90,10 +92,13 @@ namespace Library
 		//	std::terminate();
 		//}
 	}
-	
+
+#ifdef _WIN32
 	LRESULT CALLBACK Engine::WndProc([[maybe_unused]] void* hWnd, const UINT uMsg, const WPARAM wParam, [[maybe_unused]] const LPARAM lParam)
 	{
 		Input::WndProc(uMsg, wParam);
 		return 0;
 	}
+#else
+#endif
 }

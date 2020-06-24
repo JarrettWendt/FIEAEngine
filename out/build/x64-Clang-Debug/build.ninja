@@ -111,7 +111,7 @@ build source\Library\edit_cache: phony source\Library\CMakeFiles\edit_cache.util
 build cmake_object_order_depends_target_Library_Debug: phony || source\Library\CMakeFiles\Library.dir
 
 build source\Library\CMakeFiles\Library.dir\Attributed.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Attributed.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -119,7 +119,7 @@ build source\Library\CMakeFiles\Library.dir\Attributed.cpp.obj: CXX_COMPILER__Li
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Coroutine.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Coroutine.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -127,7 +127,7 @@ build source\Library\CMakeFiles\Library.dir\Coroutine.cpp.obj: CXX_COMPILER__Lib
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Datum.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Datum.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -135,7 +135,7 @@ build source\Library\CMakeFiles\Library.dir\Datum.cpp.obj: CXX_COMPILER__Library
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Engine.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Engine.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -143,7 +143,7 @@ build source\Library\CMakeFiles\Library.dir\Engine.cpp.obj: CXX_COMPILER__Librar
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\EngineTime.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\EngineTime.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -151,7 +151,7 @@ build source\Library\CMakeFiles\Library.dir\EngineTime.cpp.obj: CXX_COMPILER__Li
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Entity.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Entity.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -159,7 +159,7 @@ build source\Library\CMakeFiles\Library.dir\Entity.cpp.obj: CXX_COMPILER__Librar
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Exception.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Exception.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -167,7 +167,7 @@ build source\Library\CMakeFiles\Library.dir\Exception.cpp.obj: CXX_COMPILER__Lib
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Hash.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Hash.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -175,7 +175,7 @@ build source\Library\CMakeFiles\Library.dir\Hash.cpp.obj: CXX_COMPILER__Library_
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Input.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Input.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -183,7 +183,7 @@ build source\Library\CMakeFiles\Library.dir\Input.cpp.obj: CXX_COMPILER__Library
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\LibMath.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\LibMath.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -191,7 +191,7 @@ build source\Library\CMakeFiles\Library.dir\LibMath.cpp.obj: CXX_COMPILER__Libra
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Library.Windows.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Library.Windows.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -199,7 +199,7 @@ build source\Library\CMakeFiles\Library.dir\Library.Windows.cpp.obj: CXX_COMPILE
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Matrix.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Matrix.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -207,7 +207,7 @@ build source\Library\CMakeFiles\Library.dir\Matrix.cpp.obj: CXX_COMPILER__Librar
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Quaternion.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Quaternion.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -215,7 +215,7 @@ build source\Library\CMakeFiles\Library.dir\Quaternion.cpp.obj: CXX_COMPILER__Li
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Reflection.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Reflection.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -223,7 +223,7 @@ build source\Library\CMakeFiles\Library.dir\Reflection.cpp.obj: CXX_COMPILER__Li
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Registry.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Registry.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -231,7 +231,7 @@ build source\Library\CMakeFiles\Library.dir\Registry.cpp.obj: CXX_COMPILER__Libr
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Transform.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Transform.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -239,7 +239,7 @@ build source\Library\CMakeFiles\Library.dir\Transform.cpp.obj: CXX_COMPILER__Lib
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Util.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Util.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -247,7 +247,7 @@ build source\Library\CMakeFiles\Library.dir\Util.cpp.obj: CXX_COMPILER__Library_
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Vector2.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Vector2.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -255,7 +255,7 @@ build source\Library\CMakeFiles\Library.dir\Vector2.cpp.obj: CXX_COMPILER__Libra
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Vector3.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Vector3.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -263,7 +263,7 @@ build source\Library\CMakeFiles\Library.dir\Vector3.cpp.obj: CXX_COMPILER__Libra
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\Vector4.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\Vector4.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -271,7 +271,7 @@ build source\Library\CMakeFiles\Library.dir\Vector4.cpp.obj: CXX_COMPILER__Libra
   TARGET_PDB = source\Library\Library.pdb
 
 build source\Library\CMakeFiles\Library.dir\pch.cpp.obj: CXX_COMPILER__Library_Debug ..\..\..\source\Library\pch.cpp || cmake_object_order_depends_target_Library_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Library\CMakeFiles\Library.dir
   OBJECT_FILE_DIR = source\Library\CMakeFiles\Library.dir
@@ -323,7 +323,7 @@ build source\Library\rebuild_cache: phony source\Library\CMakeFiles\rebuild_cach
 build cmake_object_order_depends_target_Tests_Debug: phony || cmake_object_order_depends_target_Library_Debug
 
 build source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\TestUtils.cpp || cmake_object_order_depends_target_Tests_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
@@ -331,7 +331,7 @@ build source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj: CXX_COMPILER__Tests_D
   TARGET_PDB = source\Tests\Tests.pdb
 
 build source\Tests\CMakeFiles\Tests.dir\Tests\UtilTests.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\Tests\UtilTests.cpp || cmake_object_order_depends_target_Tests_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir\Tests
@@ -339,7 +339,7 @@ build source\Tests\CMakeFiles\Tests.dir\Tests\UtilTests.cpp.obj: CXX_COMPILER__T
   TARGET_PDB = source\Tests\Tests.pdb
 
 build source\Tests\CMakeFiles\Tests.dir\main.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\main.cpp || cmake_object_order_depends_target_Tests_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
@@ -347,7 +347,7 @@ build source\Tests\CMakeFiles\Tests.dir\main.cpp.obj: CXX_COMPILER__Tests_Debug 
   TARGET_PDB = source\Tests\Tests.pdb
 
 build source\Tests\CMakeFiles\Tests.dir\pch.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\pch.cpp || cmake_object_order_depends_target_Tests_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
@@ -412,7 +412,7 @@ build source\Tests\rebuild_cache: phony source\Tests\CMakeFiles\rebuild_cache.ut
 build cmake_object_order_depends_target_Game_Debug: phony || cmake_object_order_depends_target_Library_Debug
 
 build source\Game\CMakeFiles\Game.dir\main.cpp.obj: CXX_COMPILER__Game_Debug ..\..\..\source\Game\main.cpp || cmake_object_order_depends_target_Game_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-ignored-attributes -std:c++latest
   INCLUDES = -I..\..\..\source\Library -Isource
   OBJECT_DIR = source\Game\CMakeFiles\Game.dir
   OBJECT_FILE_DIR = source\Game\CMakeFiles\Game.dir

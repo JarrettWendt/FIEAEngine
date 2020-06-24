@@ -2,9 +2,7 @@
 #include "Vector4.h"
 
 namespace Library
-{
-	constexpr bool SIMD = true;
-	
+{	
 #pragma region Special Members
 	Vector4::Vector4(const float x, const float y, const float z, const float w) noexcept :
 		x(x), y(y), z(z), w(w) {}

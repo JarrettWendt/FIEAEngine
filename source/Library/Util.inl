@@ -127,7 +127,10 @@ namespace Library::Util
 		}
 		else
 		{
+			// TODO: On linux this fails even when the function is never called
+#if _WIN32
 			static_assert(false, "no string conversion for type");
+#endif
 		}
 	}
 	

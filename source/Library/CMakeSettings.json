@@ -30,11 +30,6 @@
 					"type": "FILEPATH"
 				},
 				{
-					"name": "CMAKE_CXX_FLAGS",
-					"value": "-fno-limit-debug-info",
-					"type": "STRING"
-				},
-				{
 					"name": "CMAKE_EXE_LINKER_FLAGS",
 					"value": "-stdlib=libstdc++",
 					"type": "STRING"

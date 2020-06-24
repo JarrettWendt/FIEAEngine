@@ -1,7 +1,7 @@
 // MIT License Copyright (c) 2020 Jarrett Wendt
 
 #include "pch.h"
-#include "Math.h"
+#include "LibMath.h"
 
 namespace Library::Math
 {
@@ -12,7 +12,7 @@ namespace Library::Math
 		// because the largest composite with only prime factors will be within the first square root.
 		for (size_t i = start, n = size_t(std::floor(std::sqrt(end))); i <= n; i += 2)
 		{
-#if defined(_WIN32)
+#ifdef _WIN32
 			if (!_InterlockedCompareExchange8(sieve + i, -1, 0))
 #else
 			// If this index hasn't been worked yet

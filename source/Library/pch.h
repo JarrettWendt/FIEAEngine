@@ -14,7 +14,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <exception>
-#include <experimental/coroutine>
 #include <fstream>
 #include <functional>
 #include <future>
@@ -29,6 +28,12 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+
+#ifdef _WIN32
+#include <experimental/coroutine>
+#else
+#include <coroutine>
+#endif
 
 // External
 #include <gsl/gsl>

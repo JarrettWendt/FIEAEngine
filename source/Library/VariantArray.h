@@ -111,19 +111,21 @@ namespace Library
 			 * comparison operator for element type
 			 *
 			 * @param <T>	type that this wrapper may reference
+			 * @param val	value to to compare
 			 * @param t		value to compare this wrapper against
 			 * @returns		whether or not the value this wrapper references is equivalent to t
 			 */
 			template<typename T>
 			[[nodiscard]] friend bool operator==(const value_type& val, const T& t)
 			{
-				return val.IsType<T>() && val.owner.Get<T>(val.index) == t;
+				return val.template IsType<T>() && val.owner.template Get<T>(val.index) == t;
 			}
 
 			/**
 			 * comparison operator for element type
 			 *
 			 * @param <T>	type that this wrapper may reference
+			 * @param val	value to to compare
 			 * @param t		value to compare this wrapper against
 			 * @returns		whether or not the value this wrapper references is inequivalent to t
 			 */
@@ -138,6 +140,7 @@ namespace Library
 			 *
 			 * @param <T>	type that this wrapper may reference
 			 * @param t		value to compare this wrapper against
+			 * @param val	value to to compare
 			 * @returns		whether or not the value this wrapper references is equivalent to t
 			 */
 			template<typename T>
@@ -151,6 +154,7 @@ namespace Library
 			 *
 			 * @param <T>	type that this wrapper may reference
 			 * @param t		value to compare this wrapper against
+			 * @param val	value to to compare
 			 * @returns		whether or not the value this wrapper references is inequivalent to t
 			 */
 			template<typename T>

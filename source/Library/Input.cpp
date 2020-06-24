@@ -5,10 +5,12 @@
 #include "Input.h"
 #include "Util.h"
 
+#ifdef _WIN32
 #pragma warning(push)
 #pragma warning(disable: 4005)		// Macro redefinition.
 #include <Windows.h>
 #pragma warning(pop)
+#endif
 
 namespace Library
 {
@@ -54,6 +56,7 @@ namespace Library
 	// TODO: This can be an array. That would be much more efficient, but much less readable.
 	static const HashMap<KeyCode, std::string> keyToString = stringToKey.Invert();
 
+#ifdef _WIN32
 	void Input::WndProc(const unsigned int uMsg, const unsigned long long wParam)
 	{
 		switch (uMsg)
@@ -91,6 +94,7 @@ namespace Library
 			break;
 		}
 	}
+#endif
 
 	void Input::Update()
 	{

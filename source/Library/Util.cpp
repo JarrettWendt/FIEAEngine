@@ -90,7 +90,7 @@ namespace Library::Util
 
 	std::string RemoveWhitespace(std::string str) noexcept
 	{
-		str.erase(std::remove_if(str.begin(), str.end(), std::isspace), str.end());
+		str.erase(std::remove_if(str.begin(), str.end(), isspace), str.end());
 		return str;
 	}
 #pragma endregion

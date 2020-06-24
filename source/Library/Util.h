@@ -165,41 +165,6 @@ namespace Library::Util
 	{
 		return Find(range, t) != range.end();
 	}
-
-	/**
-	 * similar to std::transform except it takes a range and constructs a new one
-	 *
-	 * @param range		the range to read from
-	 * @param op		the operation to perform on each element of the range before inserting it into the retval
-	 */
-	template<std::ranges::range Range, std::predicate<typename Range::value_type> UnaryOperation>
-	[[nodiscard]] Range Transform(const Range& range, UnaryOperation op)
-	{
-		Range ret;
-		if constexpr (std::is_same_v<Range, Array<Range::value_type>> || std::is_same_v<Range, SList<Range::value_type>>)
-		{
-			for (const auto& a : range)
-			{
-				ret.PushBack(op(a));
-			}
-		}
-		else if constexpr (std::is_same_v<Range, HashMap<Range::key_type, Range::mapped_type>>)
-		{
-			for (const auto& a : range)
-			{
-				ret.Insert(op(a));
-			}
-		}
-		else
-		{
-			auto inserter = std::inserter(range, ret.end());
-			for (const auto& a : range)
-			{
-				inserter = op(a);
-			}
-		}
-		return ret;
-	}
 #pragma endregion
 
 #pragma region SFINAE

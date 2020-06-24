@@ -9,6 +9,8 @@
 
 namespace Library
 {
+	class Registry;
+	
 	class Attributed : public RTTI
 	{
 		RTTI_DECLARATIONS(RTTI)

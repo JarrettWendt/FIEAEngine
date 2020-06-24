@@ -16,7 +16,7 @@ namespace Library
 		STATIC_CLASS(Time)
 		
 		// not std::chrono::high_resolution_clock because `Point = Point + Seconds` wouldn't work.
-		using Point = std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<float, std::nano>>;
+		using Point = std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::duration<float, std::nano>>;
 		/**
 		 * See namespace Library::Literals to be able to type 500ms to create 500 Millis. 
 		 */
