@@ -322,17 +322,25 @@ build source\Library\rebuild_cache: phony source\Library\CMakeFiles\rebuild_cach
 
 build cmake_object_order_depends_target_Tests_Debug: phony || cmake_object_order_depends_target_Library_Debug
 
-build source\Tests\CMakeFiles\Tests.dir\main.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\main.cpp || cmake_object_order_depends_target_Tests_Debug
+build source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\TestUtils.cpp || cmake_object_order_depends_target_Tests_Debug
   FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
-  INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
+  INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
   TARGET_COMPILE_PDB = source\Tests\CMakeFiles\Tests.dir\
   TARGET_PDB = source\Tests\Tests.pdb
 
-build source\Tests\CMakeFiles\Tests.dir\UtilTests.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\UtilTests.cpp || cmake_object_order_depends_target_Tests_Debug
+build source\Tests\CMakeFiles\Tests.dir\Tests\UtilTests.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\Tests\UtilTests.cpp || cmake_object_order_depends_target_Tests_Debug
   FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
-  INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
+  INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
+  OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
+  OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir\Tests
+  TARGET_COMPILE_PDB = source\Tests\CMakeFiles\Tests.dir\
+  TARGET_PDB = source\Tests\Tests.pdb
+
+build source\Tests\CMakeFiles\Tests.dir\main.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\main.cpp || cmake_object_order_depends_target_Tests_Debug
+  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
+  INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
   TARGET_COMPILE_PDB = source\Tests\CMakeFiles\Tests.dir\
@@ -340,15 +348,7 @@ build source\Tests\CMakeFiles\Tests.dir\UtilTests.cpp.obj: CXX_COMPILER__Tests_D
 
 build source\Tests\CMakeFiles\Tests.dir\pch.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\pch.cpp || cmake_object_order_depends_target_Tests_Debug
   FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
-  INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
-  OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
-  OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
-  TARGET_COMPILE_PDB = source\Tests\CMakeFiles\Tests.dir\
-  TARGET_PDB = source\Tests\Tests.pdb
-
-build source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj: CXX_COMPILER__Tests_Debug ..\..\..\source\Tests\TestUtils.cpp || cmake_object_order_depends_target_Tests_Debug
-  FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1   -std:c++latest
-  INCLUDES = -I..\..\..\source\Library -Isource -IC:\Dev\vcpkg\installed\x64-windows\include
+  INCLUDES = -I..\..\..\source\Library -Isource -I..\..\..\source\Tests -IC:\Dev\vcpkg\installed\x64-windows\include
   OBJECT_DIR = source\Tests\CMakeFiles\Tests.dir
   OBJECT_FILE_DIR = source\Tests\CMakeFiles\Tests.dir
   TARGET_COMPILE_PDB = source\Tests\CMakeFiles\Tests.dir\
@@ -362,7 +362,7 @@ build source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj: CXX_COMPILER__Tests_D
 #############################################
 # Link the executable source\Tests\Tests.exe
 
-build source\Tests\Tests.exe: CXX_EXECUTABLE_LINKER__Tests_Debug source\Tests\CMakeFiles\Tests.dir\main.cpp.obj source\Tests\CMakeFiles\Tests.dir\UtilTests.cpp.obj source\Tests\CMakeFiles\Tests.dir\pch.cpp.obj source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj | source\Library\Library.lib || source\Library\Library.lib
+build source\Tests\Tests.exe: CXX_EXECUTABLE_LINKER__Tests_Debug source\Tests\CMakeFiles\Tests.dir\TestUtils.cpp.obj source\Tests\CMakeFiles\Tests.dir\Tests\UtilTests.cpp.obj source\Tests\CMakeFiles\Tests.dir\main.cpp.obj source\Tests\CMakeFiles\Tests.dir\pch.cpp.obj | source\Library\Library.lib || source\Library\Library.lib
   FLAGS = -m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = source\Library\Library.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
