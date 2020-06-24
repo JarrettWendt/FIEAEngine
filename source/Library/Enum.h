@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include <iterator>
 #include <exception>
+#include <iterator>
+#include <string>
 
 #include "Concept.h"
 #include "Macros.h"
-#include "LibMath.h"	// Mod
 
 namespace Library
 {

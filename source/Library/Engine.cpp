@@ -1,7 +1,8 @@
+#include "Engine.h"
 // MIT License Copyright (c) 2020 Jarrett Wendt
 
 #include "pch.h"
-//#include "PythonPCH.h"
+#include "python/pch.h"
 #include "Engine.h"
 
 #include "Coroutine.h"
@@ -12,7 +13,8 @@
 #ifdef _WIN32
 #include <Windows.h>
 #endif
-//#include "FIEAEngine_module.h"
+#include "python/modules/FIEAEngine.h"
+#include <filesystem>
 
 namespace Library
 {
@@ -23,7 +25,8 @@ namespace Library
 	
 	void Engine::Main(const Args& args)
 	{
-		Init(args);
+		ParseArgs(args);
+		Init();
 		
 		while (IsActive())
 		{
@@ -38,33 +41,27 @@ namespace Library
 		return ret;
 	}
 	
-	void Engine::Init(const Args& args)
+	void Engine::Init()
 	{
 		world = std::make_shared<Entity>();
 		world->SetName("World");
 		world->Init();
 
-		if (!args.empty())
-		{
-			//const auto wProgramName = Py_DecodeLocale(args[0], nullptr);
-			//programName = std::to_string(wProgramName);
-			//Py_SetProgramName(wProgramName);
-		}
-
-		//PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
+		PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
 		
-		//Py_Initialize();
+		Py_Initialize();
 
-//#ifdef _DEBUG
-//		const std::ifstream file{ "Init.py" };
-//		const std::string str = (std::stringstream{} << file.rdbuf()).str();
-//		PyRun_SimpleString(str.c_str());
-//#else
-//		// TODO: This is the way running a python file is _supposed_ to work.
-//		FILE* f;
-//		fopen_s(&f, "Init.py", "r");
-//		PyRun_SimpleFile(f, "Init.py");
-//#endif
+#ifdef _DEBUG
+		const std::string bleh = std::filesystem::current_path().string();
+		const std::ifstream file{ pythonSourceDirectory + initFileName };
+		const std::string str = (std::stringstream{} << file.rdbuf()).str();
+		PyRun_SimpleString(str.c_str());
+#else
+		// TODO: This is the way running a python file is _supposed_ to work.
+		FILE* f;
+		fopen_s(&f, (pythonSourceDirectory + initFileName).c_str(), "r");
+		PyRun_SimpleFile(f, initFileName.c_str());
+#endif
 	}
 
 	void Engine::Update()
@@ -87,10 +84,21 @@ namespace Library
 	void Engine::Terminate()
 	{
 		world = nullptr;
-		//if (Py_FinalizeEx() < 0)
-		//{
-		//	std::terminate();
-		//}
+		if (Py_FinalizeEx() < 0)
+		{
+			std::terminate();
+		}
+	}
+
+	void Engine::ParseArgs(const Args& args)
+	{
+		if (!args.empty())
+		{
+			const auto wProgramName = Py_DecodeLocale(args[0], nullptr);
+			programName = std::to_string(wProgramName);
+			Py_SetProgramName(wProgramName);
+		}
+		pythonSourceDirectory = args.size() > 1 ? args[1] : "";
 	}
 
 #ifdef _WIN32

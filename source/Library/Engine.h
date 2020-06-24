@@ -17,7 +17,12 @@ namespace Library
 		
 		/** the parentmost Entity */
 		static inline std::shared_ptr<Entity> world{ nullptr };
+		
 		static inline std::string programName{};
+		static inline std::string pythonSourceDirectory{};
+		static inline const std::string initFileName{ "init.py" };
+		static inline const std::string shutdownFileName{ "del.py" };
+		
 		// TODO: This should be replaced with a garbage collector
 		static inline SList<std::weak_ptr<Entity>> pendingOrphans{};
 		
@@ -47,7 +52,7 @@ namespace Library
 		/**
 		 * runs before the first Update()
 		 */
-		static void Init(const Args& args);
+		static void Init();
 
 		/**
 		 * the main engine loop
@@ -60,6 +65,11 @@ namespace Library
 		static void Terminate();
 
 	private:
+		/**
+		 * wraps all of the logic for parsing the command line args.
+		 */
+		static void ParseArgs(const Args& args);
+		
 		/**
 		 * Invoked by WinMain's WndProc.
 		 *

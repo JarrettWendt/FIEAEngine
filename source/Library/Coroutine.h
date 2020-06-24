@@ -3,7 +3,10 @@
 #pragma once
 
 #ifdef _WIN32
-#include <experimental/coroutine>
+// TODO: On windows we're using MSVC's STL implementation, not libstdc++ which we're using on Linux.
+// MSVC's coroutine header is incompatible with clang-cl (the version of clang installed on windows through the VS installer).
+// So instead we're using this header which was copy/pasted from clang's GitHub.
+#include "clang_coroutine.h"
 #else
 #include <coroutine>
 #endif
@@ -25,8 +28,8 @@ namespace Library
 	{
 		friend class Coroutines;
 #ifdef _WIN32
-		using SuspendAlways = std::experimental::suspend_always;
-		using SuspendNever = std::experimental::suspend_never;
+		using SuspendAlways = std::experimental::coroutines_v1::suspend_always;
+		using SuspendNever = std::experimental::coroutines_v1::suspend_never;
 #else
 		using SuspendAlways = std::suspend_always;
 		using SuspendNever = std::suspend_never;
@@ -37,7 +40,7 @@ namespace Library
 		{
 			friend class Coroutine;
 #ifdef _WIN32
-			using Handle = std::experimental::coroutine_handle<promise_type>;
+			using Handle = std::experimental::coroutines_v1::coroutine_handle<promise_type>;
 #else
 			using Handle = std::coroutine_handle<promise_type>;
 #endif

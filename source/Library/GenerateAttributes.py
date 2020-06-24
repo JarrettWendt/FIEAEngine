@@ -43,7 +43,7 @@ class Attribute:
 		ret = '{ '
 		ret += '"' + self.name + '", '
 		ret += str(self.count) + ', '
-		ret += 'offsetof(' + self.attributed.scopeResolvedClass() + ', ' + self.attributed.scopeResolvedClass() + '::' + self.name + '), ' if self.isMember else '0, '
+		ret += 'offsetof(' + self.attributed.scopeResolvedClass() + ', ' + self.name + '), ' if self.isMember else '0, '
 		ret += 'Datum::TypeOf<' + self.type + '>, '
 		return ret + ' }'
 
@@ -94,7 +94,7 @@ class Attributed:
 			for attribute in self.attributes:
 				ret += '\t\t\t\t\t' + str(attribute) + ',\n'
 		else:
-			ret += '\t\t\t\t\tVector<Attribute>()\n'
+			ret += '\t\t\t\t\tArray<Attribute>()\n'
 		return ret + '\t\t\t\t}\n\t\t\t}\n\t\t}'
 	
 	def __eq__(self, other):
@@ -113,7 +113,7 @@ class Attributed:
 		return self.namespace + '::' + self.className
 
 rootPaths = [os.path.abspath(arg) for arg in sys.argv[1:]] if len(sys.argv) > 1 else [os.path.abspath('..')]
-destFile = rootPaths[0] + '\Registry.generated.cpp'
+destFile = rootPaths[0] + '\.generated\Registry.generated.cpp'
 
 attributeds = []
 
@@ -194,6 +194,8 @@ string += """	};
 }
 """
 
+# make the directory if it doesn't already exist
+os.makedirs(os.path.dirname(destFile), exist_ok=True)
 with open(destFile, 'w') as file:
 	file.write(string)
 	file.close()

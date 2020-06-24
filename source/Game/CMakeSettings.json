@@ -51,7 +51,13 @@
 			"buildCommandArgs": "",
 			"ctestCommandArgs": "",
 			"inheritEnvironments": [ "clang_cl_x64_x64" ],
-			"variables": []
+			"variables": [
+				{
+					"name": "CMAKE_CXX_FLAGS",
+					"value": "-m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers -Wno-invalid-offsetof",
+					"type": "STRING"
+				}
+			]
 		}
 	]
 }

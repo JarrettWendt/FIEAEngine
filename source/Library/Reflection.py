@@ -28,7 +28,7 @@ class ClassInfo:
 		return self.namespace + '::' + self.className
 
 rootPaths = [os.path.abspath(arg) for arg in sys.argv[1:]] if len(sys.argv) > 1 else [os.path.abspath('..')]
-destFile = rootPaths[0] + '\Reflection.generated.cpp'
+destFile = rootPaths[0] + '\.generated\Reflection.generated.cpp'
 
 classInfos = []
 

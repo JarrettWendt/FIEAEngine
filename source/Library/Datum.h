@@ -413,9 +413,9 @@ namespace Library
 		/**
 		 * Helper for "do"ing generic things when compile-time type information is not known, but run-time enum information is available
 		 *
-		 * @param<Invokable>	tempalted lambda type
+		 * @param<Invokable>	templated lambda type
 		 * @param type			Datum::Type to "do something" for
-		 * @param func			tempalted lambda which will be passed a dummy nullptr of TypeOfType<type>
+		 * @param func			templated lambda which will be passed a dummy nullptr of TypeOfType<type>
 		 */
 		template<typename Invokable>
 		void Do(Type type, Invokable func);
@@ -435,9 +435,9 @@ namespace Library
 	const std::string& Enum<Datum::Type>::ToString(Datum::Type t);
 
 	/**
-	 * @param str							a string representing a Datum::Type
-	 * @param returns Datum::Type::None		if str == "None" or it could not be parsed
-	 * @param returns						the Datum::Type represented by str
+	 * @param str						a string representing a Datum::Type
+	 * @returns Datum::Type::None		if str == "None" or it could not be parsed
+	 * @returns							the Datum::Type represented by str
 	 */
 	template<>
 	Datum::Type Enum<Datum::Type>::FromString(const std::string& str);
