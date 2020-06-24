@@ -10,5 +10,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# set(CMAKE_TOOLCHAIN_FILE "mnt/c/Dev/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 # all directories which have a CMakeLists.txt
 add_subdirectory(source)

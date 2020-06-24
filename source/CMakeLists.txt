@@ -7,4 +7,5 @@ include_directories(${PROJECT_SOURCE_DIR}/source/Library ${CMAKE_CURRENT_BINARY_
 
 # all directories which have a CMakeLists.txt
 add_subdirectory(Library)
+add_subdirectory(Tests)
 add_subdirectory(Game)

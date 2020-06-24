@@ -2,6 +2,8 @@
 
 #pragma once
 
+#define _SILENCE_CLANG_COROUTINE_MESSAGE
+
 // Standard
 #include <algorithm>
 #include <cassert>
@@ -30,16 +32,16 @@
 
 // External
 #include <gsl/gsl>
-#include <glm/glm.hpp>
+//#include <glm/glm.hpp>
 
-#pragma warning(push)
-#pragma warning(disable: 4201)		// Nonstandard extension used : nameless struct/union.
-#include <glm/gtx/string_cast.hpp>
-#pragma warning(pop)
+//#pragma warning(push)
+//#pragma warning(disable: 4201)		// Nonstandard extension used : nameless struct/union.
+//#include <glm/gtx/string_cast.hpp>
+//#pragma warning(pop)
 
-#pragma warning(push)
-#pragma warning(disable: 26812)		// Prefer 'enum class' over 'enum'.
-#include <json/json.h>
-#pragma warning(pop)
+//#pragma warning(push)
+//#pragma warning(disable: 26812)		// Prefer 'enum class' over 'enum'.
+//#include <json/json.h>
+//#pragma warning(pop)
 
 // Custom

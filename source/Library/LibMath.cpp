@@ -64,7 +64,7 @@ namespace Library::Math
 		// 0 and 1 are not prime.
 		// 2 is the only even prime.
 		// No even numbers are tallied in the sieve.
-		return n == 2 || n > 1 && n % 2 && sieve[n] != 1;
+		return n == 2 || (n > 1 && n % 2 && sieve[n] != 1);
 	}
 
 	size_t NextPrime(size_t num)
