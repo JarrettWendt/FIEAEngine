@@ -46,3 +46,6 @@ Build/obj/*
 # reflection
 *.generated.*
 *.generated.*
+
+# cmake
+out/*
