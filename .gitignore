@@ -48,4 +48,4 @@ Build/obj/*
 *.generated.*
 
 # cmake
-out/*
+#out/*
