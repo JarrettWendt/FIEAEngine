@@ -25,6 +25,8 @@ namespace Library
 		
 		// TODO: This should be replaced with a garbage collector
 		static inline SList<std::weak_ptr<Entity>> pendingOrphans{};
+
+		static inline FILE* initFilePtr{ nullptr };
 		
 	public:
 		STATIC_CLASS(Engine)

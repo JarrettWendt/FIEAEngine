@@ -109,8 +109,8 @@ namespace Library::Util
 
 	std::string FixDirectorySeparators(std::string filepath) noexcept
 	{
-		const std::string delim = std::to_string(std::filesystem::path::preferred_separator);
-		const std::string notdelim = delim == "/" ? "\\" : delim;;
+		const std::string delim = std::to_string(char(std::filesystem::path::preferred_separator));
+		const std::string notdelim = delim == "/" ? "\\" : "/";
 		
 		filepath = ReplaceAll(filepath, "\\\\", delim);
 		filepath = ReplaceAll(filepath, "//", delim);

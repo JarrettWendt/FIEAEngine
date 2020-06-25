@@ -48,6 +48,7 @@ class SubParticle(Entity.Entity):
 	def Draw(self):
 		colour, attr = SubParticle.attrs[int(self.idx)]
 		ScreenManager.screen.print_at(choice(ascii_letters), self.x, int(self.y), colour, attr)
+		#print('Draw (' + str(self.x) + ', ' + str(self.y) + ')')
 
 	def _Update(self):
 		self.idx -= self.speed * Time.Delta()
@@ -79,6 +80,7 @@ class Particle(Entity.Entity):
 		if self.y - Particle.maxChildren > ScreenManager.screen.height:
 			self.Orphan()
 		super()._Update()
+		#print('Particle (' + str(self.x) + ', ' + str(self.y) + ')\n')
 
 # Manages Particles
 class ParticleSystem(Entity.Entity):
@@ -93,6 +95,7 @@ class ParticleSystem(Entity.Entity):
 			self.childCounter += 1
 			self.Adopt('Particle' + str(self.childCounter), Particle())
 		super()._Update()
+		#print('ParticleSystem ' + str(self.childCounter))
 
 Engine.World().Adopt(ScreenManager())
 Engine.World().Adopt(ParticleSystem())

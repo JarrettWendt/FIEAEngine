@@ -391,6 +391,11 @@ namespace std
 	{
 		return std::string(1, c);
 	}
+	
+	[[nodiscard]] static std::string to_string(const wchar_t c)
+	{
+		return to_string(char(c));
+	}
 
 	[[nodiscard]] constexpr const std::string& to_string(const std::string& str)
 	{

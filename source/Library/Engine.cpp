@@ -40,20 +40,19 @@ namespace Library
 	}
 	
 	void Engine::Init()
-	{
+	{		
 		world = std::make_shared<Entity>();
 		world->SetName("World");
 		world->Init();
 
-		PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);
-		
+		PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);		
 		Py_Initialize();
 
-		std::string init = Util::FixDirectorySeparators(pythonSourceDirectory + initFileName);
-
+		std::string init = Util::FixDirectorySeparators(pythonSourceDirectory + "/" + initFileName);
 #ifndef _WIN32
 		init = Util::WindowsToWSLDir(init);
 #endif
+		std::cout << "initializing with python file " << init << std::endl;
 		
 #ifdef _DEBUG
 		const std::ifstream file{ init };
@@ -61,8 +60,8 @@ namespace Library
 		PyRun_SimpleString(str.c_str());
 #else
 		// TODO: This is the way running a python file is _supposed_ to work.
-		FILE* f = std::fopen(init.c_str(), "r");
-		PyRun_SimpleFile(f, init.c_str());
+		initFilePtr = std::fopen(init.c_str(), "r");
+		PyRun_SimpleFile(initFilePtr, init.c_str());
 #endif
 	}
 
@@ -86,6 +85,7 @@ namespace Library
 	void Engine::Terminate()
 	{
 		world = nullptr;
+		std::fclose(initFilePtr);
 		if (Py_FinalizeEx() < 0)
 		{
 			std::terminate();
