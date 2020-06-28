@@ -70,6 +70,14 @@ namespace Library::Util
 	template <typename T, typename U, typename... Ts>
 	constexpr std::size_t Index() noexcept;
 
+	/**
+	 * static_assert(false) inside a constexpr-if inside a template will fail to compile.
+	 * The static_assert must depend on the template type.
+	 * So instead use static_assert(Util::DependentFalse<Ts...>)
+	 */
+	template<typename...>
+	constexpr std::false_type DependentFalse{};
+
 #pragma region Query
 	/**
 	 * performs a linear query over the range using a predicate

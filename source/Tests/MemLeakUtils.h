@@ -4,6 +4,7 @@
 
 namespace UnitTests
 {
+	// to be used with TEST_CASE_METHOD
 	class MemLeak
 	{
 	protected:
@@ -18,5 +19,23 @@ namespace UnitTests
 		}
 
 		MOVE_COPY(MemLeak, default)
+	};
+	
+	// to be used with TEMPLATE_TEST_CASE_METHOD
+	template<typename T>
+	class TemplateMemLeak
+	{
+	protected:
+		TemplateMemLeak()
+		{
+			TestUtil::StartMemState();
+		}
+
+		~TemplateMemLeak()
+		{
+			TestUtil::EndMemState();
+		}
+
+		MOVE_COPY(TemplateMemLeak, default)
 	};
 }

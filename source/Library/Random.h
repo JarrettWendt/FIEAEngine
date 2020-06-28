@@ -6,7 +6,6 @@
 #include <random>
 #include <ranges>
 
-#include "Macros.h"
 #include "Concept.h"
 
 namespace Library::Random

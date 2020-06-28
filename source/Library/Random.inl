@@ -49,7 +49,7 @@ namespace Library::Random
 	{
 		return Range<T, Engine>(T(0), std::numeric_limits<T>::max());
 	}
-
+	
 	template<Concept::Arithmetic T, typename Engine>
 	T Range(const T min, T max)
 	{
@@ -77,7 +77,7 @@ namespace Library::Random
 		else
 		{
 			// The above cases should cover every arithmetic type so this in an unexpected state.
-			static_assert(false, "unexpected type");
+			static_assert(Util::DependentFalse<T>, "unexpected type");
 		}
 	}
 
