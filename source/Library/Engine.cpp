@@ -52,7 +52,6 @@ namespace Library
 #ifndef _WIN32
 		init = Util::WindowsToWSLDir(init);
 #endif
-		std::cout << "initializing with python file " << init << std::endl;
 		
 #ifdef _DEBUG
 		const std::ifstream file{ init };

@@ -18,6 +18,9 @@ namespace UnitTests
 
 		~MemLeak()
 		{
+			using namespace Library;
+			Coroutines::StopAll();
+			Engine::Update();
 			TestUtil::EndMemState();
 		}
 
@@ -26,12 +29,24 @@ namespace UnitTests
 	private:
 		static void Singleton()
 		{
+			using namespace Library;
+			Engine::Init();
+			Coroutines::StopAll();
+			Engine::Update();
 			static bool b{ false };
 			if (b)
 			{
 				return;
 			}
-			Library::Math::NextPrime(500);
+			Math::NextPrime(500);
+			Enum<Digit>::ToString(Digit());
+			Enum<Digit>::FromString("Zero");
+			Enum<Datum::Type>::ToString(Datum::Type());
+			Enum<Datum::Type>::FromString("Zero");
+			Enum<Input::KeyCode>::ToString(Input::KeyCode());
+			Enum<Input::KeyCode>::FromString("None");
+			Enum<Input::KeyState>::ToString(Input::KeyState());
+			Enum<Input::KeyState>::FromString("up");
 		}
 	};
 	
@@ -48,6 +63,9 @@ namespace UnitTests
 
 		~TemplateMemLeak()
 		{
+			using namespace Library;
+			Coroutines::StopAll();
+			Engine::Update();
 			TestUtil::EndMemState();
 		}
 

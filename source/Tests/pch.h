@@ -53,6 +53,7 @@
 #include "Entity.h"
 
 // UnitTests
+#include "Digit.h"
 #include "FooBar/AttributedFoo.h"
 #include "FooBar/Foo.h"
 #include "MemLeakUtils.h"
