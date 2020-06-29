@@ -33,7 +33,7 @@ namespace Library::Util
 				return false;
 			}
 		}
-		return str.size() > 0;
+		return !str.empty();
 	}
 
 	bool HasAlpha(const std::string& str) noexcept

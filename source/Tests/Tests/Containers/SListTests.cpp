@@ -4,9 +4,9 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace Library::Literals;
 
-#define TYPES bool, char, int, float, uint64_t//, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>)
-#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, "SList::" #name, "[SList]", TYPES)
-#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE("SList::" #name, "[SList]", TYPES)
+using Types = std::tuple<bool, char, int, float, uint64_t>; //, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>)
+#define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "SList::" #name, "[SList]", Types)
+#define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("SList::" #name, "[SList]", Types)
 #define CONTAINER SList<TestType>
 
 namespace UnitTests

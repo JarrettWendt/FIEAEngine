@@ -10,6 +10,7 @@ namespace UnitTests
 	protected:
 		MemLeak()
 		{
+			Library::Math::NextPrime(500);
 			TestUtil::StartMemState();
 		}
 
@@ -28,6 +29,7 @@ namespace UnitTests
 	protected:
 		TemplateMemLeak()
 		{
+			Library::Math::NextPrime(500);
 			TestUtil::StartMemState();
 		}
 

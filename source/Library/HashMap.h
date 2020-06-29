@@ -43,6 +43,8 @@ namespace Library
 		const key_type key;
 		value_type value;
 
+		operator std::pair<TKey, TValue>();
+
 		/**
 		 * Only compares the key, not the value.
 		 *
@@ -65,7 +67,7 @@ namespace Library
 		 * Converts a KeyValuePair to a string.
 		 * Requires both key and value have a to_string
 		 *
-		 * @param kvp	the KeyValuPair to stringify
+		 * @param kvp	the KeyValuePair to stringify
 		 * @returns		the string representation of this KeyValuePair
 		 */
 		[[nodiscard]] friend std::string to_string(const KeyValuePair& kvp)

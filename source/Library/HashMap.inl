@@ -7,6 +7,12 @@
 namespace Library
 {
 	template<typename TKey, typename TValue, std::predicate<TKey, TKey> KeyEqual>
+	KeyValuePair<TKey, TValue, KeyEqual>::operator std::pair<TKey, TValue>()
+	{
+		return { key, value };
+	}
+	
+	template<typename TKey, typename TValue, std::predicate<TKey, TKey> KeyEqual>
 	inline bool KeyValuePair<TKey, TValue, KeyEqual>::operator==(const KeyValuePair& other) const
 	{
 		return KeyEqual{}(key, other.key);
