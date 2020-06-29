@@ -52,7 +52,9 @@
 #include "Attributed.h"
 #include "Entity.h"
 
-// Utility
+// UnitTests
+#include "FooBar/AttributedFoo.h"
+#include "FooBar/Foo.h"
 #include "MemLeakUtils.h"
 #include "TestRandom.h"
 #include "TestUtils.h"
