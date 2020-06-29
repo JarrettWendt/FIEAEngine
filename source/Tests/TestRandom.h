@@ -4,7 +4,7 @@
 namespace Library::Random
 {
 	template<std::ranges::range Range, typename Engine = DefaultEngine>
-	[[nodiscard]] Range Next(const size_t size)
+	[[nodiscard]] Range Next(const size_t size = 100)
 	{
 		using value_type = typename Range::value_type;
 		std::vector<value_type> v;
@@ -15,6 +15,21 @@ namespace Library::Random
 		}
 		return { v.begin(), v.end() };
 	}
+
+	//template<typename T>
+	//[[nodiscard]] T Next();
+	//
+	//template<>
+	//[[nodiscard]] std::string Next<std::string>()
+	//{
+	//	std::string ret;
+	//	ret.reserve(10);
+	//	while (ret.size() != ret.capacity())
+	//	{
+	//		ret.push_back(Range<char>('a', 'z'));
+	//	}
+	//	return ret;
+	//}
 
 	template<std::ranges::range Range, typename Engine = DefaultEngine>
 	[[nodiscard]] typename Range::value_type NotIn(const Range& range)

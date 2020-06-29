@@ -439,13 +439,13 @@ namespace Library
 		void PushFront(T&& t);
 
 		/**
-		 * Appends a protoypical value to the end of the container
+		 * Appends a prototypical value to the end of the container
 		 * O(n) where n = count
 		 * 
 		 * @param count			how many values to append
 		 * @param prototype		what to append
 		 */
-		void Append(const size_type count, const T& prototype = T());
+		void Append(size_type count, const T& prototype = T());
 
 		/**
 		 * appends an initializer_list to the end of the container

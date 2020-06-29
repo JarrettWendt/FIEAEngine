@@ -10,11 +10,11 @@ namespace Library::Util
 	{
 		union
 		{
-			To to;
 			From from;
-		};
-		from = f;
-		return to;
+			To to{};
+		} ret{};
+		ret.from = f;
+		return ret.to;
 	}
 	
 	template<typename T, typename ...Ts>

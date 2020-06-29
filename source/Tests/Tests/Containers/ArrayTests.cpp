@@ -5,8 +5,8 @@ using namespace Library;
 using namespace Library::Literals;
 
 #define TYPES bool, char, int, float, uint64_t//, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>)
-#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, name, "[Array]", TYPES)
-#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(name, "[Array]", TYPES)
+#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, "Array::" #name, "[Array]", TYPES)
+#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE("Array::" #name, "[Array]", TYPES)
 #define CONTAINER Array<TestType>
 
 namespace UnitTests
@@ -20,7 +20,7 @@ namespace UnitTests
 	};
 
 #pragma region special members
-	TEST("PrototypeConstructor")
+	TEST(PrototypeConstructor)
 	{
 		const size_t count = Random::Range<size_t>(0, 100);
 		const TestType t = Random::Next<TestType>();
@@ -32,7 +32,7 @@ namespace UnitTests
 		}
 	}
 
-	TEST("IteratorConstructor")
+	TEST(IteratorConstructor)
 	{
 		const size_t count = Random::Range<size_t>(0, 100);
 		const auto t = Random::Next<TestType>();
@@ -45,7 +45,7 @@ namespace UnitTests
 		}
 	}
 
-	TEST("CopyCtor")
+	TEST(CopyCtor)
 	{
 		const Array<TestType> a1 = Random::Next<Array<TestType>>(100);
 		Array<TestType> a2(a1);
@@ -54,7 +54,7 @@ namespace UnitTests
 		REQUIRE(a1 != a2);
 	}
 
-	TEST("CopyCtorDifferentReserve")
+	TEST(CopyCtorDifferentReserve)
 	{
 		const auto a = Random::Next<Array<TestType, TestReserveStrategy>>(100);
 		const Array<TestType> a1(a);
@@ -64,7 +64,7 @@ namespace UnitTests
 		REQUIRE(a1 != a2);
 	}
 
-	TEST("MoveCtorDifferentReserve")
+	TEST(MoveCtorDifferentReserve)
 	{
 		const Array<TestType> a1 = Random::Next<Array<TestType, TestReserveStrategy>>(100);
 		Array<TestType> a2(a1);
@@ -73,7 +73,7 @@ namespace UnitTests
 		REQUIRE(a1 != a2);
 	}
 
-	TEST("CopyAssignDifferentReserve")
+	TEST(CopyAssignDifferentReserve)
 	{
 		const Array<TestType, TestReserveStrategy> a1 = Random::Next<Array<TestType, TestReserveStrategy>>(100);
 		Array<TestType> a2;
@@ -83,7 +83,7 @@ namespace UnitTests
 		REQUIRE(a1 != a2);
 	}
 
-	TEST("MoveAssignDifferentReserve")
+	TEST(MoveAssignDifferentReserve)
 	{
 		Array<TestType> a1;
 		a1 = Random::Next<Array<TestType, TestReserveStrategy>>(100);
@@ -93,12 +93,12 @@ namespace UnitTests
 		REQUIRE(a1 != a2);
 	}
 
-	TEST("CopyAssignment")
+	TEST(CopyAssignment)
 	{
 		Array<TestType> a = Random::Next<Array<TestType>>(100);
 	}
 
-	TEST("AssignmentOperator")
+	TEST(AssignmentOperator)
 	{
 		Array<TestType> a, b;
 
@@ -114,7 +114,7 @@ namespace UnitTests
 		REQUIRE(a == b);
 	}
 
-	TEST("InitializerList")
+	TEST(InitializerList)
 	{
 		auto a = Random::Next<TestType>();
 		auto b = Random::Next<TestType>();
@@ -129,7 +129,7 @@ namespace UnitTests
 		REQUIRE(b == v.Back());
 	}
 
-	TEST("RangeCtor")
+	TEST(RangeCtor)
 	{
 		const auto v = Random::Next<std::vector<TestType>>(100);
 		const Array<TestType> a(v);
@@ -140,7 +140,7 @@ namespace UnitTests
 		}
 	}
 
-	TEST("RangeAssignmentOperator")
+	TEST(RangeAssignmentOperator)
 	{
 		const auto v = Random::Next<std::vector<TestType>>(100);
 		Array<TestType> a;
@@ -154,15 +154,14 @@ namespace UnitTests
 #pragma endregion
 	
 #pragma region iterator
-	TEST("iterator")
+	TEST(iterator)
 	{
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
 			return;
 		}
 		
-		using iterator = typename Array<TestType>::iterator;
-		using difference_type = typename iterator::difference_type;
+		using iterator = typename CONTAINER::iterator;
 
 		REQUIRE(std::random_access_iterator<iterator>);
 		
@@ -253,16 +252,14 @@ namespace UnitTests
 		REQUIRE(constInitialized[2] == libC[2]);
 	}
 
-	TEST("const_iterator")
+	TEST(const_iterator)
 	{
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
 			return;
 		}
 		
-		using iterator = typename Array<TestType>::iterator;
-		using const_iterator = typename Array<TestType>::const_iterator;
-		using difference_type = typename const_iterator::difference_type;
+		using const_iterator = typename CONTAINER::const_iterator;
 
 		REQUIRE(std::random_access_iterator<const_iterator>);
 		
@@ -367,7 +364,7 @@ namespace UnitTests
 		REQUIRE(constInitialized[2] == libraryContainer[2]);
 	}
 
-	TEST("ReverseIterator")
+	TEST(ReverseIterator)
 	{
 		using T = int;
 		Array<T> c = Random::Next<Array<T>>(100);
@@ -382,7 +379,7 @@ namespace UnitTests
 #pragma endregion
 		
 #pragma region Element Access
-	TEST_NO_MEM_CHECK("Front")
+	TEST_NO_MEM_CHECK(Front)
 	{
 		Array<TestType> v(10);
 		auto t = Random::Next<TestType>();
@@ -391,7 +388,7 @@ namespace UnitTests
 		REQUIRE_THROWS_AS(Array<TestType>().Front(), std::out_of_range);
 	}
 
-	TEST_NO_MEM_CHECK("Back")
+	TEST_NO_MEM_CHECK(Back)
 	{
 		Array<TestType> v(10);
 		auto t = Random::Next<TestType>();
@@ -400,7 +397,7 @@ namespace UnitTests
 		REQUIRE_THROWS_AS(Array<TestType>().Back(), std::out_of_range);
 	}
 
-	TEST("At")
+	TEST(At)
 	{
 		auto c = Random::Next<Array<TestType>>(5);
 		const auto& r = c;
@@ -410,7 +407,7 @@ namespace UnitTests
 #pragma endregion
 
 #pragma region Query
-	TEST("IndexOf")
+	TEST(IndexOf)
 	{
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
@@ -423,7 +420,7 @@ namespace UnitTests
 		REQUIRE(index == c.IndexOf([&t](const auto& a) { return t == a; }));
 	}
 	
-	TEST("Find")
+	TEST(Find)
 	{
 		const auto c = Random::Next<Array<TestType>>(100);
 		const auto& t = c[5];
@@ -431,7 +428,7 @@ namespace UnitTests
 		REQUIRE(Util::Find(c, [](const auto&) { return false; }) == c.end());
 	}
 
-	TEST("Exists")
+	TEST(Exists)
 	{
 		const auto c = Random::Next<Array<TestType>>(100);
 		const auto& t = Random::Element(c);
@@ -440,7 +437,7 @@ namespace UnitTests
 #pragma endregion
 
 #pragma region Insert
-	TEST("InsertThreeIterators")
+	TEST(InsertThreeIterators)
 	{
 		auto a = Random::Next<Array<TestType>>(100);
 		Array<TestType> b;
@@ -448,7 +445,7 @@ namespace UnitTests
 		REQUIRE(a == b);
 	}
 
-	TEST("InsertIteratorLValue")
+	TEST(InsertIteratorLValue)
 	{
 		auto a = Random::Next<Array<TestType>>(100);
 		auto t = Random::Next<TestType>();
@@ -456,7 +453,7 @@ namespace UnitTests
 		REQUIRE(t == a.Front());
 	}
 
-	TEST("InsertIteratorRValue")
+	TEST(InsertIteratorRValue)
 	{
 		auto a = Random::Next<Array<TestType>>(100);
 		const auto t = a.Front();
@@ -464,7 +461,7 @@ namespace UnitTests
 		REQUIRE(t != a.Front());
 	}
 	
-	TEST("InsertIteratorCountPrototype")
+	TEST(InsertIteratorCountPrototype)
 	{
 		auto a = Random::Next<Array<TestType>>(100);
 		auto t = Random::Next<TestType>();
@@ -476,7 +473,7 @@ namespace UnitTests
 		}
 	}
 	
-	TEST("InsertInitializerList")
+	TEST(InsertInitializerList)
 	{
 		std::initializer_list<TestType> list = { Random::Next<TestType>(), Random::Next<TestType>() };
 		Array<TestType> a = list;
@@ -485,7 +482,7 @@ namespace UnitTests
 		REQUIRE(a == b);
 	}
 			
-	TEST("Emplace")
+	TEST(Emplace)
 	{
 		auto a = Random::Next<Array<TestType>>(100);
 		auto it = a.cbegin();
@@ -497,7 +494,7 @@ namespace UnitTests
 		REQUIRE_THROWS_AS(a.Emplace(a.Size() + 1, Random::Next<TestType>()), std::out_of_range);
 	}
 	
-	TEST("PushBack")
+	TEST(PushBack)
 	{
 		Array<TestType> v;
 		const size_t capacity = v.Capacity();
@@ -518,7 +515,7 @@ namespace UnitTests
 		REQUIRE(size + 1 == v.Size());
 	}
 
-	TEST("PushFront")
+	TEST(PushFront)
 	{
 		Array<TestType> v;
 		const size_t capacity = v.Capacity();
@@ -539,7 +536,7 @@ namespace UnitTests
 		REQUIRE(size + 1 == v.Size());
 	}
 
-	TEST("PushFrontIterators")
+	TEST(PushFrontIterators)
 	{
 		const std::vector<TestType> v = Random::Next<std::vector<TestType>>(100);
 		const Array<TestType> c1(v);
@@ -550,7 +547,7 @@ namespace UnitTests
 #pragma endregion
 
 #pragma region Remove
-	TEST("Remove")
+	TEST(Remove)
 	{
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
@@ -567,7 +564,7 @@ namespace UnitTests
 		REQUIRE_THROWS_AS(a.Remove(end, begin), std::invalid_argument);
 	}
 
-	TEST("RemoveAll")
+	TEST(RemoveAll)
 	{
 		auto a = Random::Next<CONTAINER>(10);
 		const auto t = Random::Element(a);
@@ -576,7 +573,7 @@ namespace UnitTests
 		REQUIRE(!Util::Contains(a, t));
 	}
 
-	TEST("RemoveIterator")
+	TEST(RemoveIterator)
 	{
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
@@ -597,7 +594,7 @@ namespace UnitTests
 		end = b.end();
 	}
 
-	TEST("RemoveAt")
+	TEST(RemoveAt)
 	{
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
@@ -610,7 +607,7 @@ namespace UnitTests
 		REQUIRE(!Util::Contains(c, t));
 	}
 	
-	TEST("PopBack")
+	TEST(PopBack)
 	{
 		CONTAINER v;
 		v.PushBack(Random::Next<TestType>());
@@ -618,7 +615,7 @@ namespace UnitTests
 		REQUIRE(v.IsEmpty());
 	}
 
-	TEST("PopFront")
+	TEST(PopFront)
 	{
 		CONTAINER v;
 		v.PushFront(Random::Next<TestType>());
@@ -640,7 +637,7 @@ namespace UnitTests
 #pragma endregion
 
 #pragma region Memory
-	TEST("Reserve")
+	TEST(Reserve)
 	{
 		CONTAINER v;
 		v.Reserve(10);
@@ -649,7 +646,7 @@ namespace UnitTests
 		REQUIRE(10_z == v.Capacity());
 	}
 
-	TEST("Resize")
+	TEST(Resize)
 	{
 		CONTAINER v;
 		auto r = Random::Next<TestType>();
@@ -672,7 +669,7 @@ namespace UnitTests
 		REQUIRE(capacity != v.Capacity());
 	}
 
-	TEST("ShrinkToFit")
+	TEST(ShrinkToFit)
 	{
 		CONTAINER v(100);
 		v.PushBack(Random::Next<TestType>());
@@ -683,7 +680,7 @@ namespace UnitTests
 		REQUIRE(0 == v.Capacity());
 	}
 
-	TEST("Swap")
+	TEST(Swap)
 	{
 		auto a = Random::Next<CONTAINER>(100);
 		auto b = Random::Next<CONTAINER>(100);
@@ -694,7 +691,7 @@ namespace UnitTests
 		REQUIRE(cb == a);
 	}
 
-	TEST("Sort")
+	TEST(Sort)
 	{
 		// T::operator< must be defined.
 		if constexpr (std::is_arithmetic_v<TestType>)
@@ -716,7 +713,7 @@ namespace UnitTests
 		}
 	}
 
-	TEST("Data")
+	TEST(Data)
 	{
 		CONTAINER a;
 		REQUIRE(*reinterpret_cast<const TestType**>(const_cast<CONTAINER*>(&a)) == a.Data());
@@ -728,7 +725,7 @@ namespace UnitTests
 		REQUIRE(copy == b);
 	}
 
-	TEST("Reverse")
+	TEST(Reverse)
 	{
 		std::initializer_list<TestType> init =
 		{
@@ -750,7 +747,7 @@ namespace UnitTests
 #pragma endregion
 
 #pragma region Operators
-	TEST("Equivalence")
+	TEST(Equivalence)
 	{
 		CONTAINER a = Random::Next<CONTAINER>(26);
 		CONTAINER b = a;
@@ -783,7 +780,7 @@ namespace UnitTests
 		REQUIRE(!(a == b));
 	}
 
-	TEST("Subscript")
+	TEST(Subscript)
 	{
 		CONTAINER v;
 		TestType t;

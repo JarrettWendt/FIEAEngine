@@ -120,7 +120,10 @@ namespace Library
 		size(internal_size_type(other.Size())),
 		capacity(internal_size_type(other.Capacity()))
 	{
-		other.TakeData();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-result"
+		other.TakeData();		
+#pragma clang diagnostic pop
 	}
 
 	TEMPLATE

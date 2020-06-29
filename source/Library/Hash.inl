@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Hash.h"
+#include "Util.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -19,13 +20,7 @@ namespace Library
 		{
 			// Knowing that T is the same size or smaller than a hash_t, it should be suitable to just cast it to a hash_t.
 			// None of C or C++'s casts can be guaranteed to work here.
-			// Using an anonymous union to cast will force the operation to work.
-			union
-			{
-				T t;
-				hash_t hash;
-			} ret{ t };
-			return ret.hash;
+			return Util::UnionCast<hash_t>(t);
 		}
 		else
 		{
