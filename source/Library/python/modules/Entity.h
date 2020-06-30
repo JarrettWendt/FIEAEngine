@@ -32,10 +32,8 @@ namespace Library::py
 	 * The actual class that will be instantiated for every python Entity.
 	 * References a Library::Entity, not necessarily a py::Entity.
 	 */
-	class EntityBinding
-	{
-		PyObject_HEAD
-		
+	class EntityBinding : public PyObject
+	{		
 		friend PyObject* InitEntityModule();
 
 		std::shared_ptr<Library::Entity> e;
