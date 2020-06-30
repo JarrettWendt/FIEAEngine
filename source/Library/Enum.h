@@ -102,8 +102,6 @@ namespace std
  * @param EnumType		an enum type
  */
 #define ENUM_OPERATORS(EnumType)																			\
-__pragma(warning(push))																						\
-__pragma(warning(disable:4244)) /* conversion, possible loss of data */										\
 inline EnumType operator+(EnumType e, std::underlying_type_t<EnumType> i)									\
 {																											\
 	auto a = decltype(i)(e) + i;																			\
@@ -145,7 +143,6 @@ inline EnumType operator--(EnumType& e, int)																\
 	const auto ret = e;																						\
 	operator--(e);																							\
 	return ret;																								\
-}																											\
-__pragma(warning(pop))
+}
 
 #include "Enum.inl"

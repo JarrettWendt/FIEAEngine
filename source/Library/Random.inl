@@ -2,6 +2,7 @@
 
 #pragma once
 #include "Random.h"
+#include <iterator>
 
 namespace Library::Random
 {
@@ -13,7 +14,7 @@ namespace Library::Random
 		static Engine rng;
 		const auto range = std::distance(first, last) - 1;
 
-		if constexpr (std::_Is_random_iter_v<It>)
+		if constexpr (std::random_access_iterator<It>)
 		{
 			std::uniform_int_distribution<difference_type> dist(0, range);
 			return *(first + dist(rng));

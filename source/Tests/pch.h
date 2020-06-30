@@ -7,7 +7,6 @@
 #include <atomic>
 #include <chrono>
 #include <cinttypes>
-#include <crtdbg.h>
 #include <filesystem>
 #include <forward_list>
 #include <iterator>

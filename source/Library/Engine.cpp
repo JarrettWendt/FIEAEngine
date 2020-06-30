@@ -45,23 +45,26 @@ namespace Library
 		world->SetName("World");
 		world->Init();
 
-		PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);		
-		Py_Initialize();
+		if (!pythonSourceDirectory.empty())
+		{
+			PyImport_AppendInittab("FIEAEngine", &PyInit_FIEAEngine);		
+			Py_Initialize();
 
-		std::string init = Util::FixDirectorySeparators(pythonSourceDirectory + "/" + initFileName);
+			std::string init = Util::FixDirectorySeparators(pythonSourceDirectory + "/" + initFileName);
 #ifndef _WIN32
-		init = Util::WindowsToWSLDir(init);
+			init = Util::WindowsToWSLDir(init);
 #endif
-		
+			
 #ifdef _DEBUG
-		const std::ifstream file{ init };
-		const std::string str = (std::stringstream{} << file.rdbuf()).str();
-		PyRun_SimpleString(str.c_str());
+			const std::ifstream file{ init };
+			const std::string str = (std::stringstream{} << file.rdbuf()).str();
+			PyRun_SimpleString(str.c_str());
 #else
-		// TODO: This is the way running a python file is _supposed_ to work.
-		initFilePtr = std::fopen(init.c_str(), "r");
-		PyRun_SimpleFile(initFilePtr, init.c_str());
+			// TODO: This is the way running a python file is _supposed_ to work.
+			initFilePtr = std::fopen(init.c_str(), "r");
+			PyRun_SimpleFile(initFilePtr, init.c_str());
 #endif
+		}
 	}
 
 	void Engine::Update()

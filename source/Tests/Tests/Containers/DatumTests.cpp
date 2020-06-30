@@ -399,7 +399,7 @@ namespace UnitTests
 		auto t = Random::Next<TestType>();
 		d.PushFront<TestType>(t);
 		REQUIRE(t == d.Front<TestType>());
-		REQUIRE_THROWS_AS(Datum::Construct<TestType>().Front<TestType>(), std::out_of_range);
+		REQUIRE_THROWS_AS(Datum::Construct<TestType>().template Front<TestType>(), std::out_of_range);
 	}
 
 	TEST(Back)
@@ -410,7 +410,7 @@ namespace UnitTests
 		REQUIRE(t == d.Back<TestType>());
 		const Datum cd = d;
 		REQUIRE(t == cd.Back<TestType>());
-		REQUIRE_THROWS_AS(Datum::Construct<TestType>().Back<TestType>(), std::out_of_range);
+		REQUIRE_THROWS_AS(Datum::Construct<TestType>().template Back<TestType>(), std::out_of_range);
 	}
 
 	TEST(Get)

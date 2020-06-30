@@ -126,12 +126,7 @@ namespace UnitTests
 	TEST(CopyConstructor)
 	{
 		KEY_VALUE;
-		// Ensure we hit the code of copy-constructing self.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wuninitialized"
-		CONTAINER map = map;
-#pragma clang diagnostic pop
-		map = RandomHashMap<TKey, TValue>();
+		CONTAINER map = RandomHashMap<TKey, TValue>();
 		CONTAINER map2(map);
 	}
 
@@ -285,7 +280,9 @@ namespace UnitTests
 		}
 
 		REQUIRE(it == map.end());
+#ifdef _WIN32
 		REQUIRE(stdIt == stdMap.end());
+#endif
 
 		// Now make sure range-based for-loops work.
 		it = map.begin();
@@ -338,8 +335,10 @@ namespace UnitTests
 		}
 
 		REQUIRE(it == map.cend());
+#ifdef _WIN32
 		REQUIRE(stdIt == stdMap.cend());
-
+#endif
+		
 		// Now make sure range-based for-loops work.
 		it = map.cbegin();
 		for (const auto& pair : map)
