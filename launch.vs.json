@@ -1,0 +1,27 @@
+{
+	"version": "0.2.1",
+	"defaults": {},
+	"configurations": [
+		{
+			"type": "default",
+			"project": "CMakeLists.txt",
+			"projectTarget": "Game.exe (source\\Game\\Game.exe)",
+			"name": "Game.exe (source\\Game\\Game.exe)",
+			"args": [
+				"\"${workspaceRoot}/source/Game/\""
+			]
+		},
+		{
+			"type": "cppgdb",
+			"name": "Game (source\\Game\\Game)",
+			"project": "CMakeLists.txt",
+			"projectTarget": "Game (source\\Game\\Game)",
+			"comment": "Learn how to configure WSL debugging. See here for more info http://aka.ms/vslinuxdebug",
+			"debuggerConfiguration": "gdb",
+			"args": [
+				"\"${workspaceRoot}/source/Game/\""
+			],
+			"env": {}
+		}
+  ]
+}

@@ -1,9 +1,0 @@
-# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
-
-[*]
-indent_style = tab
-end_of_line = lf
-
-[*.xml]
-
-[*.json]
