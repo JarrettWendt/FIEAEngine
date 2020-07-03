@@ -49,3 +49,7 @@ Build/obj/*
 
 # cmake
 out/*
+
+# OpenCppCoverage
+CoverageReport*/*
+LastCoverageResults.log
