@@ -39,3 +39,13 @@ Build/obj/*
 # ReSharper
 *.DotSettings
 *.DotSettings.*
+
+# Python
+*__pycache__*
+
+# reflection
+*.generated.*
+*.generated.*
+
+# cmake
+out/*
