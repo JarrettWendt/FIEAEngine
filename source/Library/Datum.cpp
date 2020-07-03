@@ -115,7 +115,7 @@ namespace Library
 		}
 	}
 
-	inline void Datum::ThrowExternal() const
+	void Datum::ThrowExternal() const
 	{
 		if (IsExternal())
 		{

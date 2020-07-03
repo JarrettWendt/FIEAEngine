@@ -41,7 +41,7 @@ namespace Library::Math
 	 * O(1)			most cases
 	 * O(n^2)		if the sieve must be regenerated
 	 *
-	 * @param num	a whole number
+	 * @param n		a whole number
 	 * @returns		whether or not this number is prime.
 	 */
 	bool IsPrime(size_t n);

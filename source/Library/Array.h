@@ -8,6 +8,7 @@
 
 #include <algorithm>			// std::min/max
 #include <compare>				// std::strong_ordering
+#include <functional>
 #include <initializer_list>		// std::initializer/list
 #include <iterator>				// std::random_access_iterator
 
@@ -718,22 +719,6 @@ namespace Library
 		 * Does an O(n) search for the first occurrence of the passed element.
 		 * 
 		 * @param t				the element to query for.
-		 * @returns				an iterator at the position of the first element, or end() if it was not found.
-		 */
-		//iterator Find(const T& t);
-
-		/**
-		 * Does an O(n) search for the first occurrence of the passed element.
-		 *
-		 * @param t				the element to query for.
-		 * @returns				an iterator at the position of the first element, or end() if it was not found.
-		 */
-		//const_iterator Find(const T& t) const;
-
-		/**
-		 * Does an O(n) search for the first occurrence of the passed element.
-		 * 
-		 * @param t				the element to query for.
 		 * @returns				the index of the first element found, or Size() if it was not found.
 		 */
 		size_type IndexOf(const T& t) const;
@@ -746,14 +731,6 @@ namespace Library
 		 */
 		template<std::predicate<T> Predicate>
 		size_type IndexOf(Predicate predicate) const;
-
-		/**
-		 * Does an O(n) search for the first occurrence of the passed element.
-		 * 
-		 * @param t				The element to query for.
-		 * @returns				Whether or not the element exists in the container. 
-		 */
-		//bool Contains(const T& t) const;
 #pragma endregion
 		
 #pragma region Memory		
@@ -882,7 +859,7 @@ namespace Library
 		{
 			return !operator==(left, right);
 		}
-
+		
 		friend std::ostream& operator<<(std::ostream& stream, const ARRAY& array) noexcept
 		{
 			Util::StreamTo(stream, array.begin(), array.end());

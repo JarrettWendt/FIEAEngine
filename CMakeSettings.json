@@ -13,7 +13,7 @@
 			"variables": [
 				{
 					"name": "CMAKE_CXX_FLAGS",
-					"value": "-m64 -fdiagnostics-absolute-paths  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers",
+					"value": "-m64 -fdiagnostics-absolute-paths /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wno-unknown-attributes -Wno-defaulted-function-deleted -Wno-logical-op-parentheses -Wno-ignored-qualifiers",
 					"type": "STRING"
 				}
 			]
@@ -53,6 +53,55 @@
 					"type": "STRING"
 				}
 			]
+		},
+		{
+			"name": "x64-Clang-Release",
+			"generator": "Ninja",
+			"configurationType": "RelWithDebInfo",
+			"buildRoot": "${projectDir}\\out\\build\\${name}",
+			"installRoot": "${projectDir}\\out\\install\\${name}",
+			"cmakeCommandArgs": "",
+			"buildCommandArgs": "",
+			"ctestCommandArgs": "",
+			"inheritEnvironments": [ "clang_cl_x64_x64" ],
+			"variables": []
+		},
+		{
+			"name": "WSL-Clang-Release",
+			"generator": "Ninja",
+			"configurationType": "RelWithDebInfo",
+			"buildRoot": "${projectDir}\\out\\build\\${name}",
+			"installRoot": "${projectDir}\\out\\install\\${name}",
+			"cmakeExecutable": "/usr/bin/cmake",
+			"cmakeCommandArgs": "",
+			"buildCommandArgs": "",
+			"ctestCommandArgs": "",
+			"inheritEnvironments": [ "linux_clang_x64" ],
+			"variables": [
+				{
+					"name": "CMAKE_C_COMPILER",
+					"value": "clang-10",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_CXX_COMPILER",
+					"value": "clang++-10",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_EXE_LINKER_FLAGS",
+					"value": "-stdlib=libstdc++ -lpthread -lpython3.8",
+					"type": "STRING"
+				},
+				{
+					"name": "CMAKE_CXX_FLAGS",
+					"value": "-fno-limit-debug-info -Wno-missing-declarations",
+					"type": "STRING"
+				}
+			],
+			"wslPath": "${defaultWSLPath}",
+			"addressSanitizerRuntimeFlags": "detect_leaks=0",
+			"addressSanitizerEnabled": true
 		}
 	]
 }
