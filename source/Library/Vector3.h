@@ -21,10 +21,25 @@ namespace Library
 
 #pragma region Arithmetic
 		[[nodiscard]] Vector3 operator-() const noexcept;
+
+#pragma region Scalar
+		friend Vector3 operator+(const Vector3& v, float f) noexcept;
+		friend Vector3 operator+(float f, const Vector3& v) noexcept;
+		
+		friend Vector3 operator-(const Vector3& v, float f) noexcept;
+		friend Vector3 operator-(float f, const Vector3& v) noexcept;
 		
 		friend Vector3 operator*(const Vector3& v, float f) noexcept;
 		friend Vector3 operator*(float f, const Vector3& v) noexcept;
+		
+		friend Vector3 operator/(const Vector3& v, float f) noexcept;
+		friend Vector3 operator/(float f, const Vector3& v) noexcept;
+		
+		Vector3& operator+=(float f) noexcept;
+		Vector3& operator-=(float f) noexcept;
 		Vector3& operator*=(float f) noexcept;
+		Vector3& operator/=(float f) noexcept;
+#pragma endregion
 		
 		[[nodiscard]] Vector3 operator+(const Vector3& other) const noexcept;
 		[[nodiscard]] Vector3 operator-(const Vector3& other) const noexcept;

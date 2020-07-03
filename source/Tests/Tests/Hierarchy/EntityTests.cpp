@@ -7,7 +7,7 @@ using namespace Library::Literals;
 #define TEST(name) TEST_CASE_METHOD(MemLeak, "Entity::" #name, "[Entity]")
 
 namespace UnitTests
-{		
+{	
 	TEST(Destruction)
 	{
 		std::weak_ptr<Entity> ptr;
@@ -18,6 +18,90 @@ namespace UnitTests
 		REQUIRE(ptr.expired());
 	}
 
+#pragma region wrappers
+	TEST(FloatWrapper)
+	{
+		const auto e = std::make_shared<Entity>();
+		const float f = e->Transform<CoordinateSpace::Local>().Translation().X();
+		REQUIRE(f == e->GetTransform<CoordinateSpace::Local>().translation.x);
+	}
+
+	TEST(FloatWrapper::operator=)
+	{
+		const auto e = std::make_shared<Entity>();
+		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
+		f = 1.f;
+		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
+	}
+
+	TEST(FloatWrapper::operator+)
+	{
+		const auto e = std::make_shared<Entity>();
+		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
+		f = f + 1.f;
+		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
+	}
+
+	TEST(FloatWrapper::operator-)
+	{
+		const auto e = std::make_shared<Entity>();
+		auto f = e->Transform<CoordinateSpace::Local>().Translation().X() = 2.f;
+		f = 1.f - f;
+		REQUIRE(-1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
+	}
+
+	TEST(FloatWrapper::operator+=)
+	{
+		const auto e = std::make_shared<Entity>();
+		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
+		f += 1.f;
+		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
+	}
+
+	TEST(TranslationWrapper::operator[])
+	{
+		const auto e = std::make_shared<Entity>();
+		auto f = e->Transform<CoordinateSpace::Local>().Translation()[0_zc];
+		f = 1.f;
+		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
+	}
+	
+	TEST(TranslationWrapper)
+	{
+		const auto e = std::make_shared<Entity>();
+		const Vector3 v = e->Transform<CoordinateSpace::Local>().Scale();
+		REQUIRE(v == e->GetTransform<CoordinateSpace::Local>().scale);
+	}
+	
+	TEST(ScaleWrapper)
+	{
+		const auto e = std::make_shared<Entity>();
+		const Vector3 v = e->Transform<CoordinateSpace::Local>().Translation();
+		REQUIRE(v == e->GetTransform<CoordinateSpace::Local>().translation);
+	}
+	
+	TEST(QuaternionWrapper)
+	{
+		const auto e = std::make_shared<Entity>();
+		const Quaternion q = e->Transform<CoordinateSpace::Local>().Rotation();
+		REQUIRE(q == e->GetTransform<CoordinateSpace::Local>().rotation);
+	}
+
+	TEST(TransformWrapper)
+	{
+		const auto e = std::make_shared<Entity>();
+		const Transform t = e->Transform<CoordinateSpace::Local>();
+		REQUIRE(t == e->GetTransform<CoordinateSpace::Local>());
+	}
+
+	TEST(TransformWrapper::operator==)
+	{
+		const auto e = std::make_shared<Entity>();
+		auto t = e->Transform<CoordinateSpace::Local>();
+		REQUIRE(t == e->GetTransform<CoordinateSpace::Local>());
+	}
+#pragma endregion
+	
 #pragma region iterator
 	TEST(ConstIterator)
 	{
@@ -71,17 +155,17 @@ namespace UnitTests
 		const auto p = std::make_shared<Entity>();
 		const auto c = p->CreateChild<>();
 
-		REQUIRE(p->GetLocalTransform() == p->GetWorldTransform());
-		REQUIRE(p->GetWorldTransform() == c->GetWorldTransform());
+		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(p->GetTransform<CoordinateSpace::World>() == c->GetTransform<CoordinateSpace::World>());
 
-		auto t = p->GetLocalTransform();
+		auto t = p->GetTransform<CoordinateSpace::Local>();
 		t.translation = { 0, 0, 1 };
-		p->SetLocalTransform(t);
+		p->SetTransform<CoordinateSpace::Local>(t);
 
-		REQUIRE(t == p->GetLocalTransform());
-		REQUIRE(t == p->GetWorldTransform());
-		REQUIRE(t == c->GetWorldTransform());
-		REQUIRE(Transform{} == c->GetLocalTransform());
+		REQUIRE(t == p->GetTransform<CoordinateSpace::Local>());
+		REQUIRE(t == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(t == c->GetTransform<CoordinateSpace::World>());
+		REQUIRE(Transform{} == c->GetTransform<CoordinateSpace::Local>());
 	}
 
 	TEST(SetWorldTransformFromParent)
@@ -89,17 +173,17 @@ namespace UnitTests
 		const auto p = std::make_shared<Entity>();
 		const auto c = p->CreateChild<>();
 
-		REQUIRE(p->GetLocalTransform() == p->GetWorldTransform());
-		REQUIRE(p->GetWorldTransform() == c->GetWorldTransform());
+		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(p->GetTransform<CoordinateSpace::World>() == c->GetTransform<CoordinateSpace::World>());
 
-		auto t = p->GetLocalTransform();
+		auto t = p->GetTransform<CoordinateSpace::Local>();
 		t.translation = { 0, 0, 1 };
-		p->SetWorldTransform(t);
+		p->SetTransform<CoordinateSpace::World>(t);
 
-		REQUIRE(t == p->GetLocalTransform());
-		REQUIRE(t == p->GetWorldTransform());
-		REQUIRE(t == c->GetWorldTransform());
-		REQUIRE(Transform{} == c->GetLocalTransform());
+		REQUIRE(t == p->GetTransform<CoordinateSpace::Local>());
+		REQUIRE(t == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(t == c->GetTransform<CoordinateSpace::World>());
+		REQUIRE(Transform{} == c->GetTransform<CoordinateSpace::Local>());
 	}
 	
 	TEST(SetLocalTransformFromChild)
@@ -107,17 +191,17 @@ namespace UnitTests
 		const auto p = std::make_shared<Entity>();
 		const auto c = p->CreateChild<>();
 
-		REQUIRE(p->GetLocalTransform() == p->GetWorldTransform());
-		REQUIRE(p->GetWorldTransform() == c->GetWorldTransform());
+		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(p->GetTransform<CoordinateSpace::World>() == c->GetTransform<CoordinateSpace::World>());
 
-		auto t = c->GetLocalTransform();
+		auto t = c->GetTransform<CoordinateSpace::Local>();
 		t.translation = { 0, 0, 1 };
-		c->SetLocalTransform(t);
+		c->SetTransform<CoordinateSpace::Local>(t);
 
-		REQUIRE(Transform{} == p->GetLocalTransform());
-		REQUIRE(Transform{} == p->GetWorldTransform());
-		REQUIRE(t == c->GetWorldTransform());
-		REQUIRE(t == c->GetLocalTransform());
+		REQUIRE(Transform{} == p->GetTransform<CoordinateSpace::Local>());
+		REQUIRE(Transform{} == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(t == c->GetTransform<CoordinateSpace::World>());
+		REQUIRE(t == c->GetTransform<CoordinateSpace::Local>());
 	}
 
 	TEST(SetWorldTransformFromChild)
@@ -125,17 +209,17 @@ namespace UnitTests
 		const auto p = std::make_shared<Entity>();
 		const auto c = p->CreateChild<>();
 
-		REQUIRE(p->GetLocalTransform() == p->GetWorldTransform());
-		REQUIRE(p->GetWorldTransform() == c->GetWorldTransform());
+		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(p->GetTransform<CoordinateSpace::World>() == c->GetTransform<CoordinateSpace::World>());
 
-		auto t = c->GetLocalTransform();
+		auto t = c->GetTransform<CoordinateSpace::Local>();
 		t.translation = { 0, 0, 1 };
-		c->SetWorldTransform(t);
+		c->SetTransform<CoordinateSpace::World>(t);
 
-		REQUIRE(Transform{} == p->GetLocalTransform());
-		REQUIRE(Transform{} == p->GetWorldTransform());
-		REQUIRE(t == c->GetWorldTransform());
-		REQUIRE(t == c->GetLocalTransform());
+		REQUIRE(Transform{} == p->GetTransform<CoordinateSpace::Local>());
+		REQUIRE(Transform{} == p->GetTransform<CoordinateSpace::World>());
+		REQUIRE(t == c->GetTransform<CoordinateSpace::World>());
+		REQUIRE(t == c->GetTransform<CoordinateSpace::Local>());
 	}
 #pragma endregion
 

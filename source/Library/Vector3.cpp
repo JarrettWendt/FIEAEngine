@@ -34,12 +34,33 @@ namespace Library
 		return const_cast<Vector3*>(this)->operator[](i);
 	}
 
+#pragma region Arithmetic
 	Vector3 Vector3::operator-() const noexcept
 	{
 		return { -x, -y, -z };
 	}
+	
+#pragma region Scalar	
+	Vector3 operator+(const Vector3& v, const float f) noexcept
+	{
+		return { v.x + f, v.y + f, v.z + f };
+	}
 
-#pragma region Arithmetic
+	Vector3 operator+(const float f, const Vector3& v) noexcept
+	{
+		return v + f;
+	}
+	
+	Vector3 operator-(const Vector3& v, const float f) noexcept
+	{
+		return { v.x - f, v.y - f, v.z - f };
+	}
+
+	Vector3 operator-(const float f, const Vector3& v) noexcept
+	{
+		return { f - v.x, f - v.y, f - v.z };
+	}
+	
 	Vector3 operator*(const Vector3& v, const float f) noexcept
 	{
 		return { v.x * f, v.y * f, v.z * f };
@@ -50,11 +71,36 @@ namespace Library
 		return v * f;
 	}
 	
+	Vector3 operator/(const Vector3& v, const float f) noexcept
+	{
+		return { v.x / f, v.y / f, v.z / f };
+	}
+
+	Vector3 operator/(const float f, const Vector3& v) noexcept
+	{
+		return { f / v.x, f / v.y, f / v.z };
+	}
+
+	Vector3& Vector3::operator+=(const float f) noexcept
+	{
+		return *this = *this + f;
+	}
+
+	Vector3& Vector3::operator-=(const float f) noexcept
+	{
+		return *this = *this - f;
+	}
+	
 	Vector3& Vector3::operator*=(const float f) noexcept
 	{
-		*this = *this * f;
-		return *this;
+		return *this = *this * f;
 	}
+
+	Vector3& Vector3::operator/=(const float f) noexcept
+	{
+		return *this = *this / f;
+	}
+#pragma endregion
 	
 	Vector3 Vector3::operator+(const Vector3& other) const noexcept
 	{

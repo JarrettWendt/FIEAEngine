@@ -10,7 +10,14 @@ namespace Library
 	 * 
 	 */
 	struct Transform
-	{
+	{		
+		enum class Component : uint8_t
+		{
+			Translation,
+			Scale,
+			Rotation
+		};
+		
 		Vector3 translation{};
 		Quaternion rotation{};
 		Vector3 scale{ Vector3::One };
@@ -19,6 +26,28 @@ namespace Library
 
 		Transform(Vector3 translation, Quaternion rotation, Vector3 scale) noexcept;
 
+		template<Component Type>
+		[[nodiscard]] auto& GetComponent() noexcept
+		{
+			if constexpr (Type == Component::Translation)
+			{
+				return translation;
+			}
+			else if constexpr (Type == Component::Rotation)
+			{
+				return rotation;
+			}
+			else
+			{
+				return scale;
+			}
+		}
+
+		template<Component Type>
+		[[nodiscard]] const auto& GetComponent() const noexcept
+		{
+			return const_cast<Transform*>(this)->GetComponent<Type>();
+		}
 #pragma region operators
 #pragma region Arithmetic
 		/**

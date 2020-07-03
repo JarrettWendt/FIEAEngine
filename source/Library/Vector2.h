@@ -20,6 +20,34 @@ namespace Library
 		};
 #pragma warning(pop)
 
+		/**
+		 * Get component at compile-time.
+		 * Use with Literals::operator""_zc
+		 */
+		template<size_t index>
+		float& operator[](std::integral_constant<size_t, index>) noexcept
+		{
+			static_assert(index < 2, "invalid index");
+			if constexpr (index == 0)
+			{
+				return x;
+			}
+			else
+			{
+				return y;
+			}
+		}
+
+		/**
+		 * Get component at compile-time.
+		 * Use with Literals::operator""_zc
+		 */
+		template<size_t index>
+		float operator[](std::integral_constant<size_t, index> i) const noexcept
+		{
+			return const_cast<Vector2*>(this)->operator[](i);
+		}
+		
 		[[nodiscard]] float& operator[](size_type i) noexcept;
 		[[nodiscard]] float operator[](size_type i) const noexcept;
 

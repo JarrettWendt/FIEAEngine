@@ -120,45 +120,6 @@ Entity::iterator Entity::end() noexcept
 		return const_cast<Entity*>(this)->Child(childName);
 	}
 #pragma endregion
-
-#pragma region Transform	
-	const Transform& Entity::GetWorldTransform() const noexcept
-	{
-		if (transformInval)
-		{
-			if (const auto p = Parent())
-			{
-				worldTransform = localTransform + p->GetWorldTransform();
-			}
-			else
-			{
-				worldTransform = localTransform;
-			}
-			transformInval = false;
-		}
-		return worldTransform;
-	}
-
-	void Entity::SetLocalTransform(const Library::Transform& t) noexcept
-	{
-		localTransform = t;
-		InvalTransform();
-	}
-
-	void Entity::SetWorldTransform(const Library::Transform& t) noexcept
-	{
-		worldTransform = t;
-		if (const auto p = Parent())
-		{
-			localTransform = worldTransform - p->GetWorldTransform();
-		}
-		else
-		{
-			localTransform = worldTransform;
-		}
-		InvalChildTransforms();
-	}
-#pragma endregion
 	
 	void Entity::SetName(const std::string& newName) noexcept
 	{

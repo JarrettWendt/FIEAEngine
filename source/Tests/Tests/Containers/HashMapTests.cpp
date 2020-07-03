@@ -186,7 +186,6 @@ namespace UnitTests
 
 		for (const auto& [key, value] : list)
 		{
-			std::cout << key;
 			REQUIRE(c.Contains(key));
 		}
 #endif

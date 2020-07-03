@@ -10,6 +10,16 @@ namespace Library::py
 
 namespace Library
 {
+	/**
+	 * A Transform, Vector, Quaternion, etc. can either exists in Local or World space.
+	 * It's recommended to do `using enum` with this.
+	 */
+	enum class CoordinateSpace : uint8_t
+	{
+		Local,
+		World
+	};
+	
 	[[Reflectable]];
 	class Entity : public Attributed, public std::enable_shared_from_this<Entity>
 	{
@@ -43,7 +53,241 @@ namespace Library
 		/** whether the worldTransform needs to be updated */
 		mutable bool transformInval{ true };
 
-	public:		
+	public:
+#pragma region wrappers
+		/**
+		 * @param <Space>	the CoordinateSpace this wrapper operates on
+		 * @param <Type>	the component of the Transform this wrapper references
+		 * @param <index>	the xyzw component
+		 * @param <Owner>	either a const or non-const Entity
+		 */
+		template<CoordinateSpace Space, Transform::Component Type, size_t index, std::derived_from<Entity> Owner>
+		struct FloatWrapper final
+		{
+			friend class Entity;
+		private:
+			Owner& owner;
+
+			FloatWrapper(Owner& owner) noexcept;
+			
+		public:
+			/**
+			 * Implicit conversion operator.
+			 * 
+			 * @returns the value this wrapper references
+			 */
+			operator float() const noexcept;
+
+			FloatWrapper& operator=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				auto trans = owner.template GetTransform<Space>();
+				trans.template GetComponent<Type>()[index] = f;
+				owner.template SetTransform<Space>(trans);
+				return *this;
+			}
+
+			FloatWrapper& operator+=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this + f;
+			}
+
+			FloatWrapper& operator-=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this - f;
+			}
+
+			FloatWrapper& operator*=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this * f;
+			}
+
+			FloatWrapper& operator/=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this / f;
+			}
+		};
+		
+		/**
+		 * @param <Space>	the CoordinateSpace this wrapper operates on
+		 * @param <Type>	either Scale or Translation
+		 * @param <Owner>	either a const or non-const Entity
+		 */
+		template<CoordinateSpace Space, Transform::Component Type, std::derived_from<Entity> Owner>
+		struct Vector3Wrapper final
+		{
+			friend class Entity;
+		private:
+			Owner& owner;
+
+			Vector3Wrapper(Owner& owner) noexcept;
+			
+		public:
+			/**
+			 * Implicit conversion operator.
+			 * 
+			 * @returns the value this wrapper references
+			 */
+			operator Vector3() const noexcept;
+
+			/**
+			 * Properly invalidates the referenced owner's Transform based on CoordinateSpace.
+			 *
+			 * @param v		Vector3 to reassign the one this wrapper references.
+			 * @returns		this
+			 */
+			Vector3Wrapper& operator=(const Vector3& v) noexcept requires (!std::is_const_v<Owner>)
+			{
+				auto trans = owner.template GetTransform<Space>();
+				trans.template GetComponent<Type>() = v;
+				owner.template SetTransform<Space>(trans);
+				return *this;
+			}
+
+			/**
+			 * Get component at compile-time.
+			 * Use with Literals::operator""_zc
+			 */
+			template<size_t index>
+			auto operator[](std::integral_constant<size_t, index>) const noexcept
+			{
+				return FloatWrapper<Space, Type, index, Owner>(owner);
+			}
+
+			FloatWrapper<Space, Type, 0, Owner> X() const noexcept;
+			FloatWrapper<Space, Type, 1, Owner> Y() const noexcept;
+			FloatWrapper<Space, Type, 2, Owner> Z() const noexcept;
+
+			Vector3Wrapper& operator+=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this + f;
+			}
+			
+			Vector3Wrapper& operator-=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this - f;
+			}
+			
+			Vector3Wrapper& operator*=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this * f;
+			}
+			
+			Vector3Wrapper& operator/=(float f) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this / f;
+			}
+
+			Vector3Wrapper& operator+=(const Vector3& v) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this + v;
+			}
+			
+			Vector3Wrapper& operator-=(const Vector3& v) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this - v;
+			}
+			
+			Vector3Wrapper& operator*=(const Vector3& v) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this * v;
+			}
+			
+			Vector3Wrapper& operator/=(const Vector3& v) noexcept requires (!std::is_const_v<Owner>)
+			{
+				return *this = *this / v;
+			}
+		};		
+
+		/**
+		 * @param <Space>	the CoordinateSpace this wrapper operates on
+		 * @param <Owner>	either a const or non-const Entity
+		 */
+		template<CoordinateSpace Space, std::derived_from<Entity> Owner>
+		struct QuaternionWrapper final
+		{
+			friend class Entity;
+		private:
+			Owner& owner;
+
+			QuaternionWrapper(Owner& owner) noexcept;
+			
+		public:
+			/**
+			 * Implicit conversion operator.
+			 * 
+			 * @returns the value this wrapper references
+			 */
+			operator Quaternion() const noexcept;
+
+			/**
+			 * Properly invalidates the referenced owner's Transform based on CoordinateSpace.
+			 *
+			 * @param q		Quaternion to reassign the one this wrapper references.
+			 * @returns		this
+			 */
+			QuaternionWrapper& operator=(const Quaternion& q) noexcept requires (!std::is_const_v<Owner>)
+			{
+				auto trans = owner.template GetTransform<Space>();
+				trans.rotation = q;
+				owner.template SetTransform<Space>(trans);
+				return *this;
+			}
+
+			/**
+			 * Get component at compile-time.
+			 * Use with Literals::operator""_zc
+			 */
+			template<size_t index>
+			auto operator[](std::integral_constant<size_t, index>) const noexcept
+			{
+				return FloatWrapper<Space, Transform::Component::Rotation, index, Owner>(owner);
+			}
+
+			FloatWrapper<Space, Transform::Component::Rotation, 0, Owner> X() const noexcept;
+			FloatWrapper<Space, Transform::Component::Rotation, 1, Owner> Y() const noexcept;
+			FloatWrapper<Space, Transform::Component::Rotation, 2, Owner> Z() const noexcept;
+			FloatWrapper<Space, Transform::Component::Rotation, 3, Owner> W() const noexcept;
+		};
+
+		/**
+		 * @param <Space>	the CoordinateSpace this wrapper operates on
+		 * @param <Owner>	either a const or non-const Entity
+		 */
+		template<CoordinateSpace Space, std::derived_from<Entity> Owner>
+		struct TransformWrapper final
+		{
+			friend class Entity;
+		private:
+			Owner& owner;
+
+			TransformWrapper(Owner& owner) noexcept;
+			
+		public:
+			/**
+			 * Implicit conversion operator.
+			 * 
+			 * @returns the value this wrapper references
+			 */
+			operator Library::Transform() const noexcept;
+
+			/**
+			 * Will properly invalidate the referenced owner's Transform based on CoordinateSpace.
+			 *
+			 * @param t		Transform to reassign the one that this wrapper references
+			 * @returns		this
+			 */
+			TransformWrapper& operator=(const Library::Transform& t) noexcept requires (!std::is_const_v<Owner>)
+			{
+				owner.template SetTransform<Space>(t);
+				return *this;
+			}
+			
+			[[nodiscard]] Vector3Wrapper<Space, Transform::Component::Translation, Owner> Translation() noexcept;
+			[[nodiscard]] Vector3Wrapper<Space, Transform::Component::Scale, Owner> Scale() noexcept;
+			[[nodiscard]] QuaternionWrapper<Space, Owner> Rotation() noexcept;
+		};
+#pragma endregion
+		
 #pragma region iterator
 		class iterator final
 		{
@@ -238,38 +482,32 @@ namespace Library
 		[[nodiscard]] std::shared_ptr<const Entity> Child(const std::string& childName) const noexcept;
 #pragma endregion
 
-#pragma region Transform		
-		/**
-		 * O(1)
-		 * 
-		 * @returns		this Entity's local Transform
-		 */
-		[[nodiscard]] constexpr const Library::Transform& GetLocalTransform() const noexcept;
-
+#pragma region Transform
 		/**
 		 * O(1) most cases
-		 * Potentially O(n) where n is the number of parents with invalid Transforms.
-		 * Must to matrix multiplications for every iteration.
+		 * Potentially O(n) if this is World space where n is the number of parents with invalid Transforms.
 		 * 
-		 * @returns		this Entity's world Transform
+		 * @param <Space>	CoordinateSpace this operation should take effect in.
+		 * @returns			this Entity's local or world Transform
 		 */
-		[[nodiscard]] const Library::Transform& GetWorldTransform() const noexcept;
-
-		/**
-		 * O(n) where n is the number of children.
-		 * Sets a bool on all children to mark their Transforms invalid (comes into play in GetWorldTransform()).
-		 * 
-		 * @param t		Transform to set this local one to. 
-		 */
-		void SetLocalTransform(const Library::Transform& t) noexcept;
-
+		template<CoordinateSpace Space>
+		[[nodiscard]] const Library::Transform& GetTransform() const noexcept;
+		
 		/**
 		 * O(n) where n is the number of children.
 		 * Sets a bool on all children to mark their Transforms invalid (comes into play in GetWorldTransform()).
 		 *
-		 * @param t		Transform to set this world one to.
+		 * @param <Space>	CoordinateSpace this operation should take effect in.
+		 * @param t			Transform to set this one's local or world to. 
 		 */
-		void SetWorldTransform(const Library::Transform& t) noexcept;
+		template<CoordinateSpace Space>
+		void SetTransform(const Library::Transform& t) noexcept;
+
+		template<CoordinateSpace Space>
+		TransformWrapper<Space, Entity> Transform() noexcept;
+
+		template<CoordinateSpace Space>
+		TransformWrapper<Space, const Entity> Transform() const noexcept;
 #pragma endregion
 		
 		/**
