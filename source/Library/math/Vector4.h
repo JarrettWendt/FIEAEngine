@@ -8,6 +8,8 @@ namespace Library
 	{
 		using size_type = size_t;
 
+		const static Vector4 Zero, One;
+
 		float x{}, y{}, z{}, w{};
 
 		SPECIAL_MEMBERS(Vector4, default)
@@ -31,9 +33,28 @@ namespace Library
 		[[nodiscard]] float operator[](size_type i) const noexcept;
 
 #pragma region Arithmetic
+		[[nodiscard]] Vector4 operator-() const noexcept;
+
+#pragma region scalar
+		friend Vector4 operator+(const Vector4& v, float f) noexcept;
+		friend Vector4 operator+(float f, const Vector4& v) noexcept;
+		
+		friend Vector4 operator-(const Vector4& v, float f) noexcept;
+		friend Vector4 operator-(float f, const Vector4& v) noexcept;
+		
+		friend Vector4 operator*(const Vector4& v, float f) noexcept;
+		friend Vector4 operator*(float f, const Vector4& v) noexcept;
+		
 		friend Vector4 operator/(const Vector4& v, float f) noexcept;
 		friend Vector4 operator/(float f, const Vector4& v) noexcept;
-		
+
+		friend Vector4& operator+=(Vector4& v, float f);
+		friend Vector4& operator-=(Vector4& v, float f);
+		friend Vector4& operator*=(Vector4& v, float f);
+		friend Vector4& operator/=(Vector4& v, float f);
+#pragma endregion
+
+#pragma region vector
 		[[nodiscard]] Vector4 operator+(const Vector4& other) const noexcept;
 		[[nodiscard]] Vector4 operator-(const Vector4& other) const noexcept;
 
@@ -51,6 +72,7 @@ namespace Library
 		Vector4& operator-=(const Vector4& other) noexcept;
 		Vector4& operator*=(const Vector4& other) noexcept;
 		Vector4& operator/=(const Vector4& other) noexcept;
+#pragma endregion
 #pragma endregion
 		
 		friend bool operator==(const Vector4& left, const Vector4& right);

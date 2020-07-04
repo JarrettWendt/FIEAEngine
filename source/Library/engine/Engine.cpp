@@ -87,7 +87,10 @@ namespace Library
 	void Engine::Terminate()
 	{
 		world = nullptr;
-		std::fclose(initFilePtr);
+		if (initFilePtr)
+		{
+			std::fclose(initFilePtr);
+		}
 		if (Py_FinalizeEx() < 0)
 		{
 			std::terminate();

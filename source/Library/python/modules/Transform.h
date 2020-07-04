@@ -5,10 +5,8 @@
 
 namespace Library::py
 {
-	class Transform
+	class Transform : public PyObject
 	{
-		PyObject_HEAD
-
 		
 	};
 }

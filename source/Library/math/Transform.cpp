@@ -31,14 +31,12 @@ namespace Library
 
 	Transform& Transform::operator+=(const Transform& other) noexcept
 	{
-		*this = *this + other;
-		return *this;
+		return *this = *this + other;
 	}
 
 	Transform& Transform::operator-=(const Transform& other) noexcept
 	{
-		*this = *this - other;
-		return *this;
+		return *this = *this - other;
 	}
 #pragma endregion
 	

@@ -6,7 +6,7 @@ namespace Library
 {
 	float& Vector2::operator[](const size_type i) noexcept
 	{
-		assertm(i < 4, "Vector3 index out of bounds");
+		assertm(i < 2, "Vector2 index out of bounds");
 		return v[i];
 	}
 

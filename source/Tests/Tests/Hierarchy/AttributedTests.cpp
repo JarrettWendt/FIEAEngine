@@ -140,19 +140,11 @@ namespace UnitTests
 		{
 			count++;
 		}
-		REQUIRE(count == 13);
+		REQUIRE(count == foo.NumAttributes());
 	}
 #pragma endregion
 		
 #pragma region Properties
-	TEST(NumAttributes)
-	{
-		AttributedFoo foo;
-		REQUIRE(13_z == foo.NumAttributes());
-		foo.AddAttribute("hi");
-		REQUIRE(14_z == foo.NumAttributes());
-	}
-
 	TEST(HasAttributes)
 	{
 		AttributedFoo foo;

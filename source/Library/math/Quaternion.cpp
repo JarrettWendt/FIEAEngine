@@ -29,8 +29,7 @@ namespace Library
 	
 	Quaternion& Quaternion::operator*=(const Quaternion& other) noexcept
 	{
-		*this = *this * other;
-		return *this;
+		return *this = *this * other;
 	}
 	
 	Quaternion Quaternion::operator/(const Quaternion& other) const noexcept
@@ -39,9 +38,8 @@ namespace Library
 	}
 
 	Quaternion& Quaternion::operator/=(const Quaternion& other) noexcept
-	{
-		*this = *this / other;
-		return *this;
+	{		
+		return *this = *this / other;
 	}
 	
 	std::ostream& operator<<(std::ostream& stream, const Quaternion& q)

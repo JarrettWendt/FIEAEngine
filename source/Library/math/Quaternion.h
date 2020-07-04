@@ -27,12 +27,19 @@ namespace Library
 
 #pragma region operators
 #pragma region Arithmetic
+#pragma region scalar
+#pragma endregion
+		
+#pragma region vector
 		[[nodiscard]] Quaternion operator*(const Quaternion& other) const noexcept;
 		Quaternion& operator*=(const Quaternion& other) noexcept;
 		
 		[[nodiscard]] Quaternion operator/(const Quaternion& other) const noexcept;
 		Quaternion& operator/=(const Quaternion& other) noexcept;
 #pragma endregion
+#pragma endregion
+		
+		friend std::ostream& operator<<(std::ostream& stream, const Quaternion& q);
 #pragma endregion
 	};
 }

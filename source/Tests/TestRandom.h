@@ -16,6 +16,43 @@ namespace Library::Random
 		return { v.begin(), v.end() };
 	}
 
+	template<typename T>
+	[[nodiscard]] T Next()
+	{
+		if constexpr (std::is_same_v<std::shared_ptr<UnitTests::Foo>, T>)
+		{
+			return std::make_shared<UnitTests::Foo>(Next<int>());
+		}
+		else if constexpr (std::is_same_v<Vector2, T>)
+		{
+			return { Next<float>(), Next<float>() };
+		}
+		else if constexpr (std::is_same_v<Vector3, T>)
+		{
+			return { Next<float>(), Next<float>(), Next<float>() };
+		}
+		else if constexpr (std::is_same_v<Vector4, T>)
+		{
+			return { Next<float>(), Next<float>(), Next<float>(), Next<float>() };
+		}
+		else if constexpr (std::is_same_v<Quaternion, T>)
+		{
+			return { Next<float>(), Next<float>(), Next<float>(), Next<float>() };
+		}
+		else if constexpr (std::is_same_v<Matrix, T>)
+		{
+			return { Next<Vector4>(), Next<Vector4>(), Next<Vector4>(), Next<Vector4>() };
+		}
+		else if constexpr (std::is_same_v<Transform, T>)
+		{
+			return { Next<Vector3>(), Next<Quaternion>(), Next<Vector3>() };
+		}
+		else
+		{
+			return {};
+		}
+	}
+
 	template<std::ranges::range Range, typename Engine = DefaultEngine>
 	[[nodiscard]] typename Range::value_type NotIn(const Range& range)
 	{

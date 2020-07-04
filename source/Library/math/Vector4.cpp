@@ -3,6 +3,9 @@
 
 namespace Library
 {	
+	const Vector4 Vector4::Zero = { 0, 0, 0, 0 };
+	const Vector4 Vector4::One = { 1, 1, 1, 1 };
+	
 #pragma region Special Members
 	Vector4::Vector4(const float x, const float y, const float z, const float w) noexcept :
 		x(x), y(y), z(z), w(w) {}
@@ -37,50 +40,37 @@ namespace Library
 	}
 
 #pragma region Arithmetic
-	Vector4 Vector4::operator+(const Vector4& other) const noexcept
+#pragma region scalar	
+	Vector4 operator+(const Vector4& v, const float f) noexcept
 	{
-		return Vector4{ x + other.x, y + other.y, z + other.z, w + other.w };
-	}
-
-	Vector4 Vector4::operator-(const Vector4& other) const noexcept
-	{
-		return Vector4{ x - other.x, y - other.y, z - other.z, w - other.w };
-	}
-
-	Vector4 Vector4::operator*(const Vector4& other) const noexcept
-	{
-		return Vector4{ x * other.x, y * other.y, z * other.z, w * other.w };
-	}
-
-	Vector4 Vector4::operator/(const Vector4& other) const noexcept
-	{
-		return Vector4{ x / other.x, y / other.y, z / other.z, w / other.w };
-	}
-
-	Vector4& Vector4::operator+=(const Vector4& other) noexcept
-	{
-		*this = *this + other;
-		return *this;
-	}
-
-	Vector4& Vector4::operator-=(const Vector4& other) noexcept
-	{
-		*this = *this - other;
-		return *this;
-	}
-
-	Vector4& Vector4::operator*=(const Vector4& other) noexcept
-	{
-		*this = *this * other;
-		return *this;
-	}
-
-	Vector4& Vector4::operator/=(const Vector4& other) noexcept
-	{
-		*this = *this / other;
-		return *this;
+		return { v.x + f, v.y + f, v.z + f, v.w + f };
 	}
 	
+	Vector4 operator+(const float f, const Vector4& v) noexcept
+	{
+		return v + f;
+	}
+
+	Vector4 operator-(const Vector4& v, const float f) noexcept
+	{
+		return { v.x - f, v.y - f, v.z - f, v.w - f };
+	}
+
+	Vector4 operator-(const float f, const Vector4& v) noexcept
+	{
+		return { f - v.x, f - v.y, f - v.z, f - v.w };
+	}
+	
+	Vector4 operator*(const Vector4& v, const float f) noexcept
+	{
+		return { v.x * f, v.y * f, v.z * f, v.w * f };
+	}
+
+	Vector4 operator*(const float f, const Vector4& v) noexcept
+	{
+		return v * f;
+	}
+
 	Vector4 operator/(const Vector4& v, const float f) noexcept
 	{
 		return { v.x / f, v.y / f, v.z / f, v.w / f };
@@ -88,8 +78,76 @@ namespace Library
 
 	Vector4 operator/(const float f, const Vector4& v) noexcept
 	{
-		return v / f;
+		return { f / v.x, f / v.y, f / v.z, f / v.w };
 	}
+
+	Vector4& operator+=(Vector4& v, const float f)
+	{
+		return v = v + f;
+	}
+
+	Vector4& operator-=(Vector4& v, const float f)
+	{
+		return v = v - f;
+	}
+
+	Vector4& operator*=(Vector4& v, const float f)
+	{
+		return v = v * f;
+	}
+
+	Vector4& operator/=(Vector4& v, const float f)
+	{
+		return v = v / f;
+	}
+#pragma endregion
+	
+#pragma region vector
+	Vector4 Vector4::operator-() const noexcept
+	{
+		return { -x, -y, -z, -w };
+	}
+	
+	Vector4 Vector4::operator+(const Vector4& other) const noexcept
+	{
+		return { x + other.x, y + other.y, z + other.z, w + other.w };
+	}
+
+	Vector4 Vector4::operator-(const Vector4& other) const noexcept
+	{
+		return { x - other.x, y - other.y, z - other.z, w - other.w };
+	}
+
+	Vector4 Vector4::operator*(const Vector4& other) const noexcept
+	{
+		return { x * other.x, y * other.y, z * other.z, w * other.w };
+	}
+
+	Vector4 Vector4::operator/(const Vector4& other) const noexcept
+	{
+		return { x / other.x, y / other.y, z / other.z, w / other.w };
+	}
+
+	Vector4& Vector4::operator+=(const Vector4& other) noexcept
+	{		
+		return *this = *this + other;
+	}
+
+	Vector4& Vector4::operator-=(const Vector4& other) noexcept
+	{		
+		return *this = *this - other;
+	}
+
+	Vector4& Vector4::operator*=(const Vector4& other) noexcept
+	{		
+		return *this = *this * other;
+	}
+
+	Vector4& Vector4::operator/=(const Vector4& other) noexcept
+	{		
+		return *this = *this / other;
+	}
+#pragma endregion
 #pragma endregion
 
 	bool operator==(const Vector4& left, const Vector4& right)

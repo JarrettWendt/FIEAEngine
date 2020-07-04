@@ -6,7 +6,7 @@ using namespace Library::Literals;
 
 #define NAMESPACE "Datum::"
 #define CATEGORY "[Datum]"
-#define TYPES bool, int, float, std::string
+#define TYPES bool, int, float, Vector2, Vector3, Vector4, Quaternion, Matrix, Transform, std::string, std::shared_ptr<Foo>
 #define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, NAMESPACE #name, CATEGORY)
 #define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, NAMESPACE "::" #name, CATEGORY, TYPES)
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(NAMESPACE "::" #name, CATEGORY, TYPES)

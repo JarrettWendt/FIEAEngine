@@ -4,6 +4,11 @@
 
 namespace Library
 {
+	const Matrix Matrix::Identity = { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } };
+
+	Matrix::Matrix(const Vector4 v1, const Vector4 v2, const Vector4 v3, const Vector4 v4) noexcept :
+		v{ v1, v2, v3, v4 } {}
+	
 	Vector4& Matrix::operator[](const size_type i) noexcept
 	{
 		assertm(i < 4, "Matrix index out of bounds");
