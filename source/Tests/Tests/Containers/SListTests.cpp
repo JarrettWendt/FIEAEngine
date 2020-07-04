@@ -4,10 +4,15 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace Library::Literals;
 
-using Types = std::tuple<bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>>;
-#define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "SList::" #name, "[SList]", Types)
-#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "SList::" #name, "[SList]")
-#define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("SList::" #name, "[SList]", Types)
+// Catch2 has a TEMPLATE_LIST_TEST_CASE which takes a tuple and iterates through the types.
+// That seems to be buggy because sometimes tests will compile but not run at all.
+// Using a macro instead seems to work.
+#define NAMESPACE "SList::"
+#define CATEGORY "[SList]"
+#define TYPES bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>
+#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, NAMESPACE #name, CATEGORY)
+#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, NAMESPACE "::" #name, CATEGORY, TYPES)
+#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(NAMESPACE "::" #name, CATEGORY, TYPES)
 #define CONTAINER SList<TestType>
 
 namespace UnitTests
@@ -38,7 +43,7 @@ namespace UnitTests
 
 	TEST(RangeCtor)
 	{
-		const auto v = Random::Next<std::vector<TestType>>(100);
+		const auto v = Random::Next<std::vector<TestType>>();
 		const CONTAINER a(v);
 		REQUIRE(v.size() == a.Size());
 		auto it = v.begin();
@@ -51,7 +56,7 @@ namespace UnitTests
 
 	TEST(RangeAssignmentOperator)
 	{
-		const auto v = Random::Next<std::vector<TestType>>(100);
+		const auto v = Random::Next<std::vector<TestType>>();
 		CONTAINER a;
 		a = v;
 		REQUIRE(v.size() == a.Size());
@@ -71,7 +76,7 @@ namespace UnitTests
 		
 		using iterator = typename CONTAINER::iterator;
 		
-		std::list<TestType> list = Random::Next<std::list<TestType>>(100);
+		std::list<TestType> list = Random::Next<std::list<TestType>>();
 		CONTAINER slist = list;
 
 		iterator sit = slist.begin();
@@ -116,7 +121,7 @@ namespace UnitTests
 		
 		using const_iterator = typename CONTAINER::const_iterator;
 	
-		std::list<TestType> list = Random::Next<std::list<TestType>>(100);
+		std::list<TestType> list = Random::Next<std::list<TestType>>();
 		CONTAINER slist = list;
 
 		// Make const copies.
@@ -165,7 +170,7 @@ namespace UnitTests
 
 	TEST(BeforeBegin)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		const auto t = Random::Next<TestType>();
 		c.InsertAfter(c.cbefore_begin(), t);
 		REQUIRE(t == c.Front());
@@ -173,7 +178,7 @@ namespace UnitTests
 
 	TEST(BeforeEnd)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		const auto t = Random::Next<TestType>();
 		c.InsertAfter(c.cbefore_end(), t);
 		REQUIRE(t == c.Back());
@@ -192,7 +197,7 @@ namespace UnitTests
 
 		TEST(Exists)
 		{
-			const auto c = Random::Next<CONTAINER>(100);
+			const auto c = Random::Next<CONTAINER>();
 			const auto t = Random::Element(c);
 			REQUIRE(Util::Exists(c, [&t](const auto& a) { return t == a; }));
 		}
@@ -329,7 +334,7 @@ namespace UnitTests
 
 	TEST(InsertAfterCount)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		const auto t = Random::Next<TestType>();
 		auto it = c.cbegin();
 		for (size_t i = 1; i < c.Size(); i++, ++it);
@@ -343,8 +348,8 @@ namespace UnitTests
 
 	TEST(InsertAfterRange)
 	{
-		CONTAINER a = Random::Next<CONTAINER>(100);
-		auto v = Random::Next<Array<TestType>>(100);
+		CONTAINER a = Random::Next<CONTAINER>();
+		auto v = Random::Next<Array<TestType>>();
 		CONTAINER b = a;
 		
 		a.Append(v.begin(), v.end());
@@ -375,7 +380,7 @@ namespace UnitTests
 
 	TEST(AppendList)
 	{
-		CONTAINER a = Random::Next<CONTAINER>(100), b;
+		CONTAINER a = Random::Next<CONTAINER>(), b;
 		b.Append(a.begin(), a.end());
 		REQUIRE(a == b);
 	}
@@ -384,7 +389,7 @@ namespace UnitTests
 #pragma region Remove
 	TEST(PopFront)
 	{
-		std::list<TestType> list = Random::Next<std::list<TestType>>(100);
+		std::list<TestType> list = Random::Next<std::list<TestType>>();
 		CONTAINER slist;
 
 		// Make sure nothing goes wrong when popping an empty list.
@@ -406,7 +411,7 @@ namespace UnitTests
 
 	TEST(PopBack)
 	{
-		std::list<TestType> list = Random::Next<std::list<TestType>>(100);
+		std::list<TestType> list = Random::Next<std::list<TestType>>();
 		CONTAINER slist;
 
 		// Make sure nothing goes wrong when popping an empty list.
@@ -439,7 +444,7 @@ namespace UnitTests
 		REQUIRE(list.IsEmpty());
 
 		// Insert some values so that clearing will work.
-		list = Random::Next<CONTAINER>(100);
+		list = Random::Next<CONTAINER>();
 
 		// Make sure that we can clear a list with many elements.
 		list.Clear();
@@ -476,7 +481,7 @@ namespace UnitTests
 	{
 		SKIP_TYPE(bool);
 		
-		CONTAINER a = Random::Unique<CONTAINER>(100);
+		CONTAINER a = Random::Unique<CONTAINER>(10);
 		CONTAINER b(a);
 
 		auto it = b.end();
@@ -514,7 +519,7 @@ namespace UnitTests
 
 	TEST(RemoveAll)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		auto t = c.Front();
 		c.PushBack(t);
 		REQUIRE(c.RemoveAll(t) >= 2);
@@ -527,7 +532,7 @@ namespace UnitTests
 
 	TEST(RemoveAllAfter)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		c.RemoveAllAfter(c.begin());
 		REQUIRE(c.Size() == 1);
 	}
@@ -543,7 +548,7 @@ namespace UnitTests
 		c.Remove(++c.cbegin(), c.cend());
 		REQUIRE(c.Size() == 1);
 
-		c = Random::Next<CONTAINER>(100);
+		c = Random::Next<CONTAINER>();
 		c.Remove(c.cbegin(), c.cbefore_end());
 		REQUIRE(c.Size() == 1);
 	}
@@ -572,7 +577,7 @@ namespace UnitTests
 
 	TEST(At)
 	{
-		const auto c = Random::Next<CONTAINER>(100);
+		const auto c = Random::Next<CONTAINER>();
 		const auto& r = c;
 		const auto index = 6;
 		REQUIRE(c.At(index) == r.At(index));
@@ -583,7 +588,7 @@ namespace UnitTests
 #pragma region Memory
 	TEST(ShrinkTo)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		REQUIRE_THROWS_AS(c.ShrinkTo(c.Size() + 1), std::invalid_argument);
 		const auto size = c.Size() / 2;
 		c.ShrinkTo(size);
@@ -592,7 +597,7 @@ namespace UnitTests
 	
 	TEST(Resize)
 	{
-		auto c = Random::Next<CONTAINER>(100);
+		auto c = Random::Next<CONTAINER>();
 		const auto size = c.Size();
 		const auto t = Random::Next<TestType>();
 		
@@ -607,8 +612,8 @@ namespace UnitTests
 	
 	TEST(Swap)
 	{
-		auto a = Random::Next<CONTAINER>(100);
-		auto b = Random::Next<CONTAINER>(100);
+		auto a = Random::Next<CONTAINER>();
+		auto b = Random::Next<CONTAINER>();
 		const auto oldA = a;
 		const auto oldB = b;
 		a.Swap(b);
@@ -645,7 +650,7 @@ namespace UnitTests
 		// T::operator<= must be defined.
 		if constexpr (std::is_arithmetic_v<TestType>)
 		{
-			auto a = Random::Next<Array<TestType>>(100);
+			auto a = Random::Next<Array<TestType>>();
 			CONTAINER l(a.begin(), a.end());
 			std::sort(a.begin(), a.end());
 			l.Sort();
@@ -658,7 +663,7 @@ namespace UnitTests
 		// T::operator<= must be defined.
 		if constexpr (std::is_arithmetic_v<TestType>)
 		{
-			auto a = Random::Next<Array<TestType>>(100);
+			auto a = Random::Next<Array<TestType>>();
 			CONTAINER l;
 			l.Merge(CONTAINER(a.begin(), a.end()));
 			REQUIRE(CONTAINER(a.begin(), a.end()) == l);

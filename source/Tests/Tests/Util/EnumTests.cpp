@@ -73,6 +73,13 @@ namespace UnitTests
 		REQUIRE("Nine" == std::to_string(Digit::Nine));
 	}
 
+	TEST(operator<<)
+	{
+		std::stringstream stream;
+		stream << Digit::Two;
+		REQUIRE(stream.str() == "Two");
+	}
+
 	TEST(Count)
 	{
 		REQUIRE(10 == Enum<Digit>::Count);

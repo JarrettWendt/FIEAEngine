@@ -113,6 +113,11 @@ namespace UnitTests
 		REQUIRE(Util::RemoveWhitespace(" Hello, World!") == "Hello,World!");
 		REQUIRE(Util::RemoveWhitespace(" HELLO, WORLD!") == "HELLO,WORLD!");
 	}
+
+	TEST(ReplaceAll)
+	{
+		REQUIRE(Util::ReplaceAll("noob toob", "oo", "00") == "n00b t00b");
+	}
 #pragma endregion
 
 #pragma region paths

@@ -139,7 +139,7 @@ namespace Library
 	};
 
 	template<>
-	struct Hash<Transform>
+	struct Hash<Library::Transform>
 	{
 		hash_t operator()(const Transform& t) const
 		{

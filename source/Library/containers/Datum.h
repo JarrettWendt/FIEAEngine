@@ -11,7 +11,7 @@
 #include "Vector4.h"
 #include "Quaternion.h"
 #include "Matrix.h"
-#include "Transform.h"
+#include "math/Transform.h"
 
 namespace Library
 {
@@ -35,7 +35,7 @@ namespace Library
 		// TODO: This bool feels like a big waste because it's taking up 8 bytes due to padding.
 		// If we wanted to go *crazy* memory efficient, we could steal a bit from the Array pointer.
 		// Another option might be to create a separate type: ExternalDatum.
-		// Another another option might be to re-impliment std::variant to use a uint32_t instead of a size_t.
+		// Another another option might be to re-implement std::variant to use a uint32_t instead of a size_t.
 		bool isExternal{ false };
 		
 	public:

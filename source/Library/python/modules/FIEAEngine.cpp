@@ -4,7 +4,7 @@
 #include "python/modules/FIEAEngine.h"
 #include "python/modules/Engine.h"
 #include "python/modules/Entity.h"
-#include "python/modules/Math.h"
+#include "python/modules/LibMath_module.h"
 #include "python/modules/Time.h"
 
 PyObject* PyInit_FIEAEngine() noexcept
