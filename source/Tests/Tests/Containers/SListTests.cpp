@@ -6,11 +6,20 @@ using namespace Library::Literals;
 
 using Types = std::tuple<bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>>;
 #define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "SList::" #name, "[SList]", Types)
+#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "SList::" #name, "[SList]")
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("SList::" #name, "[SList]", Types)
 #define CONTAINER SList<TestType>
 
 namespace UnitTests
 {
+	TEST_NO_TEMPLATE(operator<<)
+	{
+		SList<int> l{ 1, 2, 3 };
+		std::stringstream stream;
+		stream << l;
+		REQUIRE(stream.str() == "{ 1, 2, 3 }");
+	}
+	
 #pragma region special members
 	TEST(initializer_list)
 	{

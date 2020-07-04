@@ -8,6 +8,27 @@ namespace Library::py
 	class EntityBinding;
 }
 
+/**
+ * Defaults the ctors.
+ * Deletes the move/copy semantics since an Entity must exists in a shared_ptr anyway.
+ * Allows user to explicitly define a dtor.
+ *
+ * @param DerivedType	a type which derives from Entity
+ */
+#define ENTITY_CTOR_ASSIGN(DerivedType)		\
+	ATTRIBUTED_CTORS(DerivedType)			\
+	MOVE_COPY(DerivedType, delete)
+
+/**
+ * Defaults the ctors and virtual dtor.
+ * Deletes the move/copy semantics since an Entity must exists in a shared_ptr anyway.
+ *
+ * @param DerivedType	a type which derives from Entity
+ */
+#define ENTITY_SPECIAL_MEMBERS(DerivedType)	\
+	ENTITY_CTOR_ASSIGN(DerivedType)			\
+	virtual ~DerivedType() = default;
+
 namespace Library
 {
 	/**
@@ -24,7 +45,8 @@ namespace Library
 	class Entity : public Attributed, public std::enable_shared_from_this<Entity>
 	{
 		ATTRIBUTED_DECLARATIONS(Attributed)
-		ATTRIBUTED_SPECIAL_MEMBERS(Entity, default)
+		ENTITY_SPECIAL_MEMBERS(Entity)
+		
 		friend class Engine;
 		friend py::EntityBinding;
 
@@ -39,7 +61,7 @@ namespace Library
 		mutable Transform worldTransform{};
 
 		using MapType = HashMap<std::string, SharedEntity>;
-		MapType children;
+		MapType children{};
 
 		[[Attribute]]
 		std::string name{ "Entity" };

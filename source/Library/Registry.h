@@ -54,17 +54,6 @@ namespace Library
 		static size_t NumAttributes(RTTI::IDType id) noexcept;
 
 		/**
-		 * O(n) where n is the number of Attributes for this Attributed
-		 * 
-		 * @param id	ID of an Attributed to query for
-		 * @param name	name of an Attribute on that Attributed
-		 * @returns		the Attributed matching the ID/name pair
-		 *
-		 * @throws std::out_of_range if no Attribute of that ID/name pair exists
-		 */
-		static Attribute& Find(RTTI::IDType id, const std::string& name);
-
-		/**
 		 * Loops through every Attribute for the given id.
 		 * Recursively does so for base types too.
 		 * 

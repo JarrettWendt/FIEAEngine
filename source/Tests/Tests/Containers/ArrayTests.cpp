@@ -6,6 +6,7 @@ using namespace Library::Literals;
 
 using Types = std::tuple<bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>>;
 #define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "Array::" #name, "[Array]", Types)
+#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "Array::" #name, "[Array]")
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("Array::" #name, "[Array]", Types)
 #define CONTAINER Array<TestType>
 
@@ -18,6 +19,14 @@ namespace UnitTests
 			return size * 2 + 1;
 		}
 	};
+
+	TEST_NO_TEMPLATE(operator<<)
+	{
+		Array<int> a{ 1, 2, 3 };
+		std::stringstream stream;
+		stream << a;
+		REQUIRE(stream.str() == "{ 1, 2, 3 }");
+	}
 
 #pragma region special members
 	TEST(PrototypeConstructor)

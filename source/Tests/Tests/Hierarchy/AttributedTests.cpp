@@ -130,6 +130,19 @@ namespace UnitTests
 		REQUIRE(9 == copied["integers"].Get<int>(9));
 	}
 #pragma endregion
+
+#pragma region iterator
+	TEST(iterator)
+	{
+		const AttributedFoo foo;
+		size_t count = 0;
+		for (auto it = foo.begin(); it != foo.end(); ++it)
+		{
+			count++;
+		}
+		REQUIRE(count == 13);
+	}
+#pragma endregion
 		
 #pragma region Properties
 	TEST(NumAttributes)

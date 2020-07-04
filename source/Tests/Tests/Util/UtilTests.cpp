@@ -3,48 +3,50 @@
 using namespace std::string_literals;
 using namespace Library;
 
-#define TEST(name) TEST_CASE_METHOD(MemLeak, name, "[Util]")
+#define TEST(name) TEST_CASE_METHOD(MemLeak, "Util::" #name, "[Util]")
 
 namespace UnitTests
 {
-	TEST("DefaultReserveStrategy")
+	TEST(DefaultReserveStrategy)
 	{
 	    REQUIRE(size_t(7 * 1.5) == Util::DefaultReserveStrategy{}(7, 7));
 	}
 
-	TEST("IsOneOf")
+	TEST(IsOneOf)
 	{
 		REQUIRE(Util::IsOneOf<int, bool, float, std::string, int>());
 		REQUIRE(!Util::IsOneOf<int, bool, float, std::string, double>());
 	}
 
-	TEST("FirstConvertible")
+	TEST(FirstConvertible)
 	{
 		REQUIRE(std::is_same_v<Util::FirstConvertible<int, bool, float, std::string>, bool>);
 		REQUIRE(std::is_same_v<Util::FirstConvertible<int, std::string, bool, float>, bool>);
 	}
 
-	TEST("BestMatch")
+	TEST(BestMatch)
 	{
 		REQUIRE(std::is_same_v<Util::BestMatch<int, bool, float, std::string, int>, int>);
 		REQUIRE(std::is_same_v<Util::BestMatch<int, bool, float, std::string>, bool>);
 	}
 
 #pragma region String
-	TEST("std::to_string")
+	TEST(std::to_string)
 	{
 		REQUIRE(std::to_string('c') == "c");
 		REQUIRE(std::to_string(L"c") == "c");
 		REQUIRE(std::to_wstring("c"s) == L"c"s);
+
+		REQUIRE(std::to_string(std::vector<int>{ 1, 2, 3 }) == "{ 1, 2, 3 }");
 	}
 	
-	TEST("PairToString")
+	TEST(PairToString)
 	{
 		std::pair<int, int> p = { 6, 7 };
 		REQUIRE("{ 6, 7 }" == std::to_string(p));
 	}
 
-	TEST("IsEmptyOrWhitespace")
+	TEST(IsEmptyOrWhitespace)
 	{
 		REQUIRE(Util::IsEmptyOrWhitespace(""));
 		REQUIRE(Util::IsEmptyOrWhitespace(" "));
@@ -52,7 +54,7 @@ namespace UnitTests
 		REQUIRE(!Util::IsEmptyOrWhitespace(" a"));
 	}
 
-	TEST("IsWhitespace")
+	TEST(IsWhitespace)
 	{
 		REQUIRE(!Util::IsWhitespace(""));
 		REQUIRE(Util::IsWhitespace(" "));
@@ -60,7 +62,7 @@ namespace UnitTests
 		REQUIRE(!Util::IsEmptyOrWhitespace(" a"));
 	}
 
-	TEST("HasAlpha")
+	TEST(HasAlpha)
 	{
 		REQUIRE(!Util::HasAlpha(""));
 		REQUIRE(!Util::HasAlpha(" "));
@@ -68,7 +70,7 @@ namespace UnitTests
 		REQUIRE(Util::HasAlpha(" ;a"));
 	}
 
-	TEST("ToLower")
+	TEST(ToLower)
 	{
 		REQUIRE(Util::ToLower("").empty());
 		REQUIRE(Util::ToLower(" ") == " ");
@@ -76,7 +78,7 @@ namespace UnitTests
 		REQUIRE(Util::ToLower("hello, world!") == "hello, world!");
 	}
 
-	TEST("ToUpper")
+	TEST(ToUpper)
 	{
 		REQUIRE(Util::ToUpper("").empty());
 		REQUIRE(Util::ToUpper(" ") == " ");
@@ -84,7 +86,7 @@ namespace UnitTests
 		REQUIRE(Util::ToUpper("HELLO, WORLD!") == "HELLO, WORLD!");
 	}
 
-	TEST("IsLower")
+	TEST(IsLower)
 	{
 		REQUIRE(!Util::IsLower(""));
 		REQUIRE(!Util::IsLower(" "));
@@ -94,7 +96,7 @@ namespace UnitTests
 		REQUIRE(Util::IsLower("hello, world!"));
 	}
 
-	TEST("IsUpper")
+	TEST(IsUpper)
 	{
 		REQUIRE(!Util::IsUpper(""));
 		REQUIRE(!Util::IsUpper(" "));
@@ -104,12 +106,28 @@ namespace UnitTests
 		REQUIRE(Util::IsUpper("HELLO, WORLD!"));
 	}
 
-	TEST("RemoveWhitespace")
+	TEST(RemoveWhitespace)
 	{
 		REQUIRE(Util::RemoveWhitespace("").empty());
 		REQUIRE(Util::RemoveWhitespace(" ").empty());
 		REQUIRE(Util::RemoveWhitespace(" Hello, World!") == "Hello,World!");
 		REQUIRE(Util::RemoveWhitespace(" HELLO, WORLD!") == "HELLO,WORLD!");
+	}
+#pragma endregion
+
+#pragma region paths
+	TEST(FixDirectorySeparators)
+	{
+#ifdef _WIN32
+		REQUIRE(Util::FixDirectorySeparators("C:\\Dev") == "C:\\Dev");
+#else
+		REQUIRE(Util::FixDirectorySeparators("C:\\Dev") == "C:/Dev");
+#endif
+	}
+
+	TEST(WindowsToWSLDir)
+	{
+		REQUIRE(Util::WindowsToWSLDir("C:/Dev") == "/mnt/c/Dev");
 	}
 #pragma endregion
 }

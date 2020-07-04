@@ -18,9 +18,4 @@ namespace Library
 		}
 		return 0;
 	}
-	
-	Registry::Attribute& Registry::Find(const RTTI::IDType id, const std::string& name)
-	{
-		return *Util::Find(registry.At(id).attributes, [&name](const Attribute& a) { return a.name == name; });
-	}
 }

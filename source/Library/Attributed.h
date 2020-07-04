@@ -235,11 +235,14 @@ namespace Library
 	RTTI_DECLARATIONS(BaseType)											\
 	friend class Library::Registry;
 
-#define ATTRIBUTED_SPECIAL_MEMBERS(DerivedType, D)						\
+#define ATTRIBUTED_CTORS(DerivedType)									\
 protected:																\
 	explicit DerivedType(const RTTI::IDType derived) : Base(derived) {}	\
 public:																	\
-	DerivedType() : Base(typeID) {}										\
-	MOVE_COPY_VDTOR(DerivedType, D)		
+	DerivedType() : Base(typeID) {}
+
+#define ATTRIBUTED_SPECIAL_MEMBERS(DerivedType, D)						\
+	ATTRIBUTED_CTORS(DerivedType)										\
+	MOVE_COPY_VDTOR(DerivedType, D)
 
 #include "Attributed.inl"

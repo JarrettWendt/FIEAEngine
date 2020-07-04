@@ -106,8 +106,6 @@ namespace Library
 			case PendingOp::Type::RemoveAll:
 				listeners.Clear();
 				break;
-
-			default:;
 			}
 		}
 		// TODO: Come up with some sort of a dtor iterator that destructs the list as we iterate.
