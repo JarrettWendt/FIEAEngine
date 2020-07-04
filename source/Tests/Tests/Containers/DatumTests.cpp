@@ -4,14 +4,14 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace Library::Literals;
 
-using Types = std::tuple<bool, int, float>; //, std::string
+using Types = std::tuple<bool, int, float, std::string>;
 #define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "Datum::" #name, "[Datum]", Types)
 #define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "Datum::" #name, "[Datum]")
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("Datum::" #name, "[Datum]", Types)
 #define CONTAINER Array<TestType>
 
 namespace UnitTests
-{
+{	
 	TEST_NO_TEMPLATE(TypeOf)
 	{
 		using Type = Datum::Type;
@@ -48,6 +48,14 @@ namespace UnitTests
 		d = 1;
 		REQUIRE(Datum::Type::Int == d.GetType());
 	}
+
+	TEST_NO_TEMPLATE(operator<<)
+	{
+		Datum d = { 0, 1 };
+		std::stringstream stream;
+		stream << d;
+		REQUIRE(stream.str() == "{ 0, 1 }");
+	}
 		
 #pragma region value_type
 	TEST(value_type::operator==)
@@ -67,6 +75,14 @@ namespace UnitTests
 			a.PushFront<TestType>("z"s);
 			REQUIRE(a[0] >= a[1]);
 		}
+	}
+
+	TEST_NO_TEMPLATE(value_type::operator== non comparable types)
+	{
+		Datum a, b;
+		a = 0;
+		b = "0"s;
+		REQUIRE(!(a[0] == b[0]));
 	}
 
 	TEST_NO_TEMPLATE(value_type::operator<)
@@ -195,9 +211,10 @@ namespace UnitTests
 #pragma endregion
 
 #pragma region iterator
-	TEST(Iterator)
+	TEST(iterator)
 	{
 		SKIP_TYPE(bool);
+
 		using iterator = typename Datum::iterator;
 		using difference_type = typename iterator::difference_type;
 
@@ -277,7 +294,7 @@ namespace UnitTests
 		REQUIRE(constInitialized[2].operator TestType&() == libC[2].operator TestType&());
 	}
 
-	TEST(ConstIterator)
+	TEST(const_iterator)
 	{
 		SKIP_TYPE(bool);
 		
@@ -301,6 +318,8 @@ namespace UnitTests
 		const_iterator it = libraryContainer.cbegin();
 		auto stdIt = stdContainer.begin();
 
+		REQUIRE(libraryContainer.end() == (it + (libraryContainer.Size() + 1_z)));
+
 		// Make sure pre/post increment behave differently.
 		TestType a = *++it;
 		--it;
@@ -308,9 +327,9 @@ namespace UnitTests
 		REQUIRE(a != b);
 		++stdIt;
 		// Make sure pre/post decrement behave differently.
-		a = *--it;
+		a = (*--it).operator const TestType&();
 		++it;
-		b = *it--;
+		b = (*it--).operator const TestType&();
 		REQUIRE(a != b);
 		--stdIt;
 
@@ -907,7 +926,7 @@ namespace UnitTests
 		REQUIRE(d[0] == t);
 
 		const Datum cd = d;
-		REQUIRE_THROWS_AS([&] { t = cd[-1_z]; }(), std::out_of_range);
+		REQUIRE_THROWS_AS([&] { t = cd[-1_z].operator const TestType&(); }(), std::out_of_range);
 		REQUIRE(cd[0] == cd.Front<TestType>());
 	}
 #pragma endregion

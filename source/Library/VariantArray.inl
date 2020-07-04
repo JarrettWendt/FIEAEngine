@@ -27,13 +27,6 @@ namespace Library
 
 	template<typename ...Ts>
 	template<typename T>
-	inline VariantArray<Ts...>::value_type::operator T() const
-	{
-		return owner.Get<T>(index);
-	}
-
-	template<typename ...Ts>
-	template<typename T>
 	inline VariantArray<Ts...>::value_type::operator T& ()
 	{
 		return owner.Get<T>(index);
@@ -56,7 +49,7 @@ namespace Library
 	template<typename ...Ts>
 	bool VariantArray<Ts...>::value_type::operator==(const value_type& other) const noexcept
 	{
-		if (owner == other.owner && index == other.index)
+		if (&owner == &other.owner && index == other.index)
 		{
 			return true;
 		}
@@ -150,12 +143,6 @@ namespace Library
 			}
 		}, owner.variants, other.owner.variants);
 #pragma warning(pop)
-	}
-
-	template<typename ...Ts>
-	inline std::ostream& VariantArray<Ts...>::value_type::StreamTo(std::ostream& stream) const
-	{
-		return std::visit([&stream](const auto& a)->std::ostream& { return stream << a; }, owner.variants);
 	}
 #pragma endregion
 	

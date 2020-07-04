@@ -4,7 +4,7 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace Library::Literals;
 
-using Types = std::tuple<bool, char, int, float, uint64_t>; //, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>)
+using Types = std::tuple<bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>>;
 #define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "Array::" #name, "[Array]", Types)
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("Array::" #name, "[Array]", Types)
 #define CONTAINER Array<TestType>
@@ -22,7 +22,7 @@ namespace UnitTests
 #pragma region special members
 	TEST(PrototypeConstructor)
 	{
-		const size_t count = Random::Range<size_t>(0, 100);
+		const size_t count = Random::Range<size_t>(0, 10);
 		const TestType t = Random::Next<TestType>();
 		Array<TestType> c(count, t);
 		
@@ -34,7 +34,7 @@ namespace UnitTests
 
 	TEST(IteratorConstructor)
 	{
-		const size_t count = Random::Range<size_t>(0, 100);
+		const size_t count = Random::Range<size_t>(0, 10);
 		const auto t = Random::Next<TestType>();
 		Array<TestType> c(count, t);
 		Array<TestType> b{ c.begin(), c.end() };
@@ -47,7 +47,7 @@ namespace UnitTests
 
 	TEST(CopyCtor)
 	{
-		const Array<TestType> a1 = Random::Next<Array<TestType>>(100);
+		const Array<TestType> a1 = Random::Next<Array<TestType>>();
 		Array<TestType> a2(a1);
 		REQUIRE(a1 == a2);
 		a2.PushBack(Random::Next<TestType>());
@@ -56,7 +56,7 @@ namespace UnitTests
 
 	TEST(CopyCtorDifferentReserve)
 	{
-		const auto a = Random::Next<Array<TestType, TestReserveStrategy>>(100);
+		const auto a = Random::Next<Array<TestType, TestReserveStrategy>>();
 		const Array<TestType> a1(a);
 		Array<TestType> a2(a1);
 		REQUIRE(a1 == a2);
@@ -66,7 +66,7 @@ namespace UnitTests
 
 	TEST(MoveCtorDifferentReserve)
 	{
-		const Array<TestType> a1 = Random::Next<Array<TestType, TestReserveStrategy>>(100);
+		const Array<TestType> a1 = Random::Next<Array<TestType, TestReserveStrategy>>();
 		Array<TestType> a2(a1);
 		REQUIRE(a1 == a2);
 		a2.PushBack(Random::Next<TestType>());
@@ -75,7 +75,7 @@ namespace UnitTests
 
 	TEST(CopyAssignDifferentReserve)
 	{
-		const Array<TestType, TestReserveStrategy> a1 = Random::Next<Array<TestType, TestReserveStrategy>>(100);
+		const Array<TestType, TestReserveStrategy> a1 = Random::Next<Array<TestType, TestReserveStrategy>>();
 		Array<TestType> a2;
 		a2 = a1;
 		REQUIRE(a1 == a2);
@@ -86,7 +86,7 @@ namespace UnitTests
 	TEST(MoveAssignDifferentReserve)
 	{
 		Array<TestType> a1;
-		a1 = Random::Next<Array<TestType, TestReserveStrategy>>(100);
+		a1 = Random::Next<Array<TestType, TestReserveStrategy>>();
 		Array<TestType> a2 = a1;
 		REQUIRE(a1 == a2);
 		a2.PushBack(Random::Next<TestType>());
@@ -95,7 +95,7 @@ namespace UnitTests
 
 	TEST(CopyAssignment)
 	{
-		Array<TestType> a = Random::Next<Array<TestType>>(100);
+		Array<TestType> a = Random::Next<Array<TestType>>();
 	}
 
 	TEST(AssignmentOperator)
@@ -131,7 +131,7 @@ namespace UnitTests
 
 	TEST(RangeCtor)
 	{
-		const auto v = Random::Next<std::vector<TestType>>(100);
+		const auto v = Random::Next<std::vector<TestType>>();
 		const Array<TestType> a(v);
 		REQUIRE(v.size() == a.Size());
 		for (size_t i = 0; i < v.size(); i++)
@@ -142,7 +142,7 @@ namespace UnitTests
 
 	TEST(RangeAssignmentOperator)
 	{
-		const auto v = Random::Next<std::vector<TestType>>(100);
+		const auto v = Random::Next<std::vector<TestType>>();
 		Array<TestType> a;
 		a = v;
 		REQUIRE(v.size() == a.Size());
@@ -178,7 +178,7 @@ namespace UnitTests
 		}
 		else
 		{
-			stdContainer = Random::Unique<std::vector<TestType>>(100);
+			stdContainer = Random::Unique<std::vector<TestType>>(10);
 		}
 		libC = stdContainer;
 
@@ -265,7 +265,7 @@ namespace UnitTests
 		
 		Array<TestType> libraryContainer;
 		std::vector<TestType> stdContainer;
-		const Array<TestType> constVector = Random::Next<Array<TestType>>(100);
+		const Array<TestType> constVector = Random::Next<Array<TestType>>();
 
 		if constexpr (std::is_same_v<bool, TestType>)
 		{
@@ -277,7 +277,7 @@ namespace UnitTests
 		}
 		else
 		{
-			stdContainer = Random::Unique<std::vector<TestType>>(100);
+			stdContainer = Random::Unique<std::vector<TestType>>(10);
 		}
 		libraryContainer = stdContainer;
 
@@ -422,7 +422,7 @@ namespace UnitTests
 	
 	TEST(Find)
 	{
-		const auto c = Random::Next<Array<TestType>>(100);
+		const auto c = Random::Next<Array<TestType>>();
 		const auto& t = c[5];
 		REQUIRE(Util::Find(c, t) != c.end());
 		REQUIRE(Util::Find(c, [](const auto&) { return false; }) == c.end());
@@ -430,7 +430,7 @@ namespace UnitTests
 
 	TEST(Exists)
 	{
-		const auto c = Random::Next<Array<TestType>>(100);
+		const auto c = Random::Next<Array<TestType>>();
 		const auto& t = Random::Element(c);
 		REQUIRE(Util::Exists(c, [&t](const auto& a) { return t == a; }));
 	}
@@ -439,7 +439,7 @@ namespace UnitTests
 #pragma region Insert
 	TEST(InsertThreeIterators)
 	{
-		auto a = Random::Next<Array<TestType>>(100);
+		auto a = Random::Next<Array<TestType>>();
 		Array<TestType> b;
 		b.Insert(b.begin(), a.begin(), a.end());
 		REQUIRE(a == b);
@@ -447,7 +447,7 @@ namespace UnitTests
 
 	TEST(InsertIteratorLValue)
 	{
-		auto a = Random::Next<Array<TestType>>(100);
+		auto a = Random::Next<Array<TestType>>();
 		auto t = Random::Next<TestType>();
 		a.Insert(a.begin(), t);
 		REQUIRE(t == a.Front());
@@ -455,7 +455,7 @@ namespace UnitTests
 
 	TEST(InsertIteratorRValue)
 	{
-		auto a = Random::Next<Array<TestType>>(100);
+		auto a = Random::Next<Array<TestType>>();
 		const auto t = a.Front();
 		a.Insert(a.cbegin(), Random::NotEqualTo(t));
 		REQUIRE(t != a.Front());
@@ -463,7 +463,7 @@ namespace UnitTests
 	
 	TEST(InsertIteratorCountPrototype)
 	{
-		auto a = Random::Next<Array<TestType>>(100);
+		auto a = Random::Next<Array<TestType>>();
 		auto t = Random::Next<TestType>();
 		size_t count = Random::Range<size_t>(0, 100);
 		a.Insert(a.begin(), count, t);
@@ -484,7 +484,7 @@ namespace UnitTests
 			
 	TEST(Emplace)
 	{
-		auto a = Random::Next<Array<TestType>>(100);
+		auto a = Random::Next<Array<TestType>>();
 		auto it = a.cbegin();
 		Array<TestType> b = a;
 		const auto& t = a.Emplace(it, Random::Next<TestType>());
@@ -538,7 +538,7 @@ namespace UnitTests
 
 	TEST(PushFrontIterators)
 	{
-		const std::vector<TestType> v = Random::Next<std::vector<TestType>>(100);
+		const std::vector<TestType> v = Random::Next<std::vector<TestType>>();
 		const Array<TestType> c1(v);
 		Array<TestType> c2;
 		c2.PushFront(v.begin(), v.end());
@@ -682,8 +682,8 @@ namespace UnitTests
 
 	TEST(Swap)
 	{
-		auto a = Random::Next<CONTAINER>(100);
-		auto b = Random::Next<CONTAINER>(100);
+		auto a = Random::Next<CONTAINER>();
+		auto b = Random::Next<CONTAINER>();
 		const CONTAINER ca = a;
 		const CONTAINER cb = b;
 		a.Swap(b);
@@ -696,7 +696,7 @@ namespace UnitTests
 		// T::operator< must be defined.
 		if constexpr (std::is_arithmetic_v<TestType>)
 		{
-			auto c = Random::Next<CONTAINER>(100);
+			auto c = Random::Next<CONTAINER>();
 
 			// std::iter_swap must work for std::sort to work
 			const auto front = c.Front();
@@ -776,7 +776,7 @@ namespace UnitTests
 
 		a.Clear();
 		b.Clear();
-		b = Random::Next<CONTAINER>(100);
+		b = Random::Next<CONTAINER>();
 		REQUIRE(!(a == b));
 	}
 

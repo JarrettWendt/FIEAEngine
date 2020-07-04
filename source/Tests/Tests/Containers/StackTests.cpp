@@ -4,7 +4,7 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace Library::Literals;
 
-using Types = std::tuple<bool, int, float>; //, std::string
+using Types = std::tuple<bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>>;
 #define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "Stack::" #name, "[Stack]", Types)
 #define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "Stack::" #name, "[Stack]")
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("Stack::" #name, "[Stack]", Types)

@@ -62,15 +62,6 @@ namespace Library
 			 */
 			template<typename T>
 			value_type& operator=(const T& t);
-			
-			/**
-			 * implicit conversion
-			 * usage:
-			 * static_cast<T>(my_value_type)
-			 * for (T t : myDatum)
-			 */
-			template<typename T>
-			explicit operator T () const;
 
 			/**
 			 * implicit conversion
@@ -101,7 +92,7 @@ namespace Library
 			 */
 			friend std::ostream& operator<<(std::ostream& stream, const value_type val)
 			{
-				return val.StreamTo(stream);
+				return std::visit([&](const auto& a)->std::ostream& { return stream << a[val.index]; }, val.owner.variants);
 			}
 
 #pragma region Comparison
@@ -164,15 +155,6 @@ namespace Library
 			}
 #pragma endregion
 #pragma endregion
-
-		private:
-			/**
-			 * helper for operator<< because class-friendship doesn't extend to friend functions
-			 * 
-			 * @param stream	the stream to stream to
-			 * @returns			the same stream
-			 */
-			std::ostream& StreamTo(std::ostream& stream) const;
 		};
 		using reference = value_type;
 		using cosnt_reference = const reference;

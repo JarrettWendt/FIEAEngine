@@ -4,7 +4,7 @@
 namespace Library::Random
 {
 	template<std::ranges::range Range, typename Engine = DefaultEngine>
-	[[nodiscard]] Range Next(const size_t size = 100)
+	[[nodiscard]] Range Next(const size_t size = 10)
 	{
 		using value_type = typename Range::value_type;
 		std::vector<value_type> v;
