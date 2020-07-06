@@ -16,6 +16,18 @@ namespace Library
 		[[nodiscard]] static float Dot(const Vector3& a, const Vector3& b) noexcept;
 
 #pragma region operators
+		template<size_t Index>
+		[[nodiscard]] constexpr float& operator[](std::integral_constant<size_t, Index>) noexcept
+		{
+			return *(reinterpret_cast<float*>(this) + Index);
+		}
+		
+		template<size_t Index>
+		[[nodiscard]] constexpr float operator[](std::integral_constant<size_t, Index> i) const noexcept
+		{
+			return const_cast<Vector3*>(this)->operator[](i);
+		}
+		
 		[[nodiscard]] float& operator[](size_type i) noexcept;
 		[[nodiscard]] float operator[](size_type i) const noexcept;
 

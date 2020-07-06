@@ -81,9 +81,9 @@ namespace Library
 		 * @param <Space>	the CoordinateSpace this wrapper operates on
 		 * @param <Type>	the component of the Transform this wrapper references
 		 * @param <index>	the xyzw component
-		 * @param <Owner>	either a const or non-const Entity
+		 * @param <IsConst>	whether or not this references a const or non-const Entity
 		 */
-		template<CoordinateSpace Space, Transform::Component Type, size_t index, bool IsConst = false>
+		template<CoordinateSpace Space, Transform::Component Type, size_t Index, bool IsConst = false>
 		struct FloatWrapper final
 		{
 			friend class Entity;
@@ -103,7 +103,7 @@ namespace Library
 			FloatWrapper& operator=(float f) noexcept requires (!IsConst)
 			{
 				auto trans = owner.GetTransform<Space>();
-				trans.template GetComponent<Type>()[index] = f;
+				trans.template GetComponent<Type>()[std::integral_constant<size_t, Index>()] = f;
 				owner.SetTransform<Space>(trans);
 				return *this;
 			}
@@ -132,7 +132,7 @@ namespace Library
 		/**
 		 * @param <Space>	the CoordinateSpace this wrapper operates on
 		 * @param <Type>	either Scale or Translation
-		 * @param <Owner>	either a const or non-const Entity
+		 * @param <IsConst>	whether or not this references a const or non-const Entity
 		 */
 		template<CoordinateSpace Space, Transform::Component Type, bool IsConst = false>
 		struct Vector3Wrapper final
@@ -169,8 +169,8 @@ namespace Library
 			 * Get component at compile-time.
 			 * Use with Literals::operator""_zc
 			 */
-			template<size_t index>
-			FloatWrapper<Space, Type, index, IsConst> operator[](std::integral_constant<size_t, index>) const noexcept
+			template<size_t Index>
+			FloatWrapper<Space, Type, Index, IsConst> operator[](std::integral_constant<size_t, Index>) const noexcept
 			{
 				return owner;
 			}
@@ -222,7 +222,7 @@ namespace Library
 
 		/**
 		 * @param <Space>	the CoordinateSpace this wrapper operates on
-		 * @param <Owner>	either a const or non-const Entity
+		 * @param <IsConst>	whether or not this references a const or non-const Entity
 		 */
 		template<CoordinateSpace Space, bool IsConst = false>
 		struct QuaternionWrapper final
@@ -259,10 +259,10 @@ namespace Library
 			 * Get component at compile-time.
 			 * Use with Literals::operator""_zc
 			 */
-			template<size_t index>
-			auto operator[](std::integral_constant<size_t, index>) const noexcept
+			template<size_t Index>
+			auto operator[](std::integral_constant<size_t, Index>) const noexcept
 			{
-				return FloatWrapper<Space, Transform::Component::Rotation, index, IsConst>(owner);
+				return FloatWrapper<Space, Transform::Component::Rotation, Index, IsConst>(owner);
 			}
 
 			FloatWrapper<Space, Transform::Component::Rotation, 0, IsConst> X() const noexcept;
@@ -273,7 +273,7 @@ namespace Library
 
 		/**
 		 * @param <Space>	the CoordinateSpace this wrapper operates on
-		 * @param <Owner>	either a const or non-const Entity
+		 * @param <IsConst>	whether or not this references a const or non-const Entity
 		 */
 		template<CoordinateSpace Space, bool IsConst = false>
 		struct TransformWrapper final

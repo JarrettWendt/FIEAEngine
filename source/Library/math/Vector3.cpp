@@ -22,7 +22,7 @@ namespace Library
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 
-#pragma region operators
+#pragma region operators	
 	float& Vector3::operator[](const size_type i) noexcept
 	{
 		assertm(i <= 3, "Vector3 index out of bounds");

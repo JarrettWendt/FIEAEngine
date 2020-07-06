@@ -6,14 +6,14 @@ namespace Library
 {
 #pragma region wrappers
 #pragma region float
-	template <CoordinateSpace Space, Transform::Component Type, size_t index, bool IsConst>
-	Entity::FloatWrapper<Space, Type, index, IsConst>::FloatWrapper(Entity& owner) noexcept :
+	template <CoordinateSpace Space, Transform::Component Type, size_t Index, bool IsConst>
+	Entity::FloatWrapper<Space, Type, Index, IsConst>::FloatWrapper(Entity& owner) noexcept :
 		owner(owner) {}
 
-	template<CoordinateSpace Space, Transform::Component Type, size_t index, bool IsConst>
-	inline Entity::FloatWrapper<Space, Type, index, IsConst>::operator float() const noexcept
+	template<CoordinateSpace Space, Transform::Component Type, size_t Index, bool IsConst>
+	inline Entity::FloatWrapper<Space, Type, Index, IsConst>::operator float() const noexcept
 	{
-		return owner.GetTransform<Space>().template GetComponent<Type>()[index];
+		return owner.GetTransform<Space>().template GetComponent<Type>()[Index];
 	}
 #pragma endregion
 	
