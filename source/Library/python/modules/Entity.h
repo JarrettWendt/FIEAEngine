@@ -63,27 +63,15 @@ namespace Library::py
 			template<typename Functor>
 			auto Do(Functor f)
 			{
-				if (space == CoordinateSpace::Local)
-				{
-					return Do<CoordinateSpace::Local>(f);
-				}
-				else
-				{
-					return Do<CoordinateSpace::World>(f);
-				}
+				return space == CoordinateSpace::Local ? Do<CoordinateSpace::Local>(f) : Do<CoordinateSpace::World>(f);
 			}
 
 			template<CoordinateSpace Space, typename Functor>
 			auto Do(Functor f)
 			{
-				if (component == Transform::Component::Scale)
-				{
-					return f(reinterpret_cast<Library::Entity::Vector3Wrapper<Space, Transform::Component::Scale>&>(v));
-				}
-				else
-				{
-					return f(reinterpret_cast<Library::Entity::Vector3Wrapper<Space, Transform::Component::Translation>&>(v));
-				}
+				return component == Transform::Component::Scale
+					? f(reinterpret_cast<Library::Entity::Vector3Wrapper<Space, Transform::Component::Scale>&>(v))
+					: f(reinterpret_cast<Library::Entity::Vector3Wrapper<Space, Transform::Component::Translation>&>(v));
 			}
 		};
 		
@@ -118,14 +106,9 @@ namespace Library::py
 			template<typename Functor>
 			auto Do(Functor f)
 			{
-				if (space == CoordinateSpace::Local)
-				{
-					return f(reinterpret_cast<Library::Entity::QuaternionWrapper<CoordinateSpace::Local>&>(q));
-				}
-				else
-				{
-					return f(reinterpret_cast<Library::Entity::QuaternionWrapper<CoordinateSpace::World>&>(q));
-				}
+				return space == CoordinateSpace::Local
+					? f(reinterpret_cast<Library::Entity::QuaternionWrapper<CoordinateSpace::Local>&>(q))
+					: f(reinterpret_cast<Library::Entity::QuaternionWrapper<CoordinateSpace::World>&>(q));
 			}
 		};
 		
@@ -156,14 +139,9 @@ namespace Library::py
 			template<typename Functor>
 			auto Do(Functor f)
 			{
-				if (space == CoordinateSpace::Local)
-				{
-					return f(reinterpret_cast<Library::Entity::TransformWrapper<CoordinateSpace::Local>&>(t));
-				}
-				else
-				{
-					return f(reinterpret_cast<Library::Entity::TransformWrapper<CoordinateSpace::World>&>(t));
-				}
+				return space == CoordinateSpace::Local
+					? f(reinterpret_cast<Library::Entity::TransformWrapper<CoordinateSpace::Local>&>(t))
+					: f(reinterpret_cast<Library::Entity::TransformWrapper<CoordinateSpace::World>&>(t));
 			}
 		};
 		
