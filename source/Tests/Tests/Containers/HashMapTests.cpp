@@ -7,6 +7,7 @@ using namespace Library::Literals;
 using Types = std::tuple<KeyValuePair<int, std::string>>;
 #define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "HashMap::" #name, "[HashMap]", Types)
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("HashMap::" #name, "[HashMap]", Types)
+#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "HashMap::" #name, "[HashMap]")
 #define KEY_VALUE using TKey = typename TestType::key_type; using TValue = typename TestType::value_type; using KVP = KeyValuePair<TKey, TValue>;
 #define CONTAINER HashMap<TKey, TValue>
 
@@ -52,6 +53,18 @@ namespace UnitTests
 		{
 			stdMap.emplace(std::move(key), std::move(value));
 		}
+	}
+
+	TEST_NO_TEMPLATE(operator<<)
+	{
+		const HashMap<int, std::string> map
+		{
+			{ 0, "hello" },
+			{ 1, "world" }
+		};
+		std::stringstream stream;
+		stream << map;
+		REQUIRE(stream.str() == "{ { 0, hello }, { 1, world } }");
 	}
 	
 #pragma region special members

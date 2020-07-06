@@ -4,10 +4,12 @@ using namespace std::string_literals;
 using namespace Library;
 using namespace Library::Literals;
 
-using Types = std::tuple<bool, int, float>; //, std::string
-#define TEST(name) TEMPLATE_LIST_TEST_CASE_METHOD(TemplateMemLeak, "Stack::" #name, "[Stack]", Types)
-#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, "Stack::" #name, "[Stack]")
-#define TEST_NO_MEM_CHECK(name) TEMPLATE_LIST_TEST_CASE("Stack::" #name, "[Stack]", Types)
+#define NAMESPACE "Stack::"
+#define CATEGORY "[Stack]"
+#define TYPES bool, char, int, float, uint64_t, std::string, Array<int>, Array<std::string>, SList<int>, SList<std::string>
+#define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, NAMESPACE #name, CATEGORY)
+#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, NAMESPACE "::" #name, CATEGORY, TYPES)
+#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(NAMESPACE "::" #name, CATEGORY, TYPES)
 #define CONTAINER Stack<TestType>
 
 namespace UnitTests

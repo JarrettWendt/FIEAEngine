@@ -29,7 +29,7 @@ namespace UnitTests
 	TEST(FloatWrapper::operator=)
 	{
 		const auto e = std::make_shared<Entity>();
-		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
+		auto f = e->Transform<CoordinateSpace::World>().Translation().X();
 		f = 1.f;
 		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
 	}
@@ -113,7 +113,7 @@ namespace UnitTests
 		REQUIRE(cit.IsAtBegin());
 		REQUIRE(cit.IsAtEnd());
 
-		REQUIRE(!cit);
+		REQUIRE_FALSE(cit);
 		REQUIRE(!cit);
 
 		const auto c = e->CreateChild();
@@ -261,7 +261,8 @@ namespace UnitTests
 		REQUIRE(!parent->Parent());
 		REQUIRE(!child->Parent());
 
-		child = parent->Adopt("child", child);
+		child->SetName("child");
+		child = parent->Adopt(child);
 
 		REQUIRE(!parent->Parent());
 		REQUIRE(child->Parent());
@@ -323,6 +324,22 @@ namespace UnitTests
 		//Coroutines::Start([]()->Coroutine { Engine::IsActive() = false; co_return; });
 		//Engine::Main({});
 	}
+
+#pragma region operators
+	TEST(operator==)
+	{
+		const auto a = std::make_shared<Entity>();
+		const auto b = std::make_shared<Entity>();
+		REQUIRE(*a == *b);
+	}
+	
+	TEST(operator!=)
+	{
+		const auto a = std::make_shared<Entity>();
+		const auto b = std::make_shared<Entity>();
+		REQUIRE(!(*a != *b));
+	}
+#pragma endregion
 
 #pragma region RTTI
 	TEST(StaticTypeID)
