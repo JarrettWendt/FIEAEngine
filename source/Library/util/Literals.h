@@ -79,7 +79,7 @@ namespace Library::Literals
 	constexpr auto operator""_zc()
 	{
 	    return typename ConstantFromString<size_t, digits...>::type{};
-	}
+	}	
 }
 
 #include "Literals.inl"

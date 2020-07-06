@@ -6,26 +6,26 @@ namespace Library
 {
 #pragma region wrappers
 #pragma region float
-	template <CoordinateSpace Space, Transform::Component Type, size_t index, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Type, index, Owner>::FloatWrapper(Owner& owner) noexcept :
+	template <CoordinateSpace Space, Transform::Component Type, size_t index, bool IsConst>
+	Entity::FloatWrapper<Space, Type, index, IsConst>::FloatWrapper(Entity& owner) noexcept :
 		owner(owner) {}
 
-	template<CoordinateSpace Space, Transform::Component Type, size_t index, std::derived_from<Entity> Owner>
-	inline Entity::FloatWrapper<Space, Type, index, Owner>::operator float() const noexcept
+	template<CoordinateSpace Space, Transform::Component Type, size_t index, bool IsConst>
+	inline Entity::FloatWrapper<Space, Type, index, IsConst>::operator float() const noexcept
 	{
-		return owner.template GetTransform<Space>().template GetComponent<Type>()[index];
+		return owner.GetTransform<Space>().template GetComponent<Type>()[index];
 	}
 #pragma endregion
 	
 #pragma region Vector3
-	template<CoordinateSpace Space, Transform::Component Type, std::derived_from<Entity> Owner>
-	Entity::Vector3Wrapper<Space, Type, Owner>::Vector3Wrapper(Owner& owner) noexcept :
+	template <CoordinateSpace Space, Transform::Component Type, bool IsConst>
+	Entity::Vector3Wrapper<Space, Type, IsConst>::Vector3Wrapper(Entity& owner) noexcept :
 		owner(owner) {}
 	
-	template<CoordinateSpace Space, Transform::Component Type, std::derived_from<Entity> Owner>
-	inline Entity::Vector3Wrapper<Space, Type, Owner>::operator Vector3() const noexcept
+	template <CoordinateSpace Space, Transform::Component Type, bool IsConst>
+	inline Entity::Vector3Wrapper<Space, Type, IsConst>::operator Vector3() const noexcept
 	{
-		const auto trans = owner.template GetTransform<Space>();
+		const auto trans = owner.GetTransform<Space>();
 		if constexpr (Type == Transform::Component::Translation)
 		{
 			return trans.translation;
@@ -35,88 +35,88 @@ namespace Library
 			return trans.scale;
 		}
 	}	
-
-	template <CoordinateSpace Space, Transform::Component Type, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Type, 0, Owner> Entity::Vector3Wrapper<Space, Type, Owner>::X() const noexcept
+	
+	template <CoordinateSpace Space, Transform::Component Type, bool IsConst>
+	Entity::FloatWrapper<Space, Type, 0, IsConst> Entity::Vector3Wrapper<Space, Type, IsConst>::X() const noexcept
 	{
 		return owner;
 	}
 
-	template <CoordinateSpace Space, Transform::Component Type, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Type, 1, Owner> Entity::Vector3Wrapper<Space, Type, Owner>::Y() const noexcept
+	template <CoordinateSpace Space, Transform::Component Type, bool IsConst>
+	Entity::FloatWrapper<Space, Type, 1, IsConst> Entity::Vector3Wrapper<Space, Type, IsConst>::Y() const noexcept
 	{
 		return owner;
 	}
-
-	template <CoordinateSpace Space, Transform::Component Type, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Type, 2, Owner> Entity::Vector3Wrapper<Space, Type, Owner>::Z() const noexcept
+	
+	template <CoordinateSpace Space, Transform::Component Type, bool IsConst>
+	Entity::FloatWrapper<Space, Type, 2, IsConst> Entity::Vector3Wrapper<Space, Type, IsConst>::Z() const noexcept
 	{
 		return owner;
 	}
 #pragma endregion
 	
 #pragma region Quaternion
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::QuaternionWrapper<Space, Owner>::QuaternionWrapper(Owner& owner) noexcept :
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::QuaternionWrapper<Space, IsConst>::QuaternionWrapper(Entity& owner) noexcept :
 		owner(owner) {}
-
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::QuaternionWrapper<Space, Owner>::operator Quaternion() const noexcept
+	
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::QuaternionWrapper<Space, IsConst>::operator Quaternion() const noexcept
 	{
-		const auto trans = owner.template GetTransform<Space>();
+		const auto trans = owner.GetTransform<Space>();
 		return trans.rotation;
 	}
-
-	template <CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Transform::Component::Rotation, 0, Owner> Entity::QuaternionWrapper<Space, Owner>::X() const noexcept
+	
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::FloatWrapper<Space, Transform::Component::Rotation, 0, IsConst> Entity::QuaternionWrapper<Space, IsConst>::X() const noexcept
 	{
 		return owner;
 	}
-
-	template <CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Transform::Component::Rotation, 1, Owner> Entity::QuaternionWrapper<Space, Owner>::Y() const noexcept
+	
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::FloatWrapper<Space, Transform::Component::Rotation, 1, IsConst> Entity::QuaternionWrapper<Space, IsConst>::Y() const noexcept
 	{
 		return owner;
 	}
-
-	template <CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Transform::Component::Rotation, 2, Owner> Entity::QuaternionWrapper<Space, Owner>::Z() const noexcept
+	
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::FloatWrapper<Space, Transform::Component::Rotation, 2, IsConst> Entity::QuaternionWrapper<Space, IsConst>::Z() const noexcept
 	{
 		return owner;
 	}
-
-	template <CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::FloatWrapper<Space, Transform::Component::Rotation, 3, Owner> Entity::QuaternionWrapper<Space, Owner>::W() const noexcept
+	
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::FloatWrapper<Space, Transform::Component::Rotation, 3, IsConst> Entity::QuaternionWrapper<Space, IsConst>::W() const noexcept
 	{
 		return owner;
 	}
 #pragma endregion
 	
 #pragma region Transform
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::TransformWrapper<Space, Owner>::TransformWrapper(Owner& owner) noexcept :
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::TransformWrapper<Space, IsConst>::TransformWrapper(Entity& owner) noexcept :
 		owner(owner) {}
 	
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::TransformWrapper<Space, Owner>::operator Library::Transform() const noexcept
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::TransformWrapper<Space, IsConst>::operator Library::Transform() const noexcept
 	{
 		return owner.template GetTransform<Space>();
 	}
 	
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::Vector3Wrapper<Space, Transform::Component::Translation, Owner> Entity::TransformWrapper<Space, Owner>::Translation() noexcept
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::Vector3Wrapper<Space, Transform::Component::Translation, IsConst> Entity::TransformWrapper<Space, IsConst>::Translation() noexcept
 	{
 		return owner;
 	}
 	
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::Vector3Wrapper<Space, Transform::Component::Scale, Owner> Entity::TransformWrapper<Space, Owner>::Scale() noexcept
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::Vector3Wrapper<Space, Transform::Component::Scale, IsConst> Entity::TransformWrapper<Space, IsConst>::Scale() noexcept
 	{
 		return owner;
 	}
 	
-	template<CoordinateSpace Space, std::derived_from<Entity> Owner>
-	Entity::QuaternionWrapper<Space, Owner> Entity::TransformWrapper<Space, Owner>::Rotation() noexcept
+	template<CoordinateSpace Space, bool IsConst>
+	Entity::QuaternionWrapper<Space, IsConst> Entity::TransformWrapper<Space, IsConst>::Rotation() noexcept
 	{
 		return owner;
 	}
@@ -152,7 +152,7 @@ namespace Library
 
 #pragma region Transform
 	template<CoordinateSpace Space>
-	inline const Library::Transform& Entity::GetTransform() const noexcept
+	inline const Transform& Entity::GetTransform() const noexcept
 	{
 		if constexpr (Space == CoordinateSpace::Local)
 		{
@@ -200,13 +200,13 @@ namespace Library
 	}
 	
 	template <CoordinateSpace Space>
-	Entity::TransformWrapper<Space, Entity> Entity::Transform() noexcept
+	Entity::TransformWrapper<Space, false> Entity::Transform() noexcept
 	{
 		return *this;
 	}
 	
 	template <CoordinateSpace Space>
-	Entity::TransformWrapper<Space, const Entity> Entity::Transform() const noexcept
+	Entity::TransformWrapper<Space, true> Entity::Transform() const noexcept
 	{
 		return *this;
 	}

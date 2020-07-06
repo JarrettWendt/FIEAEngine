@@ -29,7 +29,7 @@ namespace UnitTests
 	TEST(FloatWrapper::operator=)
 	{
 		const auto e = std::make_shared<Entity>();
-		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
+		auto f = e->Transform<CoordinateSpace::World>().Translation().X();
 		f = 1.f;
 		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
 	}
