@@ -290,7 +290,7 @@ namespace Library
 			 * 
 			 * @returns the value this wrapper references
 			 */
-			operator Library::Transform() const noexcept;
+			operator Transform() const noexcept;
 
 			/**
 			 * Will properly invalidate the referenced owner's Transform based on CoordinateSpace.
@@ -298,7 +298,7 @@ namespace Library
 			 * @param t		Transform to reassign the one that this wrapper references
 			 * @returns		this
 			 */
-			TransformWrapper& operator=(const Library::Transform& t) noexcept requires (!IsConst)
+			TransformWrapper& operator=(const Transform& t) noexcept requires (!IsConst)
 			{
 				owner.SetTransform<Space>(t);
 				return *this;

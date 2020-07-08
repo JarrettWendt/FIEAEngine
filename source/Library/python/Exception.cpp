@@ -17,7 +17,8 @@ namespace Library::py
 			stream << "line: " << traceback->tb_lineno << std::endl;
 			stream << "error: " << Util::ToString(value);
 			PyErr_Clear();
-			throw py::Exception(stream.str());
+			const std::string str = stream.str();
+			throw py::Exception(str);
 		}
 	}
 }

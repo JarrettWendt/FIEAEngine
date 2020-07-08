@@ -51,11 +51,11 @@ namespace Library::py
 
 			static inline PyGetSetDef getset[]
 			{
-				{ "x", Util::UnionCast<getter>(&Vector3Wrapper::GetX), Util::UnionCast<setter>(&Vector3Wrapper::SetX), "x component", nullptr },
-				{ "y", Util::UnionCast<getter>(&Vector3Wrapper::GetY), Util::UnionCast<setter>(&Vector3Wrapper::SetY), "y component", nullptr },
-				{ "z", Util::UnionCast<getter>(&Vector3Wrapper::GetZ), Util::UnionCast<setter>(&Vector3Wrapper::SetZ), "z component", nullptr },
+				{ "x", Util::UnionCast<getter>(&Vector3Wrapper::GetX), Util::UnionCast<setter>(&Vector3Wrapper::SetX), "x component" },
+				{ "y", Util::UnionCast<getter>(&Vector3Wrapper::GetY), Util::UnionCast<setter>(&Vector3Wrapper::SetY), "y component" },
+				{ "z", Util::UnionCast<getter>(&Vector3Wrapper::GetZ), Util::UnionCast<setter>(&Vector3Wrapper::SetZ), "z component" },
 				
-				{ nullptr }
+				{}
 			};
 			
 			static PyTypeObject type;
@@ -93,12 +93,12 @@ namespace Library::py
 
 			static inline PyGetSetDef getset[]
 			{
-				{ "x", Util::UnionCast<getter>(&QuaternionWrapper::GetX), Util::UnionCast<setter>(&QuaternionWrapper::SetX), "x component", nullptr },
-				{ "y", Util::UnionCast<getter>(&QuaternionWrapper::GetY), Util::UnionCast<setter>(&QuaternionWrapper::SetY), "y component", nullptr },
-				{ "z", Util::UnionCast<getter>(&QuaternionWrapper::GetZ), Util::UnionCast<setter>(&QuaternionWrapper::SetZ), "z component", nullptr },
-				{ "w", Util::UnionCast<getter>(&QuaternionWrapper::GetW), Util::UnionCast<setter>(&QuaternionWrapper::SetW), "w component", nullptr },
+				{ "x", Util::UnionCast<getter>(&QuaternionWrapper::GetX), Util::UnionCast<setter>(&QuaternionWrapper::SetX), "x component" },
+				{ "y", Util::UnionCast<getter>(&QuaternionWrapper::GetY), Util::UnionCast<setter>(&QuaternionWrapper::SetY), "y component" },
+				{ "z", Util::UnionCast<getter>(&QuaternionWrapper::GetZ), Util::UnionCast<setter>(&QuaternionWrapper::SetZ), "z component" },
+				{ "w", Util::UnionCast<getter>(&QuaternionWrapper::GetW), Util::UnionCast<setter>(&QuaternionWrapper::SetW), "w component" },
 				
-				{ nullptr }
+				{}
 			};
 			
 			static PyTypeObject type;
@@ -127,11 +127,11 @@ namespace Library::py
 
 			static inline PyGetSetDef getset[]
 			{
-				{ "translation", Util::UnionCast<getter>(&TransformWrapper::GetTranslation), Util::UnionCast<setter>(&TransformWrapper::SetTranslation), "translation component", nullptr },
-				{ "rotation", Util::UnionCast<getter>(&TransformWrapper::GetRotation), Util::UnionCast<setter>(&TransformWrapper::SetRotation), "rotation component", nullptr },
-				{ "scale", Util::UnionCast<getter>(&TransformWrapper::GetScale), Util::UnionCast<setter>(&TransformWrapper::SetScale), "scale component", nullptr },
+				{ "translation", Util::UnionCast<getter>(&TransformWrapper::GetTranslation), Util::UnionCast<setter>(&TransformWrapper::SetTranslation), "translation component" },
+				{ "rotation", Util::UnionCast<getter>(&TransformWrapper::GetRotation), Util::UnionCast<setter>(&TransformWrapper::SetRotation), "rotation component" },
+				{ "scale", Util::UnionCast<getter>(&TransformWrapper::GetScale), Util::UnionCast<setter>(&TransformWrapper::SetScale), "scale component" },
 
-				{ nullptr }
+				{}
 			};
 			
 			static PyTypeObject type;
@@ -188,25 +188,25 @@ namespace Library::py
 			{ "_Init", Util::UnionCast<PyCFunction>(&EntityBinding::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
 			{ "_Update", Util::UnionCast<PyCFunction>(&EntityBinding::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
 
-			{ nullptr }
+			{}
 		};
 
 		static inline PyGetSetDef getset[]
 		{
-			{ "name", Util::UnionCast<getter>(&EntityBinding::GetName), Util::UnionCast<setter>(&EntityBinding::SetName), "name of this EntityBinding", nullptr },
-			{ "enabled", Util::UnionCast<getter>(&EntityBinding::GetEnabled), Util::UnionCast<setter>(&EntityBinding::SetEnabled), "whether or not this EntityBinding is enabled", nullptr },
-			{ "parent", Util::UnionCast<getter>(&EntityBinding::GetParent), Util::UnionCast<setter>(&EntityBinding::SetParent), "this EntityBinding's parent", nullptr },
-			{ "numChildren", Util::UnionCast<getter>(&EntityBinding::NumChildren), nullptr, "how many children this Entity has", nullptr },
-			{ "hasChildren", Util::UnionCast<getter>(&EntityBinding::HasChildren), nullptr, "whether or not this Entity has any children", nullptr },
-			{ "localTransform", Util::UnionCast<getter>(&EntityBinding::GetLocalTransform), Util::UnionCast<setter>(&EntityBinding::SetLocalTransform), "the local transform of this Entity", nullptr },
-			{ "worldTransform", Util::UnionCast<getter>(&EntityBinding::GetWorldTransform), Util::UnionCast<setter>(&EntityBinding::SetWorldTransform), "the world transform of this Entity", nullptr },
+			{ "name", Util::UnionCast<getter>(&EntityBinding::GetName), Util::UnionCast<setter>(&EntityBinding::SetName), "name of this EntityBinding" },
+			{ "enabled", Util::UnionCast<getter>(&EntityBinding::GetEnabled), Util::UnionCast<setter>(&EntityBinding::SetEnabled), "whether or not this EntityBinding is enabled" },
+			{ "parent", Util::UnionCast<getter>(&EntityBinding::GetParent), Util::UnionCast<setter>(&EntityBinding::SetParent), "this EntityBinding's parent" },
+			{ "numChildren", Util::UnionCast<getter>(&EntityBinding::NumChildren), nullptr, "how many children this Entity has" },
+			{ "hasChildren", Util::UnionCast<getter>(&EntityBinding::HasChildren), nullptr, "whether or not this Entity has any children" },
+			{ "localTransform", Util::UnionCast<getter>(&EntityBinding::GetLocalTransform), Util::UnionCast<setter>(&EntityBinding::SetLocalTransform), "the local transform of this Entity" },
+			{ "worldTransform", Util::UnionCast<getter>(&EntityBinding::GetWorldTransform), Util::UnionCast<setter>(&EntityBinding::SetWorldTransform), "the world transform of this Entity" },
 			
-			{ nullptr }
+			{}
 		};
 
 		static inline PyMemberDef members[]
 		{
-			{ nullptr }
+			{}
 		};
 
 		// can't be inline because it needs sizeof(EntityBinding)
