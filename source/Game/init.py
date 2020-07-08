@@ -38,24 +38,15 @@ class SubParticle(Entity.Entity):
 		Attr(Screen.COLOUR_WHITE, Screen.A_REVERSE),
 	]
 
-	def __init__(self, speed, x, y):
-		# TODO: Get parent's speed in Draw
+	def __init__(self, speed, idx):
 		self.speed = speed
-		self.x = x
-		self.y = y
-		self.idx = len(SubParticle.attrs)
+		self.localTransform.translation.y = idx
+		self.idx = idx
 		
-	def Draw(self):
-		colour, attr = SubParticle.attrs[int(self.idx)]
-		ScreenManager.screen.print_at(choice(ascii_letters), self.x, int(self.y), colour, attr)
-		#print('Draw (' + str(self.x) + ', ' + str(self.y) + ')')
-
 	def _Update(self):
-		self.idx -= self.speed * Time.Delta()
-		if self.idx < 0:
-			self.Orphan()
-		else:
-			self.Draw()
+		colour, attr = SubParticle.attrs[int(self.idx)]
+		ScreenManager.screen.print_at(choice(ascii_letters), int(self.worldTransform.translation.x), int(self.worldTransform.translation.y), colour, attr)
+		#print('Particle' + self.parent.name + 'Sub' + self.name + ' (' + str(self.localTransform.translation.x) + ', ' + str(self.localTransform.translation.y) + ')')
 		super()._Update()
 
 # A ParticleSystem is made up of these
@@ -64,23 +55,23 @@ class Particle(Entity.Entity):
 	maxChildren = len(SubParticle.attrs)
 
 	def __init__(self):
-		self.x = randint(0, ScreenManager.screen.width)
-		self.y = 0
+		self.localTransform.translation.x = randint(0, ScreenManager.screen.width)
+		self.localTransform.translation.y = -Particle.maxChildren
 		self.speed = 5 * random()
-		self.childCounter = 0
-	
+
+		# add all of our sub-particles
+		childCounter = 0
+		while childCounter < Particle.maxChildren:
+			self.Adopt(str(childCounter), SubParticle(self.speed, childCounter))
+			childCounter += 1
+
 	def _Update(self):
-		newY = self.y + self.speed * Time.Delta()
-		# if we reached a new index, add a new sub-particle
-		if int(self.y) < int(newY) and self.numChildren < Particle.maxChildren:
-			self.childCounter += 1
-			self.Adopt(self.name + 'SubParticle' + str(self.childCounter), SubParticle(self.speed, self.x, self.y))
-		self.y = newY
+		self.localTransform.translation.y += self.speed * Time.Delta()
 		# destroy this particle when we reach far enough below the screen
-		if self.y - Particle.maxChildren > ScreenManager.screen.height:
+		if self.localTransform.translation.y - Particle.maxChildren > ScreenManager.screen.height:
 			self.Orphan()
 		super()._Update()
-		#print('Particle (' + str(self.x) + ', ' + str(self.y) + ')\n')
+		#print('Particle (' + str(self.localTransform.translation.x) + ', ' + str(self.localTransform.translation.y) + ')\n')
 
 # Manages Particles
 class ParticleSystem(Entity.Entity):
@@ -93,7 +84,7 @@ class ParticleSystem(Entity.Entity):
 	def _Update(self):
 		if self.numChildren < ParticleSystem.maxChildren:
 			self.childCounter += 1
-			self.Adopt('Particle' + str(self.childCounter), Particle())
+			self.Adopt(str(self.childCounter), Particle())
 		super()._Update()
 		#print('ParticleSystem ' + str(self.childCounter))
 
