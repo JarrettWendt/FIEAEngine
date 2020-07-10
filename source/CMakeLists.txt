@@ -14,6 +14,7 @@ include_directories(${LIBRARY_SOURCE_DIR}/engine ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${LIBRARY_SOURCE_DIR}/events ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${LIBRARY_SOURCE_DIR}/hierarchy ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${LIBRARY_SOURCE_DIR}/math ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${LIBRARY_SOURCE_DIR}/memory ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${LIBRARY_SOURCE_DIR}/reflection ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${LIBRARY_SOURCE_DIR}/util ${CMAKE_CURRENT_BINARY_DIR})
 
