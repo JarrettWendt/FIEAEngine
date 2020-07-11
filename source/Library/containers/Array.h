@@ -409,19 +409,19 @@ namespace Library
 		
 #pragma region Insert
 		/**
-		 * @param index		where the new element will be construted
+		 * @param index		where the new element will be constructed
 		 * @param t			value to insert
 		 */
 		void Insert(size_t index, const T& t);
 		
 		/**
-		 * @param index		where the new element will be construted
+		 * @param index		where the new element will be constructed
 		 * @param t			value to insert
 		 */
 		void Insert(size_t index, T&& t);
 
 		/**
-		 * @param index		where the new element will be construted
+		 * @param index		where the new element will be constructed
 		 * @param count		how many copies of the value to insert
 		 * @param t			value to insert
 		 * @returns			iterator at the position of the last element inserted
@@ -429,7 +429,7 @@ namespace Library
 		iterator Insert(size_t index, size_t count, const T& t);
 
 		/**
-		 * @param index		where the new element will be construted
+		 * @param index		where the new element will be constructed
 		 * @param list		initializer_list of values to insert
 		 * @returns			iterator at the position of the last element inserted
 		 */
@@ -633,7 +633,7 @@ namespace Library
 		bool Remove(Predicate predicate);
 
 		/**
-		 * Removes the index specifid and shift values to the left over.
+		 * Removes the index specified and shift values to the left over.
 		 * O(n) where n is Size() - index;
 		 * 
 		 * @param index		The index to remove.
@@ -641,7 +641,7 @@ namespace Library
 		void RemoveAt(size_t index);
 
 		/**
-		 * Removes all elements mathcing the specified value.
+		 * Removes all elements matching the specified value.
 		 * O(n)
 		 * 
 		 * @param t		The value to remove all instances of.
@@ -735,14 +735,14 @@ namespace Library
 		
 #pragma region Memory		
 		/**
-		 * Warning! Use at your own risk! Manipulating this memory can invalidate the state of the Arrray.
+		 * Warning! Use at your own risk! Manipulating this memory can invalidate the state of the Array.
 		 *
 		 * @returns		pointer to the underlying data. nullptr if the container is empty.
 		 */
 		[[nodiscard]] T* Data() noexcept;
 
 		/**
-		 * Warning! Use at your own risk! Manipulating this memory can invalidate the state of the Arrray.
+		 * Warning! Use at your own risk! Manipulating this memory can invalidate the state of the Array.
 		 *
 		 * @returns		pointer to the underlying data. nullptr if the container is empty.
 		 */

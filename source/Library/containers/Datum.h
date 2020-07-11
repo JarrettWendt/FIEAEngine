@@ -13,9 +13,11 @@
 #include "Matrix.h"
 #include "math/Transform.h"
 
+#include "InternedString.h"
+
 namespace Library
 {
-	/** 
+	/**
 	 * A Datum is merely a VariantArray of predefined types.
 	 */
 	class Datum final : public VariantArray<
@@ -26,7 +28,7 @@ namespace Library
 		Vector2, Vector3, Vector4, Quaternion, Matrix, Transform,
 
 		// object types
-		std::string, std::shared_ptr<RTTI>>
+		String, std::shared_ptr<RTTI>>
 	{
 		friend class Attributed;
 		
@@ -82,7 +84,7 @@ namespace Library
 		IMPL_TYPE_OF_TYPE(Type::Transform, Transform)
 
 		// object types
-		IMPL_TYPE_OF_TYPE(Type::String, std::string)
+		IMPL_TYPE_OF_TYPE(Type::String, String)
 		IMPL_TYPE_OF_TYPE(Type::RTTI, std::shared_ptr<RTTI>)
 		
 #undef  IMPL_TYPE_OF_TYPE

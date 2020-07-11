@@ -60,11 +60,11 @@ namespace Library
 		/** memoized transform relative to the parent */
 		mutable Transform worldTransform{};
 
-		using MapType = HashMap<std::string, SharedEntity>;
+		using MapType = HashMap<String, SharedEntity>;
 		MapType children{};
 
 		[[Attribute]]
-		std::string name{ "Entity" };
+		String name{ "Entity" };
 		
 		/** non-owning reference to parent */
 		std::weak_ptr<Entity> parent{};
@@ -493,7 +493,7 @@ namespace Library
 		 * @param childName		the name of the child to query for
 		 * @returns				this child with that name
 		 */
-		[[nodiscard]] SharedEntity Child(const std::string& childName) noexcept;
+		[[nodiscard]] SharedEntity Child(const String& childName) noexcept;
 
 		/**
 		 * O(1)
@@ -501,7 +501,7 @@ namespace Library
 		 * @param childName		the name of the child to query for
 		 * @returns				this child with that name
 		 */
-		[[nodiscard]] std::shared_ptr<const Entity> Child(const std::string& childName) const noexcept;
+		[[nodiscard]] std::shared_ptr<const Entity> Child(const String& childName) const noexcept;
 #pragma endregion
 
 #pragma region Transform
@@ -523,7 +523,7 @@ namespace Library
 		 * @param t			Transform to set this one's local or world to. 
 		 */
 		template<CoordinateSpace Space>
-		void SetTransform(const Library::Transform& t) noexcept;
+		void SetTransform(const Transform& t) noexcept;
 
 		template<CoordinateSpace Space>
 		TransformWrapper<Space, false> Transform() noexcept;
@@ -537,7 +537,7 @@ namespace Library
 		 * 
 		 * @returns		this Entity's name
 		 */
-		[[nodiscard]] constexpr const std::string& GetName() const noexcept;
+		[[nodiscard]] constexpr const String& GetName() const noexcept;
 
 		/**
 		 * Will require re-hashing this Entity into its parent
@@ -545,7 +545,7 @@ namespace Library
 		 * 
 		 * @param newName	new name for this Entity
 		 */
-		void SetName(const std::string& newName) noexcept;
+		void SetName(const String& newName) noexcept;
 		
 #pragma region Insert
 		/**
@@ -559,7 +559,7 @@ namespace Library
 		 * @throws InvalidNameException
 		 */
 		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
-		std::shared_ptr<Derived> CreateChild(const std::string& childName, Args&&... args);
+		std::shared_ptr<Derived> CreateChild(const String& childName, Args&&... args);
 
 		/**
 		 * Appends a default constructed Derived type.
@@ -572,7 +572,7 @@ namespace Library
 		 * @throws InvalidNameException
 		 */
 		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
-		std::shared_ptr<Derived> CreateChild(std::string&& childName, Args&&... args);
+		std::shared_ptr<Derived> CreateChild(String&& childName, Args&&... args);
 		
 		/**
 		 * Appends a default constructed Derived type.
@@ -596,7 +596,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		SharedEntity Adopt(const std::string& childName, SharedEntity child);
+		SharedEntity Adopt(const String& childName, SharedEntity child);
 
 		/**
 		 * Reparents the passed Entity to this one.
@@ -627,7 +627,7 @@ namespace Library
 		 * 
 		 * @param childName		child to orphan
 		 */
-		void RemoveChild(const std::string& childName) noexcept;
+		void RemoveChild(const String& childName) noexcept;
 #pragma endregion
 
 #pragma region operators

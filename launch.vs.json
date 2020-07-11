@@ -12,6 +12,13 @@
 			]
 		},
 		{
+			"type": "default",
+			"project": "CMakeLists.txt",
+			"projectTarget": "Tests.exe (source\\Tests\\Tests.exe)",
+			"name": "Tests.exe (source\\Tests\\Tests.exe)",
+			"args": []
+		},
+		{
 			"type": "cppgdb",
 			"name": "Game (source\\Game\\Game)",
 			"project": "CMakeLists.txt",
@@ -23,5 +30,5 @@
 			],
 			"env": {}
 		}
-  ]
+	]
 }

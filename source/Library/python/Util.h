@@ -48,10 +48,19 @@ namespace Library::py::Util
 	 * @returns			newly allocated T using type
 	 */
 	template<typename T>
-	T* Alloc() noexcept;
+	T* Alloc() noexcept
+	{
+		return Alloc<T>(T::type);
+	}
 
 	template<std::derived_from<PyObject> T>
-	T* New() noexcept;
+	T* New() noexcept
+	{
+		T* ret = PyObject_NEW(T, &T::type);
+		PyObject_Init(ret, &T::type);
+		Py_INCREF(ret);
+		return ret;
+	}
 
 	std::string ToString(PyObject* obj) noexcept;
 

@@ -5,7 +5,7 @@
 
 namespace Library
 {
-	const Reflection::ConstructorWrapper* Reflection::GetConstructor(const std::string& className) noexcept
+	const Reflection::ConstructorWrapper* Reflection::GetConstructor(const String& className) noexcept
 	{
 		const auto it = constructors.Find(className);
 		return it ? &it->value : nullptr;

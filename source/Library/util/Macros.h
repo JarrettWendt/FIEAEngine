@@ -123,6 +123,21 @@ SPECIAL_MEMBERS(Class, delete)
 { return operator==(other) || operator>(other); }
 
 /**
+ * Defines operator!=, operator<=, operator>, and operator>= based off of operator== and operator<
+ *
+ * @param Class     the class type
+ */
+#define FRIEND_COMPARISONS(Class)												\
+[[nodiscard]] friend bool operator!=(const Class& a, const Class& b) noexcept   \
+{ return !operator==(a, b); }													\
+[[nodiscard]] friend bool operator<=(const Class& a, const Class& b) noexcept   \
+{ return operator==(a, b) || operator<(a, b); }									\
+[[nodiscard]] friend bool operator>(const Class& a, const Class& b) noexcept    \
+{ return operator!=(a, b) && !operator<=(a, b); }								\
+[[nodiscard]] friend bool operator>=(const Class& a, const Class& b) noexcept   \
+{ return operator==(a, b) || operator>(a, b); }
+
+/**
  * Defines all other arithmetic operators for an iterator based off of operator+
  *
  * @param IT        the iterator type

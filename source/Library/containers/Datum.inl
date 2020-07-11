@@ -191,7 +191,7 @@ namespace Library
 		case Type::Transform:	func.template operator()<Transform>();				break;
 
 			// object types
-		case Type::String:		func.template operator()<std::string>();			break;
+		case Type::String:		func.template operator()<String>();					break;
 		case Type::RTTI:		func.template operator()<std::shared_ptr<RTTI>>();	break;
 			
 		case Type::None: [[fallthrough]];

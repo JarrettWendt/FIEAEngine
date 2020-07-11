@@ -15,7 +15,7 @@ namespace Library
 		struct Attribute final
 		{
 			/** the name of this data member */
-			std::string name{ "" };
+			String name{ "" };
 
 			/** how many of these there are */
 			size_t count{ 0 };

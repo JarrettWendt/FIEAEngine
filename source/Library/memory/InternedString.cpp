@@ -8,27 +8,67 @@ namespace Library
 		string(string),
 		hash(std::hash<std::string>{}(string)) {}
 
-	constexpr bool String::Compare::operator()(const std::shared_ptr<Intern>& left, const std::shared_ptr<Intern>& right) const
+	constexpr hash_t String::Hash::operator()(const SharedIntern& i) const
 	{
-		return left->hash < right->hash;
+		return i->hash;
 	}
-	
+
+	bool String::KeyEqual::operator()(const SharedIntern& a, const SharedIntern& b) const
+	{
+		return a->string == b->string;
+	}
+
+#pragma region special members
 	String::String() noexcept :
 		String(""s) {}
 
 	String::String(const char* string) noexcept :
 		String(std::string(string)) {}
+
+	String::String(const wchar_t* string) noexcept :
+		String(std::wstring(string)) {}
 	
 	String::String(const std::string& string) noexcept :
 		intern(*set.emplace(std::make_shared<Intern>(string)).first) {}
 
+	String::String(const std::wstring& string) noexcept :
+		String(std::string(string.begin(), string.end())) {}
+	
+	String& String::operator=(const String& other) noexcept
+	{
+		if (this != &other)
+		{
+			this->~String();
+			intern = other.intern;
+		}
+		return *this;
+	}
+
+	String& String::operator=(String&& other) noexcept
+	{
+		if (this != &other)
+		{
+			this->~String();
+			intern = std::move(other.intern);
+		}
+		return *this;
+	}
+	
 	String::~String() noexcept
 	{
 		// If the only reference is ours and the one held by the set.
-		if (intern.use_count() == 2)
+		const size_t count = intern.use_count();
+		if (0 < count && count <= 2)
 		{
 			set.erase(intern);
 		}
+	}
+#pragma endregion
+
+#pragma region properties
+	constexpr size_t String::Length() const noexcept
+	{
+		return intern->string.length();
 	}
 	
 	constexpr bool String::IsEmpty() const noexcept
@@ -36,36 +76,102 @@ namespace Library
 		return intern->string.empty();
 	}
 
-	constexpr size_t String::Length() const noexcept
+	bool String::IsWhitespace() const noexcept
 	{
-		return intern->string.length();
+		for (const char c : *this)
+		{
+			if (!std::isspace(c))
+			{
+				return false;
+			}
+		}
+		return !IsEmpty();
 	}
 
-	constexpr char String::operator[](const size_t index) const noexcept
+	bool String::IsEmptyOrWhitespace() const noexcept
 	{
-		return intern->string[index];
+		return IsEmpty() || IsWhitespace();
 	}
 
-	constexpr char String::At(const size_t index) const
+	bool String::HasAlpha() const noexcept
 	{
-		return intern->string.at(index);
+		for (const char c : *this)
+		{
+			if (std::isalpha(c))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
-	constexpr char String::Front() const noexcept
+	bool String::IsLower() const noexcept
 	{
-		return intern->string.front();
+		for (const char c : *this)
+		{
+			if (std::isalpha(c) && !std::islower(c))
+			{
+				return false;
+			}
+		}
+		return HasAlpha();
 	}
 
-	constexpr char String::Back() const noexcept
+	bool String::IsUpper() const noexcept
 	{
-		return intern->string.back();
+		for (const char c : *this)
+		{
+			if (std::isalpha(c) && !std::isupper(c))
+			{
+				return false;
+			}
+		}
+		return HasAlpha();
+	}
+#pragma endregion
+
+#pragma region util
+	String String::ToLower() const noexcept
+	{
+		std::string temp = *this;
+		for (char& c : temp)
+		{
+			c = static_cast<char>(std::tolower(c));
+		}
+		return temp;
 	}
 
-	constexpr const char* String::c_str() const noexcept
+	String String::ToUpper() const noexcept
 	{
-		return intern->string.c_str();
+		std::string temp = *this;
+		for (char& c : temp)
+		{
+			c = static_cast<char>(std::toupper(c));
+		}
+		return temp;
 	}
 
+	String String::RemoveWhitespace() const noexcept
+	{
+		std::string temp = *this;
+		temp.erase(std::remove_if(temp.begin(), temp.end(), isspace), temp.end());
+		return temp;
+	}
+
+	String String::ReplaceAll(const String& from, const String& to) const
+	{
+		std::string temp = *this;
+	    size_t start_pos = 0;
+	    while ((start_pos = temp.find(from, start_pos)) != std::string::npos)
+	    {
+	        temp.replace(start_pos, from.Length(), to);
+	        start_pos += to.Length();
+	    }
+	    return temp;
+	}
+#pragma endregion
+
+#pragma region iterator
 	String::const_iterator String::begin() const noexcept
 	{
 		return intern->string.begin();
@@ -85,14 +191,44 @@ namespace Library
 	{
 		return intern->string.cend();
 	}
+#pragma endregion
 
 	size_t String::NumInterned() noexcept
 	{
 		return set.size();
 	}
 
+#pragma region operators
+	String String::operator+(const char* string) const noexcept
+	{
+		return String(intern->string + string);
+	}
+
+	String& String::operator+=(const char* string) noexcept
+	{
+		return *this = *this + string;
+	}
+
+	String String::operator+(const String& other) const noexcept
+	{
+		return String(intern->string + other.intern->string);
+	}
+
+	String& String::operator+=(const String& other) noexcept
+	{
+		return *this = *this + other;
+	}
+#pragma endregion
+
+#pragma region literals
 	String Literals::operator""_s(const char* str, const size_t length) noexcept
 	{
 		return String(std::string(str, length));
 	}
+
+	String Literals::operator ""_s(const wchar_t* str, const size_t length) noexcept
+	{
+		return String(std::wstring(str, length));
+	}
+#pragma endregion
 }

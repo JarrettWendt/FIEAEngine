@@ -144,7 +144,7 @@ namespace Library
 		return NumChildren() > 0;
 	}
 
-	constexpr const std::string& Entity::GetName() const noexcept
+	constexpr const String& Entity::GetName() const noexcept
 	{
 		return name;
 	}
@@ -214,13 +214,13 @@ namespace Library
 
 #pragma region Insert
 	template<std::derived_from<Entity> Derived, typename... Args>
-	inline std::shared_ptr<Derived> Entity::CreateChild(const std::string& childName, Args&&... args)
+	inline std::shared_ptr<Derived> Entity::CreateChild(const String& childName, Args&&... args)
 	{
 		return Adopt(childName, std::make_shared<Derived>(std::forward<Args>(args)...));
 	}
 
 	template<std::derived_from<Entity> Derived, typename ...Args>
-	inline std::shared_ptr<Derived> Entity::CreateChild(std::string&& childName, Args&& ...args)
+	inline std::shared_ptr<Derived> Entity::CreateChild(String&& childName, Args&& ...args)
 	{
 		return Adopt(std::move(childName), std::make_shared<Derived>(std::forward<Args>(args)...));
 	}

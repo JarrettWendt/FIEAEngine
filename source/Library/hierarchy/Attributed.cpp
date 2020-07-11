@@ -67,49 +67,49 @@ namespace Library
 #pragma endregion
 
 #pragma region Accessors
-	Datum& Attributed::Attribute(const std::string& name)
+	Datum& Attributed::Attribute(const String& name)
 	{
 		return attributes.At(name);
 	}
 	
-	const Datum& Attributed::Attribute(const std::string& name) const
+	const Datum& Attributed::Attribute(const String& name) const
 	{
 		return const_cast<Attributed*>(this)->Attribute(name);
 	}
 #pragma endregion
 
 #pragma region Query
-	bool Attributed::HasAttribute(const std::string& name) const noexcept
+	bool Attributed::HasAttribute(const String& name) const noexcept
 	{
 		return attributes.Contains(name);
 	}
 	
-	Attributed::iterator Attributed::Find(const std::string& name) noexcept
+	Attributed::iterator Attributed::Find(const String& name) noexcept
 	{
 		return attributes.Find(name);
 	}
 	
-	Attributed::const_iterator Attributed::Find(const std::string& name) const noexcept
+	Attributed::const_iterator Attributed::Find(const String& name) const noexcept
 	{
 		return const_cast<Attributed*>(this)->Find(name);
 	}
 #pragma endregion
 
 #pragma region Insert
-	Datum& Attributed::AddAttribute(const std::string& name, const Datum& datum)
+	Datum& Attributed::AddAttribute(const String& name, const Datum& datum)
 	{
 		ThrowName(name);
 		return attributes.Insert(name, datum).first->value;
 	}
 	
-	Datum& Attributed::AddAttribute(const std::string& name, Datum&& datum)
+	Datum& Attributed::AddAttribute(const String& name, Datum&& datum)
 	{
 		ThrowName(name);
 		return attributes.Insert(name, std::move(datum)).first->value;
 	}
 #pragma endregion
 
-	bool Attributed::RemoveAttribute(const std::string& name) noexcept
+	bool Attributed::RemoveAttribute(const String& name) noexcept
 	{
 		return attributes.Remove(name);
 	}
@@ -125,19 +125,19 @@ namespace Library
 		return !operator==(a, b);
 	}
 
-	Datum& Attributed::operator[](const std::string& name)
+	Datum& Attributed::operator[](const String& name)
 	{
 		return attributes[name];
 	}
 	
-	const Datum& Attributed::operator[](const std::string& name) const
+	const Datum& Attributed::operator[](const String& name) const
 	{
 		return attributes[name];
 	}
 #pragma endregion
 
 #pragma region Helpers
-	void Attributed::ThrowName(const std::string& name)
+	void Attributed::ThrowName(const String& name)
 	{
 		if (Util::IsEmptyOrWhitespace(name)) [[unlikely]]
 		{

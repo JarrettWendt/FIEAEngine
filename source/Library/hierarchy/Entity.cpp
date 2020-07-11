@@ -3,6 +3,9 @@
 #include "pch.h"
 #include "Entity.h"
 #include "Engine.h"
+#include "InternedString.h"
+
+using namespace Library::Literals;
 
 namespace Library
 {	
@@ -109,19 +112,19 @@ Entity::iterator Entity::end() noexcept
 		return const_cast<Entity*>(this)->Parent();
 	}
 
-	std::shared_ptr<Entity> Entity::Child(const std::string& childName) noexcept
+	std::shared_ptr<Entity> Entity::Child(const String& childName) noexcept
 	{
 		const auto it = children.Find(childName);
 		return it ? it->value : nullptr;
 	}
 
-	std::shared_ptr<const Entity> Entity::Child(const std::string& childName) const noexcept
+	std::shared_ptr<const Entity> Entity::Child(const String& childName) const noexcept
 	{
 		return const_cast<Entity*>(this)->Child(childName);
 	}
 #pragma endregion
 	
-	void Entity::SetName(const std::string& newName) noexcept
+	void Entity::SetName(const String& newName) noexcept
 	{
 		if (auto p = Parent())
 		{
@@ -132,7 +135,7 @@ Entity::iterator Entity::end() noexcept
 	}
 
 #pragma region Insert	
-	std::shared_ptr<Entity> Entity::Adopt(const std::string& childName, SharedEntity child)
+	std::shared_ptr<Entity> Entity::Adopt(const String& childName, SharedEntity child)
 	{
 		ThrowName(childName);
 
@@ -141,7 +144,7 @@ Entity::iterator Entity::end() noexcept
 			const auto [it, inserted] = children.Insert(childName, child);
 			if (!inserted) [[unlikely]]
 			{
-				throw InvalidNameException("child with name " + childName + " already exists");
+				throw InvalidNameException("child with name "_s + childName + " already exists"_s);
 			}
 			assert(child == it->value);
 			child->name = childName;
@@ -162,7 +165,7 @@ Entity::iterator Entity::end() noexcept
 		Engine::pendingOrphans.PushBack(weak_from_this());
 	}
 
-	void Entity::RemoveChild(const std::string& childName) noexcept
+	void Entity::RemoveChild(const String& childName) noexcept
 	{
 		if (const auto it = children.Find(childName))
 		{

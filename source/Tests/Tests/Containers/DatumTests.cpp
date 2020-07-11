@@ -6,7 +6,7 @@ using namespace Library::Literals;
 
 #define NAMESPACE "Datum::"
 #define CATEGORY "[Datum]"
-#define TYPES bool, int, float, Vector2, Vector3, Vector4, Quaternion, Matrix, Transform, std::string, std::shared_ptr<Foo>
+#define TYPES bool, int, float, Vector2, Vector3, Vector4, Quaternion, Matrix, Transform, std::shared_ptr<Foo>
 #define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, NAMESPACE #name, CATEGORY)
 #define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, NAMESPACE "::" #name, CATEGORY, TYPES)
 #define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(NAMESPACE "::" #name, CATEGORY, TYPES)
@@ -20,7 +20,7 @@ namespace UnitTests
 		REQUIRE(Type::Bool == Datum::TypeOf<bool>);
 		REQUIRE(Type::Int == Datum::TypeOf<int>);
 		REQUIRE(Type::Float == Datum::TypeOf<float>);
-		REQUIRE(Type::String == Datum::TypeOf<std::string>);
+		REQUIRE(Type::String == Datum::TypeOf<String>);
 		REQUIRE(Type::RTTI == Datum::TypeOf<std::shared_ptr<Foo>>);
 
 		REQUIRE(Type::Bool == Library::TypeOf(Datum(1, false)[0]));
@@ -32,7 +32,7 @@ namespace UnitTests
 		REQUIRE(std::is_same_v<bool, Datum::TypeOfType<Type::Bool>>);
 		REQUIRE(std::is_same_v<int, Datum::TypeOfType<Type::Int>>);
 		REQUIRE(std::is_same_v<float, Datum::TypeOfType<Type::Float>>);
-		REQUIRE(std::is_same_v<std::string, Datum::TypeOfType<Type::String>>);
+		REQUIRE(std::is_same_v<String, Datum::TypeOfType<Type::String>>);
 		REQUIRE(std::is_same_v<std::shared_ptr<RTTI>, Datum::TypeOfType<Type::RTTI>>);
 	}
 
@@ -82,14 +82,14 @@ namespace UnitTests
 	{
 		Datum a, b;
 		a = 0;
-		b = "0"s;
+		b = "0"_s;
 		REQUIRE(!(a[0] == b[0]));
 	}
 
 	TEST_NO_TEMPLATE(value_type::operator<)
 	{
 		Datum a = { 0, 1 };
-		Datum b = { "a"s, "z"s };
+		Datum b = { "a"_s, "z"_s };
 		Datum c = { 0.f, 1.f };
 
 		// int

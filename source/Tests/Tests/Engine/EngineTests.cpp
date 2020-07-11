@@ -9,9 +9,9 @@ namespace UnitTests
 {
 	TEST(Main)
 	{
-		Engine::IsActive() = false;
-		Engine::Main({});
-		Engine::IsActive() = true;
-		Engine::Init();
+		//Engine::IsActive() = false;
+		//Engine::Main({});
+		//Engine::IsActive() = true;
+		//Engine::Init();
 	}
 }
