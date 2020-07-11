@@ -36,4 +36,12 @@ namespace UnitTests
 		stream << t;
 		REQUIRE(stream.str() == "t: <0, 0, 0>, r: {0, 0, 0, 1}, s: <1, 1, 1>");
 	}
+
+	TEST(GetComponent)
+	{
+		const Transform t = Random::Next<Transform>();
+		REQUIRE(t.translation == t.GetComponent<Transform::Component::Translation>());
+		REQUIRE(t.rotation == t.GetComponent<Transform::Component::Rotation>());
+		REQUIRE(t.scale == t.GetComponent<Transform::Component::Scale>());
+	}
 }

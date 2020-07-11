@@ -7,18 +7,8 @@ namespace Library
 	struct Vector2
 	{
 		using size_type = size_t;
-
-#pragma warning(push)
-#pragma warning(disable: 4201) // nameless struct/union
-		union
-		{
-			struct
-			{
-				float x, y;
-			};
-			float v[2];
-		};
-#pragma warning(pop)
+		
+		float x, y;
 
 		/**
 		 * Get component at compile-time.

@@ -7,7 +7,7 @@ namespace Library
 	float& Vector2::operator[](const size_type i) noexcept
 	{
 		assertm(i < 2, "Vector2 index out of bounds");
-		return v[i];
+		return reinterpret_cast<float*>(this)[i];
 	}
 
 	float Vector2::operator[](const size_type i) const noexcept

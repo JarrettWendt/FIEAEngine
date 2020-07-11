@@ -63,9 +63,9 @@ namespace UnitTests
 
 #pragma region object types
 		[[Attribute]]
-		std::string string{};
+		Library::String string{};
 		[[Attribute]]
-		std::string strings[10]{};
+		Library::String strings[10]{};
 
 		[[Attribute]]
 		std::shared_ptr<UnitTests::Foo> foo{};
@@ -83,7 +83,7 @@ namespace UnitTests
 		[[Attribute(Library::Quaternion, "quaternionWithoutmember")]]
 		[[Attribute(Library::Matrix, "matrixWithoutmember")]]
 		[[Attribute(Library::Transform, "transformWithoutmember")]]
-		[[Attribute(std::string, "stringWithoutMember")]]
+		[[Attribute(Library::String, "stringWithoutMember")]]
 		[[Attribute(std::shared_ptr<UnitTests::Foo>, "fooWithoutMember")]]
 		[[Attribute(std::shared_ptr<UnitTests::AttributedFoo>, "recursive")]];
 

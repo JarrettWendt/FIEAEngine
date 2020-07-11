@@ -17,7 +17,7 @@ namespace Library
 		friend class Registry;
 
 	private:
-		using MapType = HashMap<std::string, Datum>;
+		using MapType = HashMap<String, Datum>;
 
 		/** where all the attributes are stored */
 		MapType attributes{};
@@ -26,7 +26,7 @@ namespace Library
 		class InvalidNameException final : public std::invalid_argument
 		{
 		public:
-			explicit InvalidNameException(const std::string& str) : std::invalid_argument(str) {};
+			explicit InvalidNameException(const String& str) : std::invalid_argument(str) {};
 			SPECIAL_MEMBERS(InvalidNameException, default)
 		};
 
@@ -78,7 +78,7 @@ namespace Library
 		 *
 		 * @throws std::out_of_range if no attribute with that key exists
 		 */
-		[[nodiscard]] Datum& Attribute(const std::string& name);
+		[[nodiscard]] Datum& Attribute(const String& name);
 
 		/**
 		 * O(1)
@@ -88,7 +88,7 @@ namespace Library
 		 *
 		 * @throws std::out_of_range if no attribute with that key exists
 		 */
-		[[nodiscard]] const Datum& Attribute(const std::string& name) const;
+		[[nodiscard]] const Datum& Attribute(const String& name) const;
 #pragma endregion
 
 #pragma region Query
@@ -99,7 +99,7 @@ namespace Library
 		 * @param name	key to query for
 		 * @returns		whether or not an attribute of that key exists in this Attributed
 		 */
-		bool HasAttribute(const std::string& name) const noexcept;
+		bool HasAttribute(const String& name) const noexcept;
 
 		/**
 		 * O(1)
@@ -108,7 +108,7 @@ namespace Library
 		 * @param name		name of child to query for
 		 * @returns			iterator at that Scope, or end() if no such child exists
 		 */
-		[[nodiscard]] iterator Find(const std::string& name) noexcept;
+		[[nodiscard]] iterator Find(const String& name) noexcept;
 
 		/**
 		 * O(1)
@@ -117,12 +117,12 @@ namespace Library
 		 * @param name		name of child to query for
 		 * @returns			iterator at that Scope, or end() if no such child exists
 		 */
-		[[nodiscard]] const_iterator Find(const std::string& name) const noexcept;
+		[[nodiscard]] const_iterator Find(const String& name) const noexcept;
 #pragma endregion
 
 #pragma region Insert
 		/**
-		 * Does not overwrite any attribute already assocated with name.
+		 * Does not overwrite any attribute already associated with name.
 		 * O(1)
 		 *
 		 * @param name		name of the attribute
@@ -131,10 +131,10 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		Datum& AddAttribute(const std::string& name, const Datum& datum = {});
+		Datum& AddAttribute(const String& name, const Datum& datum = {});
 
 		/**
-		 * Does not overwrite any attribute already assocated with name.
+		 * Does not overwrite any attribute already associated with name.
 		 * O(1)
 		 *
 		 * @param name		name of the attribute
@@ -143,7 +143,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		Datum& AddAttribute(const std::string& name, Datum&& datum);
+		Datum& AddAttribute(const String& name, Datum&& datum);
 #pragma endregion
 
 #pragma region Remove
@@ -155,7 +155,7 @@ namespace Library
 		 * @param name		removes the attribute with the associated name
 		 * @returns			whether or not there was an attribute by that name
 		 */
-		bool RemoveAttribute(const std::string & name) noexcept;
+		bool RemoveAttribute(const String & name) noexcept;
 #pragma endregion
 
 #pragma region operators
@@ -186,7 +186,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		[[nodiscard]] Datum& operator[](const std::string& name);
+		[[nodiscard]] Datum& operator[](const String& name);
 
 		/**
 		 * O(1)
@@ -196,7 +196,7 @@ namespace Library
 		 *
 		 * @throws InvalidNameException
 		 */
-		[[nodiscard]] const Datum& operator[](const std::string& name) const;
+		[[nodiscard]] const Datum& operator[](const String& name) const;
 #pragma endregion
 		
 #pragma region Helpers
@@ -205,7 +205,7 @@ namespace Library
 		 * @param name	the name to check
 		 * @throws InvalidNameException
 		 */
-		static void ThrowName(const std::string& name);
+		static void ThrowName(const String& name);
 		
 	private:
 		/**

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "HashMap.h"
+#include "InternedString.h"
 
 namespace Library
 {
@@ -35,7 +36,7 @@ namespace Library
 		 * @throws				whatever the constructor does
 		 */
 		template<typename T>
-		static std::shared_ptr<T> Construct(const std::string& className);
+		static std::shared_ptr<T> Construct(const String& className);
 
 	private:
 		/**
@@ -45,7 +46,7 @@ namespace Library
 		 * @param className		the name of the class you're looking for
 		 * @returns				address of the ConstructorWrapper if it exists, nullptr otherwise
 		 */
-		static const Reflection::ConstructorWrapper* GetConstructor(const std::string& className) noexcept;
+		static const ConstructorWrapper* GetConstructor(const String& className) noexcept;
 	};
 }
 

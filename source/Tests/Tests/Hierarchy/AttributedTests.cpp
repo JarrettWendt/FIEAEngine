@@ -12,15 +12,15 @@ namespace UnitTests
 	TEST(Integers)
 	{
 		AttributedFoo foo;
-		auto& integer = foo.Attribute("integer").Front<int>();
-		auto& integers = foo.Attribute("integers").Front<int>();
+		auto& integer = foo.Attribute("integer"_s).Front<int>();
+		auto& integers = foo.Attribute("integers"_s).Front<int>();
 		
 		REQUIRE(&foo.integer == &integer);
 		REQUIRE(&foo.integers[0] == &integers);
 
 		for (int i = 0; i < 10; i++)
 		{
-			REQUIRE(foo.integers[i] == foo.Attribute("integers").Get<int>(i));
+			REQUIRE(foo.integers[i] == foo.Attribute("integers"_s).Get<int>(i));
 		}
 
 		integer = 9;
@@ -48,19 +48,19 @@ namespace UnitTests
 	TEST(Strings)
 	{
 		AttributedFoo foo;
-		auto& string = foo.Attribute("string").Front<std::string>();
-		auto& strings = foo.Attribute("strings").Front<std::string>();
+		auto& string = foo.Attribute("string"_s).Front<String>();
+		auto& strings = foo.Attribute("strings"_s).Front<String>();
 
 		REQUIRE(&foo.string == &string);
 		REQUIRE(&foo.strings[0] == &strings);
 
 		for (int i = 0; i < 10; i++)
 		{
-			REQUIRE(foo.strings[i] == foo.Attribute("strings").Get<std::string>(i));
+			REQUIRE(foo.strings[i] == foo.Attribute("strings"_s).Get<String>(i));
 		}
 
-		string = "hi";
-		REQUIRE("hi" == foo.string);
+		string = "hi"_s;
+		REQUIRE("hi"_s == foo.string);
 	}
 
 	TEST(Foos)
