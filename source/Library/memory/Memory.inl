@@ -2,8 +2,6 @@
 
 #pragma once
 #include "Memory.h"
-#include "Macros.h"
-#include <cstring>
 
 namespace Library::Memory
 {
@@ -52,11 +50,8 @@ namespace Library::Memory
 		}
 		else
 		{
-#pragma warning(push)
-#pragma warning(disable: 6308)
 			array = std::realloc(reinterpret_cast<void*>(array), byteCount);
 			assertm(array, "std::realloc returned nullptr");
-#pragma warning(pop)
 		}
 	}
 

@@ -3,19 +3,6 @@
 
 namespace Library::Random
 {
-	template<std::ranges::range Range, typename Engine = DefaultEngine>
-	[[nodiscard]] Range Next(const size_t size = 10)
-	{
-		using value_type = typename Range::value_type;
-		std::vector<value_type> v;
-		v.reserve(size);
-		for (size_t i = 0; i < size; i++)
-		{
-			v.push_back(Next<value_type>());
-		}
-		return { v.begin(), v.end() };
-	}
-
 	template<typename T>
 	[[nodiscard]] T Next()
 	{
@@ -51,6 +38,19 @@ namespace Library::Random
 		{
 			return {};
 		}
+	}
+	
+	template<std::ranges::range Range, typename Engine = DefaultEngine>
+	[[nodiscard]] Range Next(const size_t size = 10)
+	{
+		using value_type = typename Range::value_type;
+		std::vector<value_type> v;
+		v.reserve(size);
+		for (size_t i = 0; i < size; i++)
+		{
+			v.push_back(Next<value_type>());
+		}
+		return { v.begin(), v.end() };
 	}
 
 	template<std::ranges::range Range, typename Engine = DefaultEngine>
