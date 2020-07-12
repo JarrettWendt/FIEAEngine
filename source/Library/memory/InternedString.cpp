@@ -57,8 +57,7 @@ namespace Library
 	String::~String() noexcept
 	{
 		// If the only reference is ours and the one held by the set.
-		const size_t count = intern.use_count();
-		if (0 < count && count <= 2)
+		if (intern.use_count() <= 2 && intern)
 		{
 			set.erase(intern);
 		}
