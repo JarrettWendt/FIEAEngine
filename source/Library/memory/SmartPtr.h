@@ -25,39 +25,39 @@ namespace Library
 	class SmartPtr
 	{
 	protected:
-		struct Block final
+		struct Handle final
 		{
 			T* ptr;
 			uint32_t sharedCount;
 			uint32_t weakCount;
 			
-			explicit Block(T* ptr, const uint32_t count) noexcept :
+			explicit Handle(T* ptr, const uint32_t count) noexcept :
 				ptr(ptr),
 				sharedCount(count),
 				weakCount(0) {}
 						
-			~Block()
+			~Handle()
 			{
 				delete ptr;
 				ptr = nullptr;
-				sharedCount = 0;
+				sharedCount = weakCount = 0;
 			}
 			
-			Block() noexcept = default;
-			MOVE_COPY(Block, delete)
+			Handle() noexcept = default;
+			MOVE_COPY(Handle, delete)
 		};
 
-		Block* block;
+		Handle* handle;
 
-		explicit SmartPtr(Block* block = nullptr) noexcept :
-			block(block) {}
+		explicit SmartPtr(Handle* block = nullptr) noexcept :
+			handle(block) {}
 		
 	public:
 		T& operator*()
 		{
-			if (block && block->ptr)
+			if (handle && handle->ptr)
 			{
-				return *block->ptr;
+				return *handle->ptr;
 			}
 			throw NullReferenceException();
 		}
@@ -77,17 +77,17 @@ namespace Library
 
 		operator bool() const noexcept
 		{
-			return block && block->ptr;
+			return handle && handle->ptr;
 		}
 		
 		size_t ReferenceCount() noexcept
 		{
-			return block ? block->sharedCount : 0;
+			return handle ? handle->sharedCount : 0;
 		}
 		
 		T* Raw() noexcept
 		{
-			return block ? block->ptr : nullptr;
+			return handle ? handle->ptr : nullptr;
 		}
 
 		friend std::ostream& operator<<(std::ostream& stream, const SmartPtr& smart)

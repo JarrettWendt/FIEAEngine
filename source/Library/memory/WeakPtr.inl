@@ -6,21 +6,21 @@ namespace Library
 #pragma region special members
 	template<typename T>
 	WeakPtr<T>::WeakPtr(const SharedPtr<T>& shared) noexcept :
-		Base(reinterpret_cast<const WeakPtr<T>&>(shared).block)
+		Base(reinterpret_cast<const WeakPtr<T>&>(shared).handle)
 	{
-		if (this->block)
+		if (this->handle)
 		{
-			++this->block->weakCount;
+			++this->handle->weakCount;
 		}
 	}
 
 	template<typename T>
 	WeakPtr<T>::WeakPtr(const WeakPtr& other) noexcept :
-		Base(other.block)
+		Base(other.handle)
 	{
-		if (this->block)
+		if (this->handle)
 		{
-			++this->block->weakCount;
+			++this->handle->weakCount;
 		}
 	}
 
@@ -34,10 +34,10 @@ namespace Library
 		if (this != &other)
 		{
 			this->~WeakPtr();
-			this->block = other.block;
-			if (this->block)
+			this->handle = other.handle;
+			if (this->handle)
 			{
-				++this->block->weakCount;
+				++this->handle->weakCount;
 			}
 		}
 		return *this;
@@ -49,8 +49,8 @@ namespace Library
 		if (this != &other)
 		{
 			this->~WeakPtr();
-			this->block = other.block;
-			other.block = nullptr;
+			this->handle = other.handle;
+			other.handle = nullptr;
 		}
 		return *this;
 	}
@@ -58,13 +58,13 @@ namespace Library
 	template<typename T>
 	WeakPtr<T>::~WeakPtr() noexcept
 	{
-		if (this->block)
+		if (this->handle)
 		{
-			--this->block->weakCount;
-			if (this->block->sharedCount == 0 && this->block->weakCount == 0)
+			--this->handle->weakCount;
+			if (this->handle->sharedCount == 0 && this->handle->weakCount == 0)
 			{
-				delete this->block;
-				this->block = nullptr;
+				delete this->handle;
+				this->handle = nullptr;
 			}
 		}
 	}
@@ -80,6 +80,6 @@ namespace Library
 	template<typename T>
 	bool WeakPtr<T>::Expired() const noexcept
 	{
-		return !this->block || this->block->sharedCount == 0; 
+		return !this->handle || this->handle->sharedCount == 0; 
 	}
 }

@@ -12,7 +12,7 @@ namespace Library
 	{
 		using Base = SmartPtr<T>;
 
-	public:		
+	public:
 		SharedPtr() noexcept = default;
 		explicit SharedPtr(T* ptr) noexcept;
 		SharedPtr(const SharedPtr& other) noexcept;

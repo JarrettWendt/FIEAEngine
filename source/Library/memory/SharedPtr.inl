@@ -6,15 +6,15 @@ namespace Library
 #pragma region special members	
 	template<typename T>
 	SharedPtr<T>::SharedPtr(T* ptr) noexcept :
-		Base(new typename Base::Block(ptr, 1)) {}
+		Base(new typename Base::Handle(ptr, 1)) {}
 
 	template <typename T>
 	SharedPtr<T>::SharedPtr(const SharedPtr& other) noexcept :
-		Base(other.block)
+		Base(other.handle)
 	{
-		if (this->block)
+		if (this->handle)
 		{
-			++this->block->sharedCount;
+			++this->handle->sharedCount;
 		}
 	}
 
@@ -28,10 +28,10 @@ namespace Library
 		if (this != &other)
 		{
 			this->~SharedPtr();
-			this->block = other.block;
-			if (this->block)
+			this->handle = other.handle;
+			if (this->handle)
 			{
-				++this->block->sharedCount;
+				++this->handle->sharedCount;
 			}
 		}
 		return *this;
@@ -43,8 +43,8 @@ namespace Library
 		if (this != &other)
 		{
 			this->~SharedPtr();
-			this->block = other.block;
-			other.block = nullptr;
+			this->handle = other.handle;
+			other.handle = nullptr;
 		}
 		return *this;
 	}
@@ -52,20 +52,20 @@ namespace Library
 	template<typename T>
 	SharedPtr<T>::~SharedPtr()
 	{
-		if (this->block)
+		if (this->handle)
 		{
-			--this->block->sharedCount;
-			if (this->block->sharedCount == 0)
+			--this->handle->sharedCount;
+			if (this->handle->sharedCount == 0)
 			{
-				if (this->block->weakCount == 0)
+				if (this->handle->weakCount == 0)
 				{
-					delete this->block;
-					this->block = nullptr;
+					delete this->handle;
+					this->handle = nullptr;
 				}
 				else
 				{
-					delete this->block->ptr;
-					this->block->ptr = nullptr;
+					delete this->handle->ptr;
+					this->handle->ptr = nullptr;
 				}
 			}
 		}		
