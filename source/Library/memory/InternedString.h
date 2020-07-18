@@ -151,3 +151,5 @@ namespace Library
 		}
 	};
 }
+
+#include "InternedString.inl"

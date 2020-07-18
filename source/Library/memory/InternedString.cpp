@@ -65,16 +65,6 @@ namespace Library
 #pragma endregion
 
 #pragma region properties
-	constexpr size_t String::Length() const noexcept
-	{
-		return intern->string.length();
-	}
-	
-	constexpr bool String::IsEmpty() const noexcept
-	{
-		return intern->string.empty();
-	}
-
 	bool String::IsWhitespace() const noexcept
 	{
 		for (const char c : *this)

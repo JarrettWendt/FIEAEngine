@@ -37,6 +37,10 @@
 #include "Engine.h"
 #include "EngineTime.h"
 #include "Input.h"
+// Memory
+#include "Memory.h"
+#include "SmartPtr.h"
+#include "InternedString.h"
 // Util
 #include "Concept.h"
 #include "Literals.h"

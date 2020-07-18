@@ -47,7 +47,6 @@ namespace Library
 
 			Time::Seconds yieldValue{};
 
-		public:
 			/**
 			 * @returns a handle to this promise
 			 */
