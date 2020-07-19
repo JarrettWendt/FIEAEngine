@@ -9,7 +9,7 @@ namespace Library::py::Engine
 {
 	EntityBinding* World()
 	{
-		return EntityBinding::FromEntity(Library::Engine::World().shared_from_this());
+		return EntityBinding::FromEntity(Library::Engine::World().SharedFromThis());
 	}
 	
 	static PyMethodDef methods[] =

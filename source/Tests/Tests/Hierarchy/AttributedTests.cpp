@@ -18,7 +18,7 @@ namespace UnitTests
 		REQUIRE(&foo.integer == &integer);
 		REQUIRE(&foo.integers[0] == &integers);
 
-		for (int i = 0; i < 10; i++)
+		for (size_t i = 0; i < std::size(foo.integers); i++)
 		{
 			REQUIRE(foo.integers[i] == foo.Attribute("integers"_s).Get<int>(i));
 		}
@@ -36,7 +36,7 @@ namespace UnitTests
 		REQUIRE(&foo.Float == &Float);
 		REQUIRE(&foo.floats[0] == &floats);
 		
-		for (int i = 0; i < 10; i++)
+		for (size_t i = 0; i < std::size(foo.floats); i++)
 		{
 			REQUIRE(foo.floats[i] == foo.Attribute("floats").Get<float>(i));
 		}
@@ -54,7 +54,7 @@ namespace UnitTests
 		REQUIRE(&foo.string == &string);
 		REQUIRE(&foo.strings[0] == &strings);
 
-		for (int i = 0; i < 10; i++)
+		for (size_t i = 0; i < std::size(foo.strings); i++)
 		{
 			REQUIRE(foo.strings[i] == foo.Attribute("strings"_s).Get<String>(i));
 		}
@@ -66,18 +66,18 @@ namespace UnitTests
 	TEST(Foos)
 	{
 		AttributedFoo afoo;
-		auto& foo = afoo.Attribute("foo").Front<std::shared_ptr<Foo>>();
-		const auto foos = afoo.Attribute("foos").Front<std::shared_ptr<Foo>>();
+		auto& foo = afoo.Attribute("foo").Front<SharedPtr<Foo>>();
+		const auto foos = afoo.Attribute("foos").Front<SharedPtr<Foo>>();
 
 		REQUIRE(afoo.foo == foo);
 		REQUIRE(afoo.foos[0] == foos);
 
-		for (int i = 0; i < 10; i++)
+		for (size_t i = 0; i < std::size(afoo.foos); i++)
 		{
-			REQUIRE(&afoo.foos[i] == &afoo.Attribute("foos").Get<std::shared_ptr<Foo>>(i));
+			REQUIRE(&afoo.foos[i] == &afoo.Attribute("foos").Get<SharedPtr<Foo>>(i));
 		}
 
-		foo = std::make_shared<Foo>(9);
+		foo = SharedPtr<Foo>::Make(9);
 		REQUIRE(Foo(9) == *afoo.foo);
 	}
 

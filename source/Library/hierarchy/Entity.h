@@ -2,6 +2,7 @@
 
 #pragma once
 #include "Attributed.h"
+#include "EnableSharedFromThis.h"
 
 namespace Library::py
 {
@@ -42,7 +43,7 @@ namespace Library
 	};
 	
 	[[Reflectable]];
-	class Entity : public Attributed, public std::enable_shared_from_this<Entity>
+	class Entity : public Attributed, public EnableSharedFromThis<Entity>
 	{
 		ATTRIBUTED_DECLARATIONS(Attributed)
 		ENTITY_SPECIAL_MEMBERS(Entity)
@@ -50,7 +51,7 @@ namespace Library
 		friend class Engine;
 		friend py::EntityBinding;
 
-		using SharedEntity = std::shared_ptr<Entity>;
+		using SharedEntity = SharedPtr<Entity>;
 		class iterator;
 		class const_iterator;
 		
@@ -60,19 +61,22 @@ namespace Library
 		/** memoized transform relative to the parent */
 		mutable Transform worldTransform{};
 
-		using MapType = HashMap<String, SharedEntity>;
+		using MapType = std::unordered_map<String, SharedEntity>;
 		MapType children{};
 
 		[[Attribute]]
 		String name{ "Entity" };
 		
 		/** non-owning reference to parent */
-		std::weak_ptr<Entity> parent{};
+		WeakPtr<Entity> parent{};
 
 		[[Attribute]]
 		bool enabled{ true };
 
-		/** whether the worldTransform needs to be updated */
+		/**
+		 * Whether the worldTransform needs to be updated.
+		 * Initially invalid so that we don't calculate the world Transform until we first try to get it.
+		 */
 		mutable bool transformInval{ true };
 
 	public:
@@ -345,7 +349,7 @@ namespace Library
 
 			/**
 			 * Pre-increment
-			 * Does nothing if alrady at end().
+			 * Does nothing if already at end().
 			 * O(1)
 			 *
 			 * @returns			the iterator after the increment
@@ -379,33 +383,7 @@ namespace Library
 			 * @returns			whether or not they are inequivalent
 			 */
 			[[nodiscard]] bool operator!=(const iterator& other) const noexcept;
-
-			/**
-			 * @returns true if this iterator is both initialized and not at end().
-			 */
-			[[nodiscard]] operator bool() const noexcept;
-
-			/**
-			 * Inverse of operator bool().
-			 *
-			 * @returns true if this iterator is uninitialized or at end(), false otherwise.
-			 */
-			[[nodiscard]] bool operator!() const noexcept;
 #pragma endregion
-
-			/**
-			 * O(1)
-			 * @returns		Whether or not this iterator is at end().
-			 *
-			 * @asserts		the iterator is initialized.
-			 */
-			[[nodiscard]] bool IsAtEnd() const noexcept;
-
-			/**
-			 * O(1)
-			 * @returns		Whether or not this iterator is at begin().
-			 */
-			[[nodiscard]] bool IsAtBegin() const noexcept;
 		};
 
 		class const_iterator final
@@ -413,32 +391,6 @@ namespace Library
 			friend class Entity;
 
 			CONST_FORWARD_ITERATOR(const_iterator, iterator)
-
-			/**
-			 * @returns true if this iterator is both initialized and not at end().
-			 */
-			[[nodiscard]] operator bool() const noexcept;
-
-			/**
-			 * Inverse of operator bool().
-			 *
-			 * @returns true if this iterator is uninitialized or at end(), false otherwise.
-			 */
-			[[nodiscard]] bool operator!() const noexcept;
-
-			/**
-			 * O(1)
-			 * @returns		Whether or not this iterator is at end().
-			 *
-			 * @throws std::runtime_error	if the iterator is uninitialized.
-			 */
-			[[nodiscard]] bool IsAtEnd() const noexcept;
-
-			/**
-			 * O(1)
-			 * @returns		Whether or not this iterator is at begin().
-			 */
-			[[nodiscard]] bool IsAtBegin() const noexcept;
 		};
 
 		BEGIN_END(iterator, const_iterator, Entity)
@@ -485,7 +437,7 @@ namespace Library
 		 *
 		 * @returns		this Entity's parent
 		 */
-		[[nodiscard]] std::shared_ptr<const Entity> Parent() const noexcept;
+		[[nodiscard]] SharedPtr<const Entity> Parent() const noexcept;
 
 		/**
 		 * O(1)
@@ -501,7 +453,7 @@ namespace Library
 		 * @param childName		the name of the child to query for
 		 * @returns				this child with that name
 		 */
-		[[nodiscard]] std::shared_ptr<const Entity> Child(const String& childName) const noexcept;
+		[[nodiscard]] SharedPtr<const Entity> Child(const String& childName) const noexcept;
 #pragma endregion
 
 #pragma region Transform
@@ -559,7 +511,7 @@ namespace Library
 		 * @throws InvalidNameException
 		 */
 		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
-		std::shared_ptr<Derived> CreateChild(const String& childName, Args&&... args);
+		SharedPtr<Derived> CreateChild(const String& childName, Args&&... args);
 
 		/**
 		 * Appends a default constructed Derived type.
@@ -572,7 +524,7 @@ namespace Library
 		 * @throws InvalidNameException
 		 */
 		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
-		std::shared_ptr<Derived> CreateChild(String&& childName, Args&&... args);
+		SharedPtr<Derived> CreateChild(String&& childName, Args&&... args);
 		
 		/**
 		 * Appends a default constructed Derived type.
@@ -584,7 +536,7 @@ namespace Library
 		 * @throws InvalidNameException
 		 */
 		template<std::derived_from<Entity> Derived = Entity, typename ...Args>
-		std::shared_ptr<Derived> CreateChild(Args&&... args);
+		SharedPtr<Derived> CreateChild(Args&&... args);
 
 		/**
 		 * Reparents the passed Entity to this one.
@@ -671,11 +623,6 @@ namespace Library
 		 * Marks all children to have invalid worldTransforms.
 		 */
 		void InvalChildTransforms() noexcept;
-
-		/**
-		 * Orphans this Entity now, as opposed to on the next Update().
-		 */
-		void OrphanNow() noexcept;
 	};
 }
 

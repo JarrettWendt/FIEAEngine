@@ -12,9 +12,21 @@ namespace Library
 	{
 		using Base = SmartPtr<T>;
 
-	public:
-		SharedPtr() noexcept = default;
+	public:		
 		explicit SharedPtr(T* ptr) noexcept;
+		SharedPtr(nullptr_t) noexcept;
+
+		template<typename U>
+		SharedPtr(const SharedPtr<U>& other) noexcept;
+		template<typename U>
+		SharedPtr(SharedPtr<U>&& other) noexcept;
+		
+		template<typename U>
+		SharedPtr& operator=(const SharedPtr<U>& other) noexcept;
+		template<typename U>
+		SharedPtr& operator=(SharedPtr<U>&& other) noexcept;
+		
+		SharedPtr() noexcept = default;
 		SharedPtr(const SharedPtr& other) noexcept;
 		SharedPtr(SharedPtr&& other) noexcept;
 		SharedPtr& operator=(const SharedPtr& other) noexcept;

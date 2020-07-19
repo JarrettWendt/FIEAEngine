@@ -41,7 +41,7 @@ namespace Library
 	
 	void Engine::Init()
 	{		
-		world = std::make_shared<Entity>();
+		world = SharedPtr<Entity>::Make();
 		world->SetName("World");
 		world->Init();
 
@@ -68,16 +68,7 @@ namespace Library
 	}
 
 	void Engine::Update()
-	{
-		for (const auto& o : pendingOrphans)
-		{
-			if (const auto shared = o.lock())
-			{
-				shared->OrphanNow();
-			}
-		}
-		pendingOrphans.Clear();
-		
+	{		
 		Time::Update();
 		Input::Update();
 		Coroutines::Update();

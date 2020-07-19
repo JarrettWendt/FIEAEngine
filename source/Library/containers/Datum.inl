@@ -178,21 +178,21 @@ namespace Library
 		switch (type)
 		{
 			// primitives
-		case Type::Bool:		func.template operator()<bool>();					break;
-		case Type::Int:			func.template operator()<int>();					break;
-		case Type::Float:		func.template operator()<float>();					break;
+		case Type::Bool:		func.template operator()<bool>();			break;
+		case Type::Int:			func.template operator()<int>();			break;
+		case Type::Float:		func.template operator()<float>();			break;
 
 			// math types
-		case Type::Vector2:		func.template operator()<Vector2>();				break;
-		case Type::Vector3:		func.template operator()<Vector3>();				break;
-		case Type::Vector4:		func.template operator()<Vector4>();				break;
-		case Type::Quaternion:	func.template operator()<Quaternion>();				break;
-		case Type::Matrix:		func.template operator()<Matrix>();					break;
-		case Type::Transform:	func.template operator()<Transform>();				break;
+		case Type::Vector2:		func.template operator()<Vector2>();		break;
+		case Type::Vector3:		func.template operator()<Vector3>();		break;
+		case Type::Vector4:		func.template operator()<Vector4>();		break;
+		case Type::Quaternion:	func.template operator()<Quaternion>();		break;
+		case Type::Matrix:		func.template operator()<Matrix>();			break;
+		case Type::Transform:	func.template operator()<Transform>();		break;
 
 			// object types
-		case Type::String:		func.template operator()<String>();					break;
-		case Type::RTTI:		func.template operator()<std::shared_ptr<RTTI>>();	break;
+		case Type::String:		func.template operator()<String>();			break;
+		case Type::RTTI:		func.template operator()<SharedPtr<RTTI>>();	break;
 			
 		case Type::None: [[fallthrough]];
 		default: assertm("unexpected type");

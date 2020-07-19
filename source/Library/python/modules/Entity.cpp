@@ -248,7 +248,7 @@ namespace Library::py
 	{
 		if (EntityBinding* self = Util::Alloc<EntityBinding>(t))
 		{
-			auto e = std::make_shared<Entity>();
+			auto e = SharedPtr<Entity>::Make();
 			e->pyObject = reinterpret_cast<PyObject*>(self);
 			self->e = e;
 			return self;
@@ -451,7 +451,7 @@ namespace Library::py
 	}
 #pragma endregion
 	
-	EntityBinding* EntityBinding::FromEntity(std::shared_ptr<Library::Entity> entity) noexcept
+	EntityBinding* EntityBinding::FromEntity(Library::Entity::SharedEntity entity) noexcept
 	{
 		EntityBinding* ret = Util::Alloc<EntityBinding>(type);
 		ret->e = std::move(entity);

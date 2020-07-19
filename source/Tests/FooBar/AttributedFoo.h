@@ -33,44 +33,44 @@ namespace UnitTests
     	[[Attribute]]
         Library::Vector2 vector2{};
     	[[Attribute]]
-    	Library::Vector2 vector2s[10]{};
+    	Library::Vector2 vector2s[1]{};
     	
     	[[Attribute]]
         Library::Vector3 vector3{};
     	[[Attribute]]
-    	Library::Vector3 vector3s[10]{};
+    	Library::Vector3 vector3s[1]{};
     	
     	[[Attribute]]
         Library::Vector4 vector4{};
     	[[Attribute]]
-    	Library::Vector4 vector4s[10]{};
+    	Library::Vector4 vector4s[1]{};
     	
     	[[Attribute]]
         Library::Quaternion quaternion{};
     	[[Attribute]]
-    	Library::Quaternion quaternions[10]{};
+    	Library::Quaternion quaternions[1]{};
 
     	[[Attribute]]
     	Library::Matrix matrix{};
     	[[Attribute]]
-    	Library::Matrix matrices[10]{};
+    	Library::Matrix matrices[1]{};
 
     	[[Attribute]]
     	Library::Transform transform{};
     	[[Attribute]]
-    	Library::Transform transforms[10]{};
+    	Library::Transform transforms[1]{};
 #pragma endregion
 
 #pragma region object types
 		[[Attribute]]
 		Library::String string{};
 		[[Attribute]]
-		Library::String strings[10]{};
+		Library::String strings[1]{};
 
 		[[Attribute]]
-		std::shared_ptr<UnitTests::Foo> foo{};
+		Library::SharedPtr<UnitTests::Foo> foo{};
 		[[Attribute]]
-		std::shared_ptr<UnitTests::Foo> foos[10]{};
+		Library::SharedPtr<UnitTests::Foo> foos[1]{};
 #pragma endregion
     	
 		// Prescribed attributes without data members.
@@ -84,8 +84,8 @@ namespace UnitTests
 		[[Attribute(Library::Matrix, "matrixWithoutmember")]]
 		[[Attribute(Library::Transform, "transformWithoutmember")]]
 		[[Attribute(Library::String, "stringWithoutMember")]]
-		[[Attribute(std::shared_ptr<UnitTests::Foo>, "fooWithoutMember")]]
-		[[Attribute(std::shared_ptr<UnitTests::AttributedFoo>, "recursive")]];
+		[[Attribute(Library::SharedPtr<UnitTests::Foo>, "fooWithoutMember")]]
+		[[Attribute(Library::SharedPtr<UnitTests::AttributedFoo>, "recursive")]];
 
 		ATTRIBUTED_SPECIAL_MEMBERS(AttributedFoo, default)
     };

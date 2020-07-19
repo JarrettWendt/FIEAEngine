@@ -14,13 +14,15 @@
 #include "math/Transform.h"
 
 #include "InternedString.h"
+#include "SharedPtr.h"
 
 namespace Library
 {
 	/**
 	 * A Datum is merely a VariantArray of predefined types.
 	 */
-	class Datum final : public VariantArray<
+	class Datum final : public VariantArray
+	<
 		// primitives
 		bool, int, float,
 
@@ -28,7 +30,8 @@ namespace Library
 		Vector2, Vector3, Vector4, Quaternion, Matrix, Transform,
 
 		// object types
-		String, std::shared_ptr<RTTI>>
+		String, SharedPtr<RTTI>
+	>
 	{
 		friend class Attributed;
 		
@@ -85,7 +88,7 @@ namespace Library
 
 		// object types
 		IMPL_TYPE_OF_TYPE(Type::String, String)
-		IMPL_TYPE_OF_TYPE(Type::RTTI, std::shared_ptr<RTTI>)
+		IMPL_TYPE_OF_TYPE(Type::RTTI, SharedPtr<RTTI>)
 		
 #undef  IMPL_TYPE_OF_TYPE
 		

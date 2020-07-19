@@ -1,11 +1,15 @@
 #pragma once
-#include "SmartPtr.h"
+#include "WeakPtr.h"
+#include "SharedPtr.h"
 
 namespace Library
 {
 	template<typename Derived>
 	class EnableSharedFromThis
 	{
+		template<typename T>
+		friend class SharedPtr;
+		
 		WeakPtr<Derived> weakThis{};
 
 	public:

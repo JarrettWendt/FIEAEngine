@@ -10,19 +10,19 @@ namespace UnitTests
 {	
 	TEST(Destruction)
 	{
-		std::weak_ptr<Entity> ptr;
+		WeakPtr<Entity> ptr;
 		{
-			const auto e = std::make_shared<Entity>();
+			const auto e = SharedPtr<Entity>::Make();
 			ptr = e;
 		}
-		REQUIRE(ptr.expired());
+		REQUIRE(ptr.Expired());
 	}
 
 #pragma region wrappers
 #pragma region FloatWrapper
 	TEST(FloatWrapper)
 	{
-		const auto e = std::make_shared<Entity>();
+		const auto e = SharedPtr<Entity>::Make();
 		{
 			auto w = e->Transform<CoordinateSpace::Local>().Translation();
 			const auto t = e->GetTransform<CoordinateSpace::Local>().translation;
@@ -42,7 +42,7 @@ namespace UnitTests
 
 	TEST(FloatWrapper::operator=)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto f = e->Transform<CoordinateSpace::World>().Translation().X();
 		f = 1.f;
 		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
@@ -50,7 +50,7 @@ namespace UnitTests
 
 	TEST(FloatWrapper::operator+)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
 		f = f + 1.f;
 		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
@@ -58,7 +58,7 @@ namespace UnitTests
 
 	TEST(FloatWrapper::operator-)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto f = e->Transform<CoordinateSpace::Local>().Translation().X() = 2.f;
 		f = 1.f - f;
 		REQUIRE(-1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
@@ -66,7 +66,7 @@ namespace UnitTests
 
 	TEST(FloatWrapper::operator+=)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto f = e->Transform<CoordinateSpace::Local>().Translation().X();
 		f += 1.f;
 		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
@@ -75,14 +75,14 @@ namespace UnitTests
 
 	TEST(Vector3Wrapper::operator==)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto t = e->Transform<CoordinateSpace::Local>();
 		REQUIRE(t == e->GetTransform<CoordinateSpace::Local>());
 	}
 	
 	TEST(Vector3Wrapper::operator[])
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto f = e->Transform<CoordinateSpace::Local>().Translation()[0_zc];
 		f = 1.f;
 		REQUIRE(1.f == e->GetTransform<CoordinateSpace::Local>().translation.x);
@@ -90,46 +90,46 @@ namespace UnitTests
 	
 	TEST(Vector3Wrapper::operator=)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto t = e->Transform<CoordinateSpace::Local>().Translation();
-		const auto r = Random::Next<Vector3>();
+		auto r = Random::Next<Vector3>();
 		t = r;
 		REQUIRE(r == e->GetTransform<CoordinateSpace::Local>().translation);
 	}
 	
 	TEST(QuaternionWrapper::operator=)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		auto t = e->Transform<CoordinateSpace::Local>().Rotation();
-		const auto r = Random::Next<Quaternion>();
+		auto r = Random::Next<Quaternion>();
 		t = r;
 		REQUIRE(r == e->GetTransform<CoordinateSpace::Local>().rotation);
 	}
 	
 	TEST(ScaleWrapper)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		const Vector3 v = e->Transform<CoordinateSpace::Local>().Scale();
 		REQUIRE(v == e->GetTransform<CoordinateSpace::Local>().scale);
 	}
 	
 	TEST(TranslationWrapper)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		const Vector3 v = e->Transform<CoordinateSpace::Local>().Translation();
 		REQUIRE(v == e->GetTransform<CoordinateSpace::Local>().translation);
 	}
 	
 	TEST(QuaternionWrapper)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		const Quaternion q = e->Transform<CoordinateSpace::Local>().Rotation();
 		REQUIRE(q == e->GetTransform<CoordinateSpace::Local>().rotation);
 	}
 
 	TEST(TransformWrapper)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 		const Transform t = e->Transform<CoordinateSpace::Local>();
 		REQUIRE(t == e->GetTransform<CoordinateSpace::Local>());
 	}
@@ -138,45 +138,45 @@ namespace UnitTests
 #pragma region iterator
 	TEST(ConstIterator)
 	{
-		const auto e = std::make_shared<Entity>();
+		auto e = SharedPtr<Entity>::Make();
 
 		auto cit = e->cbegin();
 		REQUIRE(cit == e->cend());
 		
-		REQUIRE(cit.IsAtBegin());
-		REQUIRE(cit.IsAtEnd());
+		//REQUIRE(cit.IsAtBegin());
+		//REQUIRE(cit.IsAtEnd());
 
-		REQUIRE_FALSE(cit);
-		REQUIRE(!cit);
+		//REQUIRE_FALSE(cit);
+		//REQUIRE(!cit);
 
-		const auto c = e->CreateChild();
+		auto c = e->CreateChild();
 		cit = e->begin();
 
 		REQUIRE(c == *cit);
 		REQUIRE(e == cit->Parent());
 
 		cit++;
-		REQUIRE(!cit);
+		REQUIRE(cit == e->end());
 	}
 #pragma endregion
 
 #pragma region Properties
 	TEST(Child)
 	{
-		const auto p = std::make_shared<Entity>();
+		auto p = SharedPtr<Entity>::Make();
 		REQUIRE(!p->Child("bleh"));
 		
 		const auto c = p->CreateChild();
-		const std::shared_ptr<const Entity> cp = p;
+		const SharedPtr<const Entity> cp = p;
 
 		REQUIRE(c == cp->Child(c->GetName()));
 	}
 
 	TEST(Parent)
 	{
-		const auto p = std::make_shared<Entity>();
-		const auto c = p->CreateChild();
-		const std::shared_ptr<const Entity> cc = c;
+		auto p = SharedPtr<Entity>::Make();
+		auto c = p->CreateChild();
+		const SharedPtr<const Entity> cc = c;
 
 		REQUIRE(p == cc->Parent());
 	}
@@ -185,7 +185,7 @@ namespace UnitTests
 #pragma region Transform
 	TEST(SetLocalTransformFromParent)
 	{			
-		const auto p = std::make_shared<Entity>();
+		auto p = SharedPtr<Entity>::Make();
 		const auto c = p->CreateChild<>();
 
 		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
@@ -203,7 +203,7 @@ namespace UnitTests
 
 	TEST(SetWorldTransformFromParent)
 	{
-		const auto p = std::make_shared<Entity>();
+		auto p = SharedPtr<Entity>::Make();
 		const auto c = p->CreateChild<>();
 
 		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
@@ -221,8 +221,8 @@ namespace UnitTests
 	
 	TEST(SetLocalTransformFromChild)
 	{
-		const auto p = std::make_shared<Entity>();
-		const auto c = p->CreateChild<>();
+		auto p = SharedPtr<Entity>::Make();
+		auto c = p->CreateChild<>();
 
 		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
 		REQUIRE(p->GetTransform<CoordinateSpace::World>() == c->GetTransform<CoordinateSpace::World>());
@@ -239,8 +239,8 @@ namespace UnitTests
 
 	TEST(SetWorldTransformFromChild)
 	{
-		const auto p = std::make_shared<Entity>();
-		const auto c = p->CreateChild<>();
+		auto p = SharedPtr<Entity>::Make();
+		auto c = p->CreateChild<>();
 
 		REQUIRE(p->GetTransform<CoordinateSpace::Local>() == p->GetTransform<CoordinateSpace::World>());
 		REQUIRE(p->GetTransform<CoordinateSpace::World>() == c->GetTransform<CoordinateSpace::World>());
@@ -258,8 +258,8 @@ namespace UnitTests
 
 	TEST(SetName)
 	{
-		const auto p = std::make_shared<Entity>();
-		const auto c = p->CreateChild<>("child"_s);
+		auto p = SharedPtr<Entity>::Make();
+		auto c = p->CreateChild("child"_s);
 		c->SetName("Seven"_s);
 		REQUIRE("Seven"_s == c->GetName());
 		REQUIRE(p->Child("Seven"_s));
@@ -267,7 +267,7 @@ namespace UnitTests
 
 	TEST(GetName)
 	{
-		const auto e = std::make_shared<Entity>();
+		const auto e = SharedPtr<Entity>::Make();
 		REQUIRE("Entity"_s == e->GetName());
 	}
 		
@@ -279,7 +279,7 @@ namespace UnitTests
 
 	TEST(InsertScope)
 	{
-		auto parent = std::make_shared<Entity>();
+		auto parent = SharedPtr<Entity>::Make();
 		const auto child = parent->CreateChild("child"_s);
 
 		REQUIRE(parent == child->Parent());
@@ -288,8 +288,8 @@ namespace UnitTests
 
 	TEST(Adopt)
 	{
-		auto parent = std::make_shared<Entity>();
-		auto child = std::make_shared<Entity>();
+		auto parent = SharedPtr<Entity>::Make();
+		auto child = SharedPtr<Entity>::Make();
 
 		REQUIRE(!parent->Parent());
 		REQUIRE(!child->Parent());
@@ -307,7 +307,7 @@ namespace UnitTests
 		REQUIRE(child2 == child);
 		REQUIRE("child"_s == child2->GetName());
 
-		auto newParent = std::make_shared<Entity>();
+		auto newParent = SharedPtr<Entity>::Make();
 		const auto child3 = newParent->Adopt("child"_s, child2);
 
 		REQUIRE(newParent == child3->Parent());
@@ -318,7 +318,7 @@ namespace UnitTests
 
 	TEST(Grandchildren)
 	{
-		auto parent = std::make_shared<Entity>();
+		auto parent = SharedPtr<Entity>::Make();
 		parent->CreateChild<>("child"_s)->CreateChild<>("grandChild"_s)->CreateChild<>("greatGrandChild"_s);
 	}
 #pragma endregion
@@ -337,7 +337,7 @@ namespace UnitTests
 
 	TEST(Remove)
 	{
-		auto s = std::make_shared<Entity>();
+		auto s = SharedPtr<Entity>::Make();
 		const auto child = s->CreateChild<>("child"_s);
 		
 		s->RemoveChild("child"_s);
@@ -346,30 +346,18 @@ namespace UnitTests
 	}
 #pragma endregion
 
-	TEST(Init)
-	{
-		//Engine::IsActive() = false;
-		//Engine::Main({});
-	}
-
-	TEST(Update)
-	{
-		//Coroutines::Start([]()->Coroutine { Engine::IsActive() = false; co_return; });
-		//Engine::Main({});
-	}
-
 #pragma region operators
 	TEST(operator==)
 	{
-		const auto a = std::make_shared<Entity>();
-		const auto b = std::make_shared<Entity>();
+		const auto a = SharedPtr<Entity>::Make();
+		const auto b = SharedPtr<Entity>::Make();
 		REQUIRE(*a == *b);
 	}
 	
 	TEST(operator!=)
 	{
-		const auto a = std::make_shared<Entity>();
-		const auto b = std::make_shared<Entity>();
+		const auto a = SharedPtr<Entity>::Make();
+		const auto b = SharedPtr<Entity>::Make();
 		REQUIRE(!(*a != *b));
 	}
 #pragma endregion

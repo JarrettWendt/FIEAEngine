@@ -17,7 +17,7 @@ namespace Library
 	template<typename Derived>
 	inline SharedPtr<Derived> EnableSharedFromThis<Derived>::SharedFromThis()
 	{
-		return WeakFromThis();
+		return SharedPtr<Derived>(WeakFromThis());
 	}
 	
 	template<typename Derived>

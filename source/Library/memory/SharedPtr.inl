@@ -6,11 +6,62 @@ namespace Library
 #pragma region special members	
 	template<typename T>
 	SharedPtr<T>::SharedPtr(T* ptr) noexcept :
-		Base(new typename Base::Handle(ptr, 1)) {}
+		Base(new typename Base::Handle(ptr, 1))
+	{
+		if constexpr (std::derived_from<T, EnableSharedFromThis<T>>)
+		{
+			reinterpret_cast<SharedPtr&>(ptr->weakThis).handle = this->handle;
+			++this->handle->weakCount;
+		}
+	}
 
-	template <typename T>
+	template<typename T>
+	SharedPtr<T>::SharedPtr(nullptr_t) noexcept :
+		Base(nullptr) {}
+
+	template<typename T>
+	template<typename U>
+	SharedPtr<T>::SharedPtr(const SharedPtr<U>& other) noexcept :
+		Base(reinterpret_cast<const SharedPtr&>(other))
+	{
+		if (this->handle)
+		{
+			++this->handle->sharedCount;
+		}
+	}
+
+	template<typename T>
+	template<typename U>
+	SharedPtr<T>::SharedPtr(SharedPtr<U>&& other) noexcept :
+		Base(std::move(reinterpret_cast<SharedPtr&&>(other))) {}
+	
+	template<typename T>
+	template<typename U>
+	SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<U>& other) noexcept
+	{
+		this->~SharedPtr();
+		this->handle = reinterpret_cast<const SharedPtr&>(other).handle;
+		if (this->handle)
+		{
+			++this->handle->sharedCount;
+		}
+		return *this;
+	}
+
+	template<typename T>
+	template<typename U>
+	SharedPtr<T>& SharedPtr<T>::operator=(SharedPtr<U>&& other) noexcept
+	{
+		this->~SharedPtr();
+		auto& handle = reinterpret_cast<const SharedPtr&>(other).handle;		
+		this->handle = handle;
+		handle = nullptr;
+		return *this;
+	}
+	
+	template<typename T>
 	SharedPtr<T>::SharedPtr(const SharedPtr& other) noexcept :
-		Base(other.handle)
+		Base(other)
 	{
 		if (this->handle)
 		{
@@ -57,6 +108,7 @@ namespace Library
 			--this->handle->sharedCount;
 			if (this->handle->sharedCount == 0)
 			{
+				delete this->handle->ptr;
 				if (this->handle->weakCount == 0)
 				{
 					delete this->handle;
@@ -64,7 +116,6 @@ namespace Library
 				}
 				else
 				{
-					delete this->handle->ptr;
 					this->handle->ptr = nullptr;
 				}
 			}

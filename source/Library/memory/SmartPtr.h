@@ -26,7 +26,7 @@ namespace Library
 	{
 	protected:
 		struct Handle final
-		{
+		{			
 			T* ptr;
 			uint32_t sharedCount;
 			uint32_t weakCount;
@@ -36,14 +36,17 @@ namespace Library
 				sharedCount(count),
 				weakCount(0) {}
 						
-			~Handle()
+			
+			Handle() noexcept = default;
+#ifdef _DEBUG			
+			~Handle() noexcept
 			{
-				delete ptr;
 				ptr = nullptr;
 				sharedCount = weakCount = 0;
 			}
-			
-			Handle() noexcept = default;
+#else
+			~Handle() noexcept = default;
+#endif
 			MOVE_COPY(Handle, delete)
 		};
 
@@ -51,6 +54,33 @@ namespace Library
 
 		explicit SmartPtr(Handle* block = nullptr) noexcept :
 			handle(block) {}
+
+		SmartPtr(const SmartPtr& other) noexcept :
+			handle(other.handle) {}
+		
+		SmartPtr(SmartPtr&& other) noexcept :
+			handle(other.handle)
+		{
+			other.handle = nullptr;
+		}
+
+		SmartPtr& operator=(const SmartPtr& other) noexcept
+		{
+			handle = other.handle;
+			return *this;
+		}
+
+		SmartPtr& operator=(SmartPtr&& other) noexcept
+		{
+			if (this != &other)
+			{
+				handle = other.handle;
+				other.handle = nullptr;
+			}
+			return *this;
+		}
+
+		~SmartPtr() noexcept = default;
 		
 	public:
 		T& operator*()
@@ -75,7 +105,7 @@ namespace Library
 			return const_cast<SmartPtr<T>*>(this)->operator->();
 		}
 
-		operator bool() const noexcept
+		explicit operator bool() const noexcept
 		{
 			return handle && handle->ptr;
 		}
@@ -92,14 +122,30 @@ namespace Library
 
 		friend std::ostream& operator<<(std::ostream& stream, const SmartPtr& smart)
 		{
-			if (smart)
-			{
-				return stream << *smart;
+			if constexpr (Concept::Ostreamable<T>)
+			{				
+				if (smart)
+				{
+					return stream << *smart;
+				}
+				return stream << nullptr;
 			}
-			return stream << nullptr;
+			else
+			{
+				return stream << smart.handle;
+			}
+		}
+
+		template<typename U>
+		friend bool operator==(const SmartPtr& a, const SmartPtr<U>& b) noexcept
+		{
+			return a.handle == reinterpret_cast<const SmartPtr&>(b).handle;
+		}
+
+		template<typename U>
+		friend bool operator!=(const SmartPtr& a, const SmartPtr<U>& b) noexcept
+		{
+			return !operator==(a, b);
 		}
 	};
 }
-
-#include "SharedPtr.h"
-#include "WeakPtr.h"

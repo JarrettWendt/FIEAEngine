@@ -148,7 +148,7 @@ namespace Library::py
 		
 		friend PyObject* InitEntityModule();
 
-		std::shared_ptr<Library::Entity> e;
+		SharedPtr<Library::Entity> e;
 		
 		static void dealloc(EntityBinding* self);
 		static EntityBinding* _new(PyTypeObject* t, PyObject* args, PyObject* kwds);
@@ -234,7 +234,7 @@ namespace Library::py
 		}
 
 	public:
-		static EntityBinding* FromEntity(std::shared_ptr<Library::Entity> entity) noexcept;
+		static EntityBinding* FromEntity(Library::Entity::SharedEntity entity) noexcept;
 #pragma endregion
 	};
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "SmartPtr.h"
+#include "SharedPtr.h"
 
 namespace Library
 {
