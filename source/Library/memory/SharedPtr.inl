@@ -112,12 +112,14 @@ namespace Library
 				if (this->handle->weakCount == 0)
 				{
 					delete this->handle;
-					this->handle = nullptr;
 				}
 				else
 				{
 					this->handle->ptr = nullptr;
 				}
+#ifdef _DEBUG
+				this->handle = nullptr;
+#endif
 			}
 		}		
 	}

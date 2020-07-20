@@ -31,94 +31,33 @@ namespace Library
 			uint32_t sharedCount;
 			uint32_t weakCount;
 			
-			explicit Handle(T* ptr, const uint32_t count) noexcept :
-				ptr(ptr),
-				sharedCount(count),
-				weakCount(0) {}
-						
+			explicit Handle(T* ptr, const uint32_t count) noexcept;						
 			
 			Handle() noexcept = default;
-#ifdef _DEBUG			
-			~Handle() noexcept
-			{
-				ptr = nullptr;
-				sharedCount = weakCount = 0;
-			}
-#else
-			~Handle() noexcept = default;
-#endif
+			~Handle() noexcept;
 			MOVE_COPY(Handle, delete)
 		};
 
 		Handle* handle;
 
-		explicit SmartPtr(Handle* block = nullptr) noexcept :
-			handle(block) {}
-
-		SmartPtr(const SmartPtr& other) noexcept :
-			handle(other.handle) {}
-		
-		SmartPtr(SmartPtr&& other) noexcept :
-			handle(other.handle)
-		{
-			other.handle = nullptr;
-		}
-
-		SmartPtr& operator=(const SmartPtr& other) noexcept
-		{
-			handle = other.handle;
-			return *this;
-		}
-
-		SmartPtr& operator=(SmartPtr&& other) noexcept
-		{
-			if (this != &other)
-			{
-				handle = other.handle;
-				other.handle = nullptr;
-			}
-			return *this;
-		}
-
+		explicit SmartPtr(Handle* handle = nullptr) noexcept;
+		SmartPtr(const SmartPtr& other) noexcept;		
+		SmartPtr(SmartPtr&& other) noexcept;
+		SmartPtr& operator=(const SmartPtr& other) noexcept;
+		SmartPtr& operator=(SmartPtr&& other) noexcept;
 		~SmartPtr() noexcept = default;
 		
 	public:
-		T& operator*()
-		{
-			if (handle && handle->ptr)
-			{
-				return *handle->ptr;
-			}
-			throw NullReferenceException();
-		}
-		const T& operator*() const
-		{
-			return const_cast<SmartPtr<T>*>(this)->operator*();
-		}
+		T& operator*();
+		const T& operator*() const;
 
-		T* operator->()
-		{
-			return &operator*();
-		}
-		const T* operator->() const
-		{
-			return const_cast<SmartPtr<T>*>(this)->operator->();
-		}
+		T* operator->();
+		const T* operator->() const;
 
-		explicit operator bool() const noexcept
-		{
-			return handle && handle->ptr;
-		}
+		explicit operator bool() const noexcept;
 		
-		size_t ReferenceCount() noexcept
-		{
-			return handle ? handle->sharedCount : 0;
-		}
-		
-		T* Raw() noexcept
-		{
-			return handle ? handle->ptr : nullptr;
-		}
+		size_t ReferenceCount() noexcept;		
+		T* Raw() noexcept;
 
 		friend std::ostream& operator<<(std::ostream& stream, const SmartPtr& smart)
 		{
@@ -149,3 +88,5 @@ namespace Library
 		}
 	};
 }
+
+#include "SmartPtr.inl"

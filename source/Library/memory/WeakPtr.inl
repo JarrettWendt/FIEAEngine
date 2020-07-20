@@ -64,8 +64,10 @@ namespace Library
 			if (this->handle->sharedCount == 0 && this->handle->weakCount == 0)
 			{
 				delete this->handle;
-				this->handle = nullptr;
 			}
+#ifdef _DEBUG
+			this->handle = nullptr;
+#endif
 		}
 	}
 #pragma endregion
