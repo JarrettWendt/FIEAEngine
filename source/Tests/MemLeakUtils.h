@@ -1,5 +1,11 @@
 #pragma once
+//#include "Coroutine.h"
+#include "Datum.h"
+#include "Engine.h"
 #include "Macros.h"
+#include "Input.h"
+
+#include "Digit.h"
 #include "TestUtils.h"
 
 namespace UnitTests
@@ -19,7 +25,7 @@ namespace UnitTests
 		~MemLeak()
 		{
 			using namespace Library;
-			Coroutines::StopAll();
+			//Coroutines::StopAll();
 			Engine::Update();
 			TestUtil::EndMemState();
 		}
@@ -31,13 +37,15 @@ namespace UnitTests
 		{
 			using namespace Library;
 			Engine::Init();
-			Coroutines::StopAll();
+			//Coroutines::StopAll();
 			Engine::Update();
+			
 			static bool b{ false };
 			if (b)
 			{
 				return;
 			}
+			
 			Math::NextPrime(500);
 			Enum<Digit>::ToString(Digit());
 			Enum<Digit>::FromString("Zero");

@@ -16,7 +16,7 @@
 			"project": "CMakeLists.txt",
 			"projectTarget": "Tests.exe (source\\Tests\\Tests.exe)",
 			"name": "Tests.exe (source\\Tests\\Tests.exe)",
-			"args": []
+			"args": [ "[Memory::Manager]" ]
 		},
 		{
 			"type": "cppgdb",

@@ -606,12 +606,27 @@ namespace Library
 		/**
 		 * Invokes Init() on all children.
 		 */
-		virtual void Init();
+		virtual void Init()
+		{
+			for (auto& e : *this)
+			{
+				e->Init();
+			}
+		}
 
 		/**
 		 * Invokes Update() on all enabled children. 
 		 */
-		virtual void Update();
+		virtual void Update()
+		{
+			for (auto& e : *this)
+			{			
+				if (e->Enabled())
+				{
+					e->Update();
+				}
+			}
+		}
 
 	private:
 		/**

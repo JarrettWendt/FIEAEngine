@@ -1,4 +1,5 @@
 #pragma once
+#include "Manager.h"
 #include "SmartPtr.h"
 
 namespace Library
@@ -12,8 +13,9 @@ namespace Library
 	{
 		using Base = SmartPtr<T>;
 
-	public:		
-		explicit SharedPtr(T* ptr) noexcept;
+		explicit SharedPtr(typename Base::Handle& handle) noexcept;
+		
+	public:
 		SharedPtr(nullptr_t) noexcept;
 
 		template<typename U>
@@ -46,7 +48,7 @@ namespace Library
 		template<typename... Args>
 		static SharedPtr Make(Args... args)
 		{
-			return SharedPtr(new T(std::forward<Args>(args)...));
+			return SharedPtr(Memory::Manager::Emplace<T>(std::forward<Args>(args)...));
 		}
 	};
 }

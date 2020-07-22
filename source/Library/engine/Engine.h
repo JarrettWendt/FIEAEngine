@@ -5,14 +5,11 @@
 #include <gsl/gsl>
 
 #include "Macros.h"
-#include "SList.h"
 #include "SharedPtr.h"
-#include "WeakPtr.h"
+#include "Entity.h"
 
 namespace Library
-{
-	class Entity;
-	
+{	
 	class Engine final
 	{
 		friend Entity;

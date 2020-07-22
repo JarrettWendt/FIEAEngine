@@ -6,6 +6,11 @@
 
 namespace Library
 {
+	namespace Memory
+	{
+		class Manager;
+	}
+	
 	/**
 	 * exception thrown when trying to dereference an uninitialized SmartPtr.
 	 */
@@ -24,23 +29,35 @@ namespace Library
 	template<typename T>
 	class SmartPtr
 	{
+		friend Memory::Manager;
+		
 	protected:
 		struct Handle final
 		{			
 			T* ptr;
 			uint32_t sharedCount;
-			uint32_t weakCount;
-			
-			explicit Handle(T* ptr, const uint32_t count) noexcept;						
+			struct
+			{
+				// 1 << alignment gives us alignof(T)
+				// needed by Memory::Manager who has no type information
+				uint32_t alignment : 5;
+				uint32_t weakCount : 27;
+			};
+			explicit Handle(T* ptr, const uint32_t alignment) noexcept;						
 			
 			Handle() noexcept = default;
 			~Handle() noexcept;
-			MOVE_COPY(Handle, delete)
+			MOVE_COPY(Handle, default)
+
+			constexpr bool Used() const noexcept;
+			constexpr size_t Alignment() const noexcept;
 		};
 
-		Handle* handle;
+		Handle* handle{};
 
-		explicit SmartPtr(Handle* handle = nullptr) noexcept;
+		explicit SmartPtr(Handle& handle) noexcept;
+		
+		SmartPtr() noexcept = default;
 		SmartPtr(const SmartPtr& other) noexcept;		
 		SmartPtr(SmartPtr&& other) noexcept;
 		SmartPtr& operator=(const SmartPtr& other) noexcept;

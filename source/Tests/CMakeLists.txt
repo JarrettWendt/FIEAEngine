@@ -9,7 +9,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/")
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 # Add source to this project's executable.
-add_executable(${TARGET_NAME} ${SOURCE_FILES} "Tests/Math/MathTests.cpp")
+add_executable(${TARGET_NAME} ${SOURCE_FILES} "Tests/Math/MathTests.cpp" "Tests/Memory/MemoryManagerTests.cpp")
 
 target_link_libraries(${TARGET_NAME} Library)
 

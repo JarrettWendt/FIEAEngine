@@ -3,21 +3,22 @@
 
 namespace Library
 {
-#pragma region special members	
-	template<typename T>
-	SharedPtr<T>::SharedPtr(T* ptr) noexcept :
-		Base(new typename Base::Handle(ptr, 1))
+#pragma region special members
+	template <typename T>
+	SharedPtr<T>::SharedPtr(typename Base::Handle& handle) noexcept :
+		Base(handle)
 	{
 		if constexpr (std::derived_from<T, EnableSharedFromThis<T>>)
 		{
-			reinterpret_cast<SharedPtr&>(ptr->weakThis).handle = this->handle;
-			++this->handle->weakCount;
+			reinterpret_cast<SharedPtr&>(handle.ptr->weakThis).handle = &handle;
+			++handle.weakCount;
 		}
+		++handle.sharedCount;
 	}
 
 	template<typename T>
 	SharedPtr<T>::SharedPtr(nullptr_t) noexcept :
-		Base(nullptr) {}
+		Base() {}
 
 	template<typename T>
 	template<typename U>
@@ -108,15 +109,8 @@ namespace Library
 			--this->handle->sharedCount;
 			if (this->handle->sharedCount == 0)
 			{
-				delete this->handle->ptr;
-				if (this->handle->weakCount == 0)
-				{
-					delete this->handle;
-				}
-				else
-				{
-					this->handle->ptr = nullptr;
-				}
+				// No need to free the handle's memory, that will be done in Memory::Manager
+				this->handle->ptr->~T();
 #ifdef _DEBUG
 				this->handle = nullptr;
 #endif

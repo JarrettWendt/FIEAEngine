@@ -8,8 +8,8 @@ using namespace Library::Literals;
 #define CATEGORY "[Array]"
 #define TYPES bool, char, int, float, uint64_t, Array<int>, Array<std::string>, SList<int>, SList<std::string>
 #define TEST_NO_TEMPLATE(name) TEST_CASE_METHOD(MemLeak, NAMESPACE #name, CATEGORY)
-#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, NAMESPACE "::" #name, CATEGORY, TYPES)
-#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(NAMESPACE "::" #name, CATEGORY, TYPES)
+#define TEST(name) TEMPLATE_TEST_CASE_METHOD(TemplateMemLeak, NAMESPACE #name, CATEGORY, TYPES)
+#define TEST_NO_MEM_CHECK(name) TEMPLATE_TEST_CASE(NAMESPACE #name, CATEGORY, TYPES)
 #define CONTAINER Array<TestType>
 
 namespace UnitTests

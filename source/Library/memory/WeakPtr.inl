@@ -6,7 +6,7 @@ namespace Library
 #pragma region special members
 	template<typename T>
 	WeakPtr<T>::WeakPtr(const SharedPtr<T>& shared) noexcept :
-		Base(reinterpret_cast<const WeakPtr<T>&>(shared).handle)
+		Base(reinterpret_cast<const WeakPtr&>(shared))
 	{
 		if (this->handle)
 		{
@@ -16,7 +16,7 @@ namespace Library
 
 	template<typename T>
 	WeakPtr<T>::WeakPtr(const WeakPtr& other) noexcept :
-		Base(other.handle)
+		Base(other)
 	{
 		if (this->handle)
 		{
@@ -61,10 +61,7 @@ namespace Library
 		if (this->handle)
 		{
 			--this->handle->weakCount;
-			if (this->handle->sharedCount == 0 && this->handle->weakCount == 0)
-			{
-				delete this->handle;
-			}
+			// No need to free the handle's memory, that will be done in Memory::Manager
 #ifdef _DEBUG
 			this->handle = nullptr;
 #endif

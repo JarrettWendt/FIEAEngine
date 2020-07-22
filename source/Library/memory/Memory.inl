@@ -78,7 +78,7 @@ namespace Library::Memory
 	template<>
 	inline void Memmove(void* dest, const void* source, const size_t byteCount) noexcept
 	{
-		// std::memcpy already safely does nothing when passing a byteCount of 0.
+		// std::memmove already safely does nothing when passing a byteCount of 0.
 		assertm((dest && source && byteCount != 0) || byteCount == 0, "undefined behavior in Memory::Memmove");
 		std::memmove(dest, source, byteCount);
 	}
@@ -88,10 +88,22 @@ namespace Library::Memory
 	{
 		Memset<void>(reinterpret_cast<void*>(dest), byte, count * sizeof(T));
 	}
+
+	template<typename T>
+	inline void Memset(T* dest, const uint16_t word, const size_t count) noexcept
+	{
+		Memset<void>(reinterpret_cast<void*>(dest), word, count * sizeof(T));
+	}
 	
 	template<>
 	inline void Memset(void* dest, const uint8_t byte, const size_t byteCount) noexcept
 	{
 		std::memset(dest, byte, byteCount);
+	}
+	
+	template<>
+	inline void Memset(void* dest, const uint16_t word, const size_t wordCount) noexcept
+	{
+		std::wmemset(reinterpret_cast<wchar_t*>(dest), word, wordCount);
 	}
 }

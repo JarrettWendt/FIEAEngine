@@ -40,7 +40,7 @@ namespace Library
 	}
 	
 	void Engine::Init()
-	{		
+	{
 		world = SharedPtr<Entity>::Make();
 		world->SetName("World");
 		world->Init();

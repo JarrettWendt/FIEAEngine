@@ -5,7 +5,7 @@ namespace Library
 {
 	template<typename Derived>
 	inline EnableSharedFromThis<Derived>::EnableSharedFromThis(const EnableSharedFromThis&) noexcept :
-		weakThis() {} // constructor must value-initialize weakThis
+		weakThis() {} // SmartPtr ctor will initialize weakThis
 	
 	template<typename Derived>
 	inline EnableSharedFromThis<Derived>& EnableSharedFromThis<Derived>::operator=(const EnableSharedFromThis&) noexcept

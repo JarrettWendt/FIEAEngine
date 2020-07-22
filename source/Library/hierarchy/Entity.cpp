@@ -152,25 +152,6 @@ Entity::iterator Entity::end() noexcept
 	}
 #pragma endregion
 
-	void Entity::Init()
-	{
-		for (auto& e : *this)
-		{
-			e->Init();
-		}
-	}
-
-	void Entity::Update()
-	{
-		for (auto& e : *this)
-		{			
-			if (e->Enabled())
-			{
-				e->Update();
-			}
-		}
-	}
-
 #pragma region Helpers
 	void Entity::InvalTransform() noexcept
 	{
