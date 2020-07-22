@@ -27,6 +27,11 @@
 #define GET_ASSERT(_1, _2, NAME, ...) NAME
 #define assertm(...) GET_ASSERT(__VA_ARGS__, assertm2, assertm1)(__VA_ARGS__)
 
+/**
+ * Cute macro for being able to write a `for EVER` loop.
+ */
+#define EVER (;;)
+
  /**
   * Macro for when you want to default or delete the copy ctor and operator=.
   *

@@ -41,6 +41,7 @@ namespace Library
 	
 	void Engine::Init()
 	{
+		world = nullptr;
 		world = SharedPtr<Entity>::Make();
 		world->SetName("World");
 		world->Init();

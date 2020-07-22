@@ -36,6 +36,7 @@ namespace UnitTests
 		static void Singleton()
 		{
 			using namespace Library;
+			Memory::Manager::Defrag();
 			Engine::Init();
 			//Coroutines::StopAll();
 			Engine::Update();
