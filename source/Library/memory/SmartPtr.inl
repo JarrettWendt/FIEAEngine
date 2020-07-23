@@ -109,4 +109,10 @@ namespace Library
 	{
 		return handle ? handle->ptr : nullptr;
 	}
+
+	template <typename T>
+	const T* SmartPtr<T>::Raw() const noexcept
+	{
+		return const_cast<SmartPtr*>(this)->Raw();
+	}
 }

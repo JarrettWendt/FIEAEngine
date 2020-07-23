@@ -75,21 +75,22 @@ namespace Library
 		
 		size_t ReferenceCount() noexcept;		
 		T* Raw() noexcept;
+		const T* Raw() const noexcept;
 
 		friend std::ostream& operator<<(std::ostream& stream, const SmartPtr& smart)
 		{
-			if constexpr (Concept::Ostreamable<T>)
-			{				
-				if (smart)
+			if (smart)
+			{
+				if constexpr (Concept::Ostreamable<T>)
 				{
 					return stream << *smart;
 				}
-				return stream << nullptr;
+				else
+				{
+					return stream << smart.Raw();
+				}
 			}
-			else
-			{
-				return stream << smart.handle;
-			}
+			return stream << nullptr;
 		}
 
 		template<typename U>

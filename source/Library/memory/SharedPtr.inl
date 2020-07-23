@@ -21,7 +21,7 @@ namespace Library
 		Base() {}
 
 	template<typename T>
-	template<typename U>
+	template<Concept::Related<T> U>
 	SharedPtr<T>::SharedPtr(const SharedPtr<U>& other) noexcept :
 		Base(reinterpret_cast<const SharedPtr&>(other))
 	{
@@ -32,12 +32,12 @@ namespace Library
 	}
 
 	template<typename T>
-	template<typename U>
+	template<Concept::Related<T> U>
 	SharedPtr<T>::SharedPtr(SharedPtr<U>&& other) noexcept :
 		Base(std::move(reinterpret_cast<SharedPtr&&>(other))) {}
 	
 	template<typename T>
-	template<typename U>
+	template<Concept::Related<T> U>
 	SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<U>& other) noexcept
 	{
 		this->~SharedPtr();
@@ -50,11 +50,11 @@ namespace Library
 	}
 
 	template<typename T>
-	template<typename U>
+	template<Concept::Related<T> U>
 	SharedPtr<T>& SharedPtr<T>::operator=(SharedPtr<U>&& other) noexcept
 	{
 		this->~SharedPtr();
-		auto& handle = reinterpret_cast<const SharedPtr&>(other).handle;		
+		auto& handle = reinterpret_cast<SharedPtr&>(other).handle;		
 		this->handle = handle;
 		handle = nullptr;
 		return *this;

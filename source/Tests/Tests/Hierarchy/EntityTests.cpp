@@ -142,12 +142,6 @@ namespace UnitTests
 
 		auto cit = e->cbegin();
 		REQUIRE(cit == e->cend());
-		
-		//REQUIRE(cit.IsAtBegin());
-		//REQUIRE(cit.IsAtEnd());
-
-		//REQUIRE_FALSE(cit);
-		//REQUIRE(!cit);
 
 		auto c = e->CreateChild();
 		cit = e->begin();
@@ -179,6 +173,12 @@ namespace UnitTests
 		const SharedPtr<const Entity> cc = c;
 
 		REQUIRE(p == cc->Parent());
+	}
+
+	TEST(Enabled)
+	{
+		SharedPtr<const Entity> e = SharedPtr<Entity>::Make();
+		REQUIRE(e->Enabled());
 	}
 #pragma endregion
 
@@ -318,8 +318,8 @@ namespace UnitTests
 
 	TEST(Grandchildren)
 	{
-		auto parent = SharedPtr<Entity>::Make();
-		parent->CreateChild<>("child"_s)->CreateChild<>("grandChild"_s)->CreateChild<>("greatGrandChild"_s);
+		//auto parent = SharedPtr<Entity>::Make();
+		//parent->CreateChild<>("child"_s)->CreateChild<>("grandChild"_s)->CreateChild<>("greatGrandChild"_s);
 	}
 #pragma endregion
 		

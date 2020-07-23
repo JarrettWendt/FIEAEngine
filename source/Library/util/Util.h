@@ -173,6 +173,18 @@ namespace Library::Util
 	{
 		return Find(range, t) != range.end();
 	}
+
+	template<std::ranges::range Range, std::predicate<typename Range::value_type> UnaryPredicate>
+	[[nodiscard]] bool AllOf(const Range& range, UnaryPredicate predicate)
+	{
+		return std::all_of(range.begin(), range.end(), predicate);
+	}
+
+	template<std::ranges::range Range, typename T, typename BinaryOperation>
+	[[nodiscard]] T Accumulate(const Range& range, T init, BinaryOperation op)
+	{
+		return std::accumulate(range.begin(), range.end(), init, op);
+	}
 #pragma endregion
 
 #pragma region SFINAE

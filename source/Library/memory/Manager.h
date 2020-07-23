@@ -13,7 +13,10 @@ namespace Library::Memory
 	class Manager final
 	{
 		using Handle = SmartPtr<std::byte>::Handle;
-		
+
+		/**
+		 * A single contiguous block of memory from which objects may reserve space.
+		 */
 		class Heap final
 		{
 			// Heap i will be `byteFactor << i` bytes big.
@@ -53,25 +56,52 @@ namespace Library::Memory
 			MOVE_COPY_DTOR(Heap, default)
 
 #pragma region properties
-			bool Contains(const std::byte* addr) const noexcept;
-			bool ContainsAllocated(const std::byte* addr) const noexcept;
-			
+			/**
+			 * Whether or not this Heap is totally empty, free of any allocations.
+			 * If this Heap is desperately in need of defragging it's possible this Heap could be free yet the Heap doesn't know it.
+			 */
+			bool IsEmpty() const noexcept;
+
+			/**
+			 * Whether or not this Heap has enough contiguous space to fit an allocation of this size in O(1) time.
+			 * Does not take alignment into account, which may require extra pad bytes.
+			 * This Heap may in fact have enough space for this allocation yet return false if this Heap is desperately in need of defragging.
+			 * Useful for a quick comparison without doing any more expensive operations.
+			 */
 			bool CanFit(size_t numBytes) const noexcept;
-			
-			size_t AllocatedBytes() const noexcept;
+
+			/**
+			 * This Heap has reserved *at most* this many bytes.
+			 * Could have less if this Heap is desperately in need of defragging.
+			 */
 			size_t TotalBytes() const noexcept;
-			
+
+			/**
+			 * @returns			the Heap after this one
+			 * @returns nullptr	if there is not Heap after this one (might want to call MakeHeap)
+			 * 
+			 */
 			Heap* Next() noexcept;
 #pragma endregion
 
+			/**
+			 * O(1)
+			 *
+			 * @returns pointer that satisfies alignment and has at least numBytes reserved after it
+			 * @returns nullptr	if no allocation could be made (might need to Defrag or Graduate)
+			 */
 			Handle* Alloc(size_t numBytes, size_t alignment) noexcept;
 
 			/**
+			 * O(n)
+			 *
 			 * Shuffles memory such that all unused memory is at the end.
 			 */
 			void Defrag() noexcept;
 
 			/**
+			 * O(n)
+			 *
 			 * Migrates memory from this Heap into the next one.
 			 * If the next Heap cannot fit this one's memory, it too must Graduate.
 			 * If there is no next Heap, one will be created.
@@ -79,10 +109,16 @@ namespace Library::Memory
 			 */
 			void Graduate() noexcept;
 
+			/**
+			 * O(n) where n is the number of Unused Handles at the top of the Heap.
+			 *
+			 * Defrag without shuffling.
+			 * Only frees memory at the top of the Heap.
+			 */
+			void ShrinkToFit() noexcept;
+
 		private:
 #pragma region helpers
-			void Free(std::byte* from, std::byte* to) noexcept;
-
 			/**
 			 * Fill memory with debug values (only in debug compilations).
 			 * 
@@ -103,6 +139,12 @@ namespace Library::Memory
 	public:
 		STATIC_CLASS(Manager)
 
+#pragma region properties
+		static bool IsEmpty() noexcept;
+		static size_t TotalBytes() noexcept;
+#pragma endregion
+		
+#pragma region alloc
 		/**
 		 * Let C++'s compile-time type system figure out numBytes and alignment for you
 		 */
@@ -124,7 +166,9 @@ namespace Library::Memory
 		 * @param alignment		desired alignment of the bytes
 		 */
 		static Handle& Alloc(size_t numBytes, size_t alignment) noexcept;
+#pragma endregion
 
+#pragma region gc
 		/**
 		 * Removes fragments from all managed Heaps.
 		 */
@@ -136,6 +180,13 @@ namespace Library::Memory
 		 * Will potentially allocate a new Heap if there's not enough space to Graduate all the way up.
 		 */
 		static void Graduate() noexcept;
+
+		/**
+		 * Keeps deleting the last Heap as long as the last Heap is empty.
+		 * Will not delete the 0th or 1st Heap.
+		 */
+		static void ShrinkToFit() noexcept;
+#pragma endregion
 
 	private:
 		/**

@@ -2,6 +2,7 @@
 #include "Manager.h"
 #include "Memory.h"
 #include "LibMath.h"
+#include "Util.h"
 
 namespace Library::Memory
 {
@@ -16,24 +17,14 @@ namespace Library::Memory
 	}
 
 #pragma region properties
-	bool Manager::Heap::Contains(const std::byte* addr) const noexcept
+	bool Manager::Heap::IsEmpty() const noexcept
 	{
-		return begin <= addr && addr < end;
-	}
-
-	bool Manager::Heap::ContainsAllocated(const std::byte* addr) const noexcept
-	{
-		return begin <= addr && addr < top;
+		return top == begin;
 	}
 
 	bool Manager::Heap::CanFit(const size_t numBytes) const noexcept
 	{
 		return top + numBytes < end;
-	}
-
-	size_t Manager::Heap::AllocatedBytes() const noexcept
-	{
-		return top - begin;
 	}
 
 	size_t Manager::Heap::TotalBytes() const noexcept
@@ -47,7 +38,7 @@ namespace Library::Memory
 		return next < heaps.size() ? &heaps[next] : nullptr;
 	}
 #pragma endregion
-
+	
 	Manager::Handle* Manager::Heap::Alloc(const size_t numBytes, const size_t alignment) noexcept
 	{
 		// calculate alignment offset
@@ -56,9 +47,7 @@ namespace Library::Memory
 		// try to reserve bytes
 		if (CanFit(offset + numBytes))
 		{
-#ifdef _DEBUG
-			count++;
-#endif
+			DebugIncCount();
 			// apply alignment offset
 			top += offset;
 			// this is our reserved address
@@ -75,7 +64,7 @@ namespace Library::Memory
 		return nullptr;
 	}
 
-	void Manager::Heap::Defrag() noexcept
+	void Manager::Heap::ShrinkToFit() noexcept
 	{
 		while (!handles.empty() && !handles.front().Used())
 		{
@@ -84,6 +73,11 @@ namespace Library::Memory
 			handles.pop_front();
 			DebugDecCount();
 		}
+	}
+
+	void Manager::Heap::Defrag() noexcept
+	{
+		ShrinkToFit();
 		
 		if (handles.empty()) [[unlikely]]
 		{
@@ -162,14 +156,23 @@ namespace Library::Memory
 		}
 		next->top += offset;
 
+		// The handles are in reverse-order of allocation. So the latest allocation is in the front.
+		// We need to iterate from back-to-front, so we need to reverse it before proceeding.
+		// This is an O(n) operation that could be mitigated by using a doubly-linked list (std::list).
+		// However that takes up an extra pointer per handle, which is undesired.
+		// Especially considering we would only need that functionality now during Graduation.
+		// Ideally, we'd be using a std::deque where we can control the individual sub-arrays.
+		handles.reverse();
+
 		// update the handles
 		std::byte* addr = next->top;
 		auto nextIt = handles.begin();
 		auto currIt = nextIt++;
 		while (nextIt != handles.end())
 		{
+			const size_t byteWidth = nextIt->ptr - currIt->ptr;
 			currIt->ptr = addr;
-			addr += nextIt->ptr - currIt->ptr;
+			addr += byteWidth;
 			currIt = nextIt++;
 		}
 		currIt->ptr = addr;
@@ -180,6 +183,7 @@ namespace Library::Memory
 		next->maxAlignment = std::max(next->maxAlignment, maxAlignment);
 		
 		// give up all of our handles
+		handles.reverse();
 		next->handles.splice_after(next->handles.before_begin(), handles);
 #ifdef _DEBUG
 		next->count += count;
@@ -224,6 +228,16 @@ namespace Library::Memory
 	}
 #pragma endregion
 #pragma endregion
+
+	bool Manager::IsEmpty() noexcept
+	{
+		return Util::AllOf(heaps, [](const Heap& heap) { return heap.IsEmpty(); });
+	}
+
+	size_t Manager::TotalBytes() noexcept
+	{
+		return Util::Accumulate(heaps, 0, [](const size_t a, const Heap& h) { return a + h.TotalBytes(); });
+	}
 	
 	Manager::Handle& Manager::Alloc(const size_t numBytes, const size_t alignment) noexcept
 	{		
@@ -255,6 +269,18 @@ namespace Library::Memory
 	void Manager::Graduate() noexcept
 	{
 		heaps.front().Graduate();
+	}
+
+	void Manager::ShrinkToFit() noexcept
+	{
+		for (Heap& heap : heaps)
+		{
+			heap.ShrinkToFit();
+		}
+		while (heaps.size() > 2 && heaps.back().IsEmpty())
+		{
+			heaps.pop_back();
+		}
 	}
 
 	Manager::Heap& Manager::MakeHeap() noexcept

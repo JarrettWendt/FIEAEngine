@@ -1,4 +1,5 @@
 #pragma once
+#include "Concept.h"
 #include "Manager.h"
 #include "SmartPtr.h"
 
@@ -18,14 +19,14 @@ namespace Library
 	public:
 		SharedPtr(nullptr_t) noexcept;
 
-		template<typename U>
+		template<Concept::Related<T> U>
 		SharedPtr(const SharedPtr<U>& other) noexcept;
-		template<typename U>
+		template<Concept::Related<T> U>
 		SharedPtr(SharedPtr<U>&& other) noexcept;
 		
-		template<typename U>
+		template<Concept::Related<T> U>
 		SharedPtr& operator=(const SharedPtr<U>& other) noexcept;
-		template<typename U>
+		template<Concept::Related<T> U>
 		SharedPtr& operator=(SharedPtr<U>&& other) noexcept;
 		
 		SharedPtr() noexcept = default;
