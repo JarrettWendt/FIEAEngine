@@ -77,48 +77,60 @@ namespace Library::Memory
 
 	void Manager::Heap::Defrag() noexcept
 	{
+		while (!handles.empty() && !handles.front().Used())
+		{
+			DebugFill(handles.front().ptr, top);
+			top -= top - handles.front().ptr;
+			handles.pop_front();
+			DebugDecCount();
+		}
+		
 		if (handles.empty()) [[unlikely]]
 		{
 			return;
 		}
-		
-		auto curr = handles.begin();
-		auto prev = curr++;
 
+		// We're going to re-calculate this as we go.
+		// This is because the largest alignment required could have been freed.
+		maxAlignment = 1;
+
+		// keep in mind the list is in reverse order of allocation
+		// so next is the previous node but the next address
+		auto curr = handles.begin();
+		auto next = curr++;
 		while (curr != handles.end())
 		{
 			if (!curr->Used()) [[unlikely]]
 			{
-				// TODO: need to worry about alignment when freeing
-				size_t byteCount = prev->ptr - curr->ptr;
+				// how big is this object
+				size_t byteCount = next->ptr - curr->ptr;
 
-				// shuffle the memory
-				Free(curr->ptr, prev->ptr);
+				// shuffle memory
+				Memmove(curr->ptr, next->ptr, top - next->ptr);
+				DebugFill(top - byteCount, top);
+				
+				// adjust the top			
+				top -= byteCount;
+				maxAlignment = std::max(maxAlignment, next->Alignment());
+				const size_t offset = size_t(top) % maxAlignment;
+				top += offset;
+				byteCount -= offset;
+
+				// done with this handle
 				++curr;
-				handles.erase_after(prev);
+				handles.erase_after(next);
+				DebugDecCount();
 
 				// update the handles
 				for (auto it = handles.begin(); it != curr; ++it)
 				{
 					it->ptr -= byteCount;
-					const size_t offset = size_t(it->ptr) % it->Alignment();
-					it->ptr += offset;
-					byteCount -= offset;
 				}
 			}
 			else [[likely]]
 			{
-				prev = curr++;
+				next = curr++;
 			}
-		}
-
-		// loop checked all except the first handle
-		Handle& handle = handles.front();
-		if (!handle.Used())
-		{
-			Free(handle.ptr, top);
-			top -= top - handle.ptr;
-			handles.pop_front();
 		}
 	}
 
@@ -180,21 +192,7 @@ namespace Library::Memory
 		maxAlignment = 1;
 	}
 
-#pragma region helpers	
-	void Manager::Heap::Free(std::byte* from, std::byte* to) noexcept
-	{
-		assert(to > from && ContainsAllocated(from) && ContainsAllocated(to - 1));
-		
-		const size_t numBytes = top - to;
-		Memmove(from, to, numBytes);
-		DebugFill(top - numBytes, top);
-		top -= numBytes;
-		
-#ifdef _DEBUG
-		count--;
-#endif
-	}
-
+#pragma region helpers
 	void Manager::Heap::DebugFill([[maybe_unused]] std::byte* from, [[maybe_unused]] std::byte* to) noexcept
 	{
 #ifdef _DEBUG
@@ -204,6 +202,23 @@ namespace Library::Memory
 		if (numBytes % 2)
 		{
 			*(to - 1) = std::byte(0xF1);
+		}
+#endif
+	}
+
+	void Manager::Heap::DebugIncCount() noexcept
+	{
+#ifdef _DEBUG
+		count++;
+#endif
+	}
+
+	void Manager::Heap::DebugDecCount() noexcept
+	{
+#ifdef _DEBUG
+		if (--count == 0)
+		{
+			assertm(top == begin, "memory leak");
 		}
 #endif
 	}
@@ -235,6 +250,10 @@ namespace Library::Memory
 		{
 			heap.Defrag();
 		}
+	}
+
+	void Manager::Graduate() noexcept
+	{
 		heaps.front().Graduate();
 	}
 

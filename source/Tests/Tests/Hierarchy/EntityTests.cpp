@@ -326,11 +326,10 @@ namespace UnitTests
 #pragma region Remove
 	TEST(Orphan)
 	{
-		auto p = Engine::World().CreateChild<>();			
+		auto p = SharedPtr<Entity>::Make();			
 		auto c = p->CreateChild<>();
 		REQUIRE(c->Parent());
 		c->Orphan();
-		Engine::Update();
 		REQUIRE(!c->Parent());
 		p->Orphan();
 	}

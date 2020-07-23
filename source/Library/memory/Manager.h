@@ -90,6 +90,9 @@ namespace Library::Memory
 			 * @param to		address to end debug values at
 			 */
 			void DebugFill(std::byte* from, std::byte* to) noexcept;
+
+			void DebugIncCount() noexcept;
+			void DebugDecCount() noexcept;
 #pragma endregion
 		};
 
@@ -100,17 +103,44 @@ namespace Library::Memory
 	public:
 		STATIC_CLASS(Manager)
 
+		/**
+		 * Let C++'s compile-time type system figure out numBytes and alignment for you
+		 */
 		template<typename T>
 		static typename SmartPtr<T>::Handle& Alloc(size_t count = 1) noexcept;
-		
+
+		/**
+		 * Allocate and construct in-place.
+		 */
 		template<typename T, typename... Args>
 		static typename SmartPtr<T>::Handle& Emplace(Args... args);
-		
+
+		/**
+		 * Allocate space.
+		 * Will end up reserving potentially more than numBytes due to padding to satisfy alignment.
+		 * Guarantees no other managed memory will be touched.
+		 *
+		 * @param numBytes		minimum number of bytes to reserve
+		 * @param alignment		desired alignment of the bytes
+		 */
 		static Handle& Alloc(size_t numBytes, size_t alignment) noexcept;
 
+		/**
+		 * Removes fragments from all managed Heaps.
+		 */
 		static void Defrag() noexcept;
 
+		/**
+		 * Graduates the smallest Heap to the next.
+		 * If the next Heap doesn't have enough space, it must Graduate too, starting a chain reaction.
+		 * Will potentially allocate a new Heap if there's not enough space to Graduate all the way up.
+		 */
+		static void Graduate() noexcept;
+
 	private:
+		/**
+		 * Constructs a new Heap at twice the size of the current largest Heap.
+		 */
 		static Heap& MakeHeap() noexcept;
 	};
 }

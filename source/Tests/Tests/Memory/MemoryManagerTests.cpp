@@ -1,10 +1,3 @@
-// forcibly allow us to see Entity::Init and Entity::Update
-#include "Attributed.h"
-#define protected public
-#include "Entity.h"
-#include "MemLeakUtils.h"
-#undef protected
-
 #include "../../pch.h"
 
 using namespace std::string_literals;
@@ -17,82 +10,39 @@ namespace UnitTests
 	using SharedString = SharedPtr<std::string>;
 	using SharedEntity = SharedPtr<Entity>;
 	
-//	TEST(std::string)
-//	{
-//		std::string* addr;
-//		{
-//			auto a = SharedString::Make("hello");
-//			REQUIRE(*a == "hello");
-//			addr = &*a;
-//		}
-//		Memory::Manager::Defrag();
-//
-//#ifdef _DEBUG
-//		REQUIRE(*reinterpret_cast<std::uint16_t*>(addr) == std::uint16_t(0xF1EA));
-//#endif
-//		
-//		{
-//			auto a = SharedString::Make("hello");
-//			REQUIRE(*a == "hello");
-//			REQUIRE(&*a == addr);
-//		}
-//		Memory::Manager::Defrag();
-//	}
-//
-//	TEST(virtual)
-//	{
-//		Entity* addr;
-//		{
-//			auto a = SharedEntity::Make();
-//			a->Init();
-//			addr = &*a;
-//		}
-//		Memory::Manager::Defrag();
-//
-//#ifdef _DEBUG
-//		REQUIRE(*reinterpret_cast<std::uint16_t*>(addr) == std::uint16_t(0xF1EA));
-//#endif
-//
-//		{
-//			auto a = SharedEntity::Make();
-//			a->Init();
-//			REQUIRE(&*a == addr);
-//		}
-//		Memory::Manager::Defrag();
-//	}
-//
-//	TEST(World)
-//	{
-//		auto world = SharedEntity::Make();
-//		world->SetName("World");
-//		world->Init();
-//
-//		world = SharedEntity::Make();
-//		world->SetName("World");
-//		world->Init();
-//	}
-//
-//	TEST(Init)
-//	{
-//		Engine::Init();
-//		Coroutines::StopAll();
-//		Engine::Update();
-//	
-//		Coroutines::StopAll();
-//		Engine::Update();
-//		
-//		Engine::Init();
-//		Coroutines::StopAll();
-//		Engine::Update();
-//	}
-
-	TEST(MemLeak)
+	TEST(std::string)
 	{
-		MemLeak();
-		MemLeak();
-		MemLeak();
-		MemLeak();
-		// the 5th one has a strange bug
-		MemLeak();
+		std::string* addr;
+		{
+			auto a = SharedString::Make("hello");
+			REQUIRE(*a == "hello");
+			addr = &*a;
+		}
+		Memory::Manager::Defrag();
+
+#ifdef _DEBUG
+		REQUIRE(*reinterpret_cast<std::uint16_t*>(addr) == std::uint16_t(0xF1EA));
+#endif
+		
+		{
+			auto a = SharedString::Make("hello");
+			REQUIRE(*a == "hello");
+			REQUIRE(&*a == addr);
+		}
+		Memory::Manager::Defrag();
+	}
+
+	TEST(ShuffleBackwards)
+	{
+		auto shared = SharedString::Make("hello");
+		std::string* addr = &*shared;
+		{
+			SharedString other = shared;
+			shared = SharedString::Make("some new string");
+		}
+		Memory::Manager::Defrag();
+
+		REQUIRE(*shared == "some new string");
+		REQUIRE(addr == &*shared);
 	}
 }

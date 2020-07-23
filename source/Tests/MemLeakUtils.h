@@ -19,14 +19,13 @@ namespace UnitTests
 		MemLeak()
 		{
 			MemLeak::Singleton();
+			Library::Memory::Manager::Defrag();
 			TestUtil::StartMemState();
 		}
 
 		~MemLeak()
 		{
-			using namespace Library;
-			//Coroutines::StopAll();
-			Engine::Update();
+			Library::Memory::Manager::Defrag();
 			TestUtil::EndMemState();
 		}
 
@@ -36,16 +35,13 @@ namespace UnitTests
 		static void Singleton()
 		{
 			using namespace Library;
-			Memory::Manager::Defrag();
-			Engine::Init();
-			//Coroutines::StopAll();
-			Engine::Update();
 			
 			static bool b{ false };
 			if (b)
 			{
 				return;
 			}
+			b = true;
 			
 			Math::NextPrime(500);
 			Enum<Digit>::ToString(Digit());
@@ -63,21 +59,6 @@ namespace UnitTests
 	template<typename T>
 	class TemplateMemLeak
 	{
-	protected:
-		TemplateMemLeak()
-		{
-			MemLeak::Singleton();
-			TestUtil::StartMemState();
-		}
-
-		~TemplateMemLeak()
-		{
-			using namespace Library;
-			Coroutines::StopAll();
-			Engine::Update();
-			TestUtil::EndMemState();
-		}
-
-		MOVE_COPY(TemplateMemLeak, default)
+		MemLeak memLeak{};
 	};
 }
