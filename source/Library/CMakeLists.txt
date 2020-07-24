@@ -7,7 +7,7 @@ set(TARGET_NAME Library)
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 # Add source to this project's executable.
-add_library(${TARGET_NAME} STATIC ${SOURCE_FILES})
+add_library(${TARGET_NAME} STATIC ${SOURCE_FILES} "memory/WeakPtr.h"  "memory/SmartPtr.h" "memory/Manager.h")
 
 # Linking External Libraries
 find_package(Microsoft.GSL CONFIG REQUIRED)

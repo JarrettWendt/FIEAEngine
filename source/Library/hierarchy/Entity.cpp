@@ -29,7 +29,7 @@ namespace Library
 
 	Entity::iterator::reference Entity::iterator::operator*() const
 	{
-		return it->value;
+		return it->second;
 	}
 
 	Entity::iterator::pointer Entity::iterator::operator->() const
@@ -46,48 +46,6 @@ namespace Library
 	{
 		return !operator==(other);
 	}
-
-	Entity::iterator::operator bool() const noexcept
-	{
-		return it;
-	}
-
-	bool Entity::iterator::operator!() const noexcept
-	{
-		return !it;
-	}
-
-	bool Entity::iterator::IsAtBegin() const noexcept
-	{
-		return it.IsAtBegin();
-	}
-
-	bool Entity::iterator::IsAtEnd() const noexcept
-	{
-		return it.IsAtEnd();
-	}
-#pragma endregion
-
-#pragma region const
-	Entity::const_iterator::operator bool() const noexcept
-	{
-		return it;
-	}
-
-	bool Entity::const_iterator::operator!() const noexcept
-	{
-		return !it;
-	}
-
-	bool Entity::const_iterator::IsAtBegin() const noexcept
-	{
-		return it.IsAtBegin();
-	}
-
-	bool Entity::const_iterator::IsAtEnd() const noexcept
-	{
-		return it.IsAtEnd();
-	}
 #pragma endregion
 
 Entity::iterator Entity::begin() noexcept
@@ -102,23 +60,26 @@ Entity::iterator Entity::end() noexcept
 #pragma endregion
 	
 #pragma region Properties
-	std::shared_ptr<Entity> Entity::Parent() noexcept
+	SharedPtr<Entity> Entity::Parent() noexcept
 	{
-		return parent.lock();
+		return parent;
 	}
 
-	std::shared_ptr<const Entity> Entity::Parent() const noexcept
+	SharedPtr<const Entity> Entity::Parent() const noexcept
 	{
 		return const_cast<Entity*>(this)->Parent();
 	}
 
-	std::shared_ptr<Entity> Entity::Child(const String& childName) noexcept
+	SharedPtr<Entity> Entity::Child(const String& childName) noexcept
 	{
-		const auto it = children.Find(childName);
-		return it ? it->value : nullptr;
+		if (const auto it = children.find(childName); it != children.end())
+		{
+			return it->second;
+		}
+		return nullptr;
 	}
 
-	std::shared_ptr<const Entity> Entity::Child(const String& childName) const noexcept
+	SharedPtr<const Entity> Entity::Child(const String& childName) const noexcept
 	{
 		return const_cast<Entity*>(this)->Child(childName);
 	}
@@ -128,32 +89,32 @@ Entity::iterator Entity::end() noexcept
 	{
 		if (auto p = Parent())
 		{
-			p->children.Remove(name);
-			p->children.Insert(newName, shared_from_this());
+			p->children.erase(name);
+			p->children.emplace(newName, SharedFromThis());
 		}
 		name = newName;
 	}
 
 #pragma region Insert	
-	std::shared_ptr<Entity> Entity::Adopt(const String& childName, SharedEntity child)
+	SharedPtr<Entity> Entity::Adopt(const String& childName, SharedEntity child)
 	{
 		ThrowName(childName);
 
-		if (child->Parent() != shared_from_this())
+		if (child->Parent() != SharedFromThis())
 		{
-			const auto [it, inserted] = children.Insert(childName, child);
+			const auto [it, inserted] = children.emplace(childName, child);
 			if (!inserted) [[unlikely]]
 			{
 				throw InvalidNameException("child with name "_s + childName + " already exists"_s);
 			}
-			assert(child == it->value);
+			assert(child == it->second);
 			child->name = childName;
-			child->parent = weak_from_this();
+			child->parent = WeakFromThis();
 		}
 		return child;
 	}
 
-	std::shared_ptr<Entity> Entity::Adopt(const SharedEntity child)
+	SharedPtr<Entity> Entity::Adopt(const SharedEntity child)
 	{
 		return Adopt(child->name, child);
 	}
@@ -162,15 +123,19 @@ Entity::iterator Entity::end() noexcept
 #pragma region Remove	
 	void Entity::Orphan() noexcept
 	{
-		Engine::pendingOrphans.PushBack(weak_from_this());
+		if (auto p = Parent())
+		{
+			p->children.erase(name);
+			parent = {};
+		}
 	}
 
 	void Entity::RemoveChild(const String& childName) noexcept
 	{
-		if (const auto it = children.Find(childName))
+		if (const auto it = children.find(childName); it != children.end())
 		{
-			it->value->parent = {};
-			children.Remove(it);
+			it->second->parent = {};
+			children.erase(it);
 		}
 	}
 #pragma endregion
@@ -187,25 +152,6 @@ Entity::iterator Entity::end() noexcept
 	}
 #pragma endregion
 
-	void Entity::Init()
-	{
-		for (const auto& e : *this)
-		{
-			e->Init();
-		}
-	}
-
-	void Entity::Update()
-	{
-		for (const auto& e : *this)
-		{			
-			if (e->Enabled())
-			{
-				e->Update();
-			}
-		}
-	}
-
 #pragma region Helpers
 	void Entity::InvalTransform() noexcept
 	{
@@ -215,18 +161,9 @@ Entity::iterator Entity::end() noexcept
 
 	void Entity::InvalChildTransforms() noexcept
 	{
-		for (const auto& e : *this)
+		for (auto& e : *this)
 		{
 			e->InvalTransform();
-		}
-	}
-	
-	void Entity::OrphanNow() noexcept
-	{
-		if (auto p = Parent())
-		{
-			p->children.Remove(name);
-			parent = {};
 		}
 	}
 #pragma endregion

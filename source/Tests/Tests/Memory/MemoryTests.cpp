@@ -3,7 +3,7 @@
 using namespace std::string_literals;
 using namespace Library;
 
-#define TEST(name) TEST_CASE_METHOD(MemLeak, #name, "[MEMORY]")
+#define TEST(name) TEST_CASE_METHOD(MemLeak, "Memory::" #name, "[Memory]")
 
 namespace UnitTests
 {

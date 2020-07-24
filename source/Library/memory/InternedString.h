@@ -3,6 +3,7 @@
 #include <unordered_set>
 
 #include "HashMap.h"
+#include "SharedPtr.h"
 
 namespace Library
 {
@@ -151,3 +152,17 @@ namespace Library
 		}
 	};
 }
+
+namespace std
+{
+	template<>
+	struct hash<Library::String>
+	{
+		size_t operator()(const Library::String& s) const noexcept
+		{
+			return Library::Hash<Library::String>{}(s);
+		}
+	};
+}
+
+#include "InternedString.inl"

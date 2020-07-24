@@ -4,6 +4,7 @@
 
 #include "python/pch.h"
 #include "python/shared_ptr.h"
+#include "python/Util.h"
 #include "hierarchy/Entity.h"
 
 namespace Library::py
@@ -51,9 +52,9 @@ namespace Library::py
 
 			static inline PyGetSetDef getset[]
 			{
-				{ "x", Util::UnionCast<getter>(&Vector3Wrapper::GetX), Util::UnionCast<setter>(&Vector3Wrapper::SetX), "x component" },
-				{ "y", Util::UnionCast<getter>(&Vector3Wrapper::GetY), Util::UnionCast<setter>(&Vector3Wrapper::SetY), "y component" },
-				{ "z", Util::UnionCast<getter>(&Vector3Wrapper::GetZ), Util::UnionCast<setter>(&Vector3Wrapper::SetZ), "z component" },
+				{ "x", Library::Util::UnionCast<getter>(&Vector3Wrapper::GetX), Library::Util::UnionCast<setter>(&Vector3Wrapper::SetX), "x component" },
+				{ "y", Library::Util::UnionCast<getter>(&Vector3Wrapper::GetY), Library::Util::UnionCast<setter>(&Vector3Wrapper::SetY), "y component" },
+				{ "z", Library::Util::UnionCast<getter>(&Vector3Wrapper::GetZ), Library::Util::UnionCast<setter>(&Vector3Wrapper::SetZ), "z component" },
 				
 				{}
 			};
@@ -93,10 +94,10 @@ namespace Library::py
 
 			static inline PyGetSetDef getset[]
 			{
-				{ "x", Util::UnionCast<getter>(&QuaternionWrapper::GetX), Util::UnionCast<setter>(&QuaternionWrapper::SetX), "x component" },
-				{ "y", Util::UnionCast<getter>(&QuaternionWrapper::GetY), Util::UnionCast<setter>(&QuaternionWrapper::SetY), "y component" },
-				{ "z", Util::UnionCast<getter>(&QuaternionWrapper::GetZ), Util::UnionCast<setter>(&QuaternionWrapper::SetZ), "z component" },
-				{ "w", Util::UnionCast<getter>(&QuaternionWrapper::GetW), Util::UnionCast<setter>(&QuaternionWrapper::SetW), "w component" },
+				{ "x", Library::Util::UnionCast<getter>(&QuaternionWrapper::GetX), Library::Util::UnionCast<setter>(&QuaternionWrapper::SetX), "x component" },
+				{ "y", Library::Util::UnionCast<getter>(&QuaternionWrapper::GetY), Library::Util::UnionCast<setter>(&QuaternionWrapper::SetY), "y component" },
+				{ "z", Library::Util::UnionCast<getter>(&QuaternionWrapper::GetZ), Library::Util::UnionCast<setter>(&QuaternionWrapper::SetZ), "z component" },
+				{ "w", Library::Util::UnionCast<getter>(&QuaternionWrapper::GetW), Library::Util::UnionCast<setter>(&QuaternionWrapper::SetW), "w component" },
 				
 				{}
 			};
@@ -127,9 +128,9 @@ namespace Library::py
 
 			static inline PyGetSetDef getset[]
 			{
-				{ "translation", Util::UnionCast<getter>(&TransformWrapper::GetTranslation), Util::UnionCast<setter>(&TransformWrapper::SetTranslation), "translation component" },
-				{ "rotation", Util::UnionCast<getter>(&TransformWrapper::GetRotation), Util::UnionCast<setter>(&TransformWrapper::SetRotation), "rotation component" },
-				{ "scale", Util::UnionCast<getter>(&TransformWrapper::GetScale), Util::UnionCast<setter>(&TransformWrapper::SetScale), "scale component" },
+				{ "translation", Library::Util::UnionCast<getter>(&TransformWrapper::GetTranslation), Library::Util::UnionCast<setter>(&TransformWrapper::SetTranslation), "translation component" },
+				{ "rotation", Library::Util::UnionCast<getter>(&TransformWrapper::GetRotation), Library::Util::UnionCast<setter>(&TransformWrapper::SetRotation), "rotation component" },
+				{ "scale", Library::Util::UnionCast<getter>(&TransformWrapper::GetScale), Library::Util::UnionCast<setter>(&TransformWrapper::SetScale), "scale component" },
 
 				{}
 			};
@@ -147,7 +148,7 @@ namespace Library::py
 		
 		friend PyObject* InitEntityModule();
 
-		std::shared_ptr<Library::Entity> e;
+		SharedPtr<Library::Entity> e;
 		
 		static void dealloc(EntityBinding* self);
 		static EntityBinding* _new(PyTypeObject* t, PyObject* args, PyObject* kwds);
@@ -178,28 +179,28 @@ namespace Library::py
 
 		static inline PyMethodDef methods[]
 		{
-			{ "Child", Util::UnionCast<PyCFunction>(&EntityBinding::Child), METH_O, "get child by name" },
+			{ "Child", Library::Util::UnionCast<PyCFunction>(&EntityBinding::Child), METH_O, "get child by name" },
 
-			{ "Adopt", Util::UnionCast<PyCFunction>(&EntityBinding::Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed EntityBinding a child of this one" },
+			{ "Adopt", Library::Util::UnionCast<PyCFunction>(&EntityBinding::Adopt), METH_VARARGS | METH_KEYWORDS, "make the passed EntityBinding a child of this one" },
 
-			{ "Orphan", Util::UnionCast<PyCFunction>(&EntityBinding::Orphan), METH_NOARGS, "orphans this EntityBinding from its parent" },
-			{ "RemoveChild", Util::UnionCast<PyCFunction>(&EntityBinding::RemoveChild), METH_O, "removes child by name" },
+			{ "Orphan", Library::Util::UnionCast<PyCFunction>(&EntityBinding::Orphan), METH_NOARGS, "orphans this EntityBinding from its parent" },
+			{ "RemoveChild", Library::Util::UnionCast<PyCFunction>(&EntityBinding::RemoveChild), METH_O, "removes child by name" },
 
-			{ "_Init", Util::UnionCast<PyCFunction>(&EntityBinding::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
-			{ "_Update", Util::UnionCast<PyCFunction>(&EntityBinding::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
+			{ "_Init", Library::Util::UnionCast<PyCFunction>(&EntityBinding::Init), METH_NOARGS, "initialization ran after construction before the first Update" },
+			{ "_Update", Library::Util::UnionCast<PyCFunction>(&EntityBinding::Update), METH_NOARGS, "initialization ran after construction before the first Update" },
 
 			{}
 		};
 
 		static inline PyGetSetDef getset[]
 		{
-			{ "name", Util::UnionCast<getter>(&EntityBinding::GetName), Util::UnionCast<setter>(&EntityBinding::SetName), "name of this EntityBinding" },
-			{ "enabled", Util::UnionCast<getter>(&EntityBinding::GetEnabled), Util::UnionCast<setter>(&EntityBinding::SetEnabled), "whether or not this EntityBinding is enabled" },
-			{ "parent", Util::UnionCast<getter>(&EntityBinding::GetParent), Util::UnionCast<setter>(&EntityBinding::SetParent), "this EntityBinding's parent" },
-			{ "numChildren", Util::UnionCast<getter>(&EntityBinding::NumChildren), nullptr, "how many children this Entity has" },
-			{ "hasChildren", Util::UnionCast<getter>(&EntityBinding::HasChildren), nullptr, "whether or not this Entity has any children" },
-			{ "localTransform", Util::UnionCast<getter>(&EntityBinding::GetLocalTransform), Util::UnionCast<setter>(&EntityBinding::SetLocalTransform), "the local transform of this Entity" },
-			{ "worldTransform", Util::UnionCast<getter>(&EntityBinding::GetWorldTransform), Util::UnionCast<setter>(&EntityBinding::SetWorldTransform), "the world transform of this Entity" },
+			{ "name", Library::Util::UnionCast<getter>(&EntityBinding::GetName), Library::Util::UnionCast<setter>(&EntityBinding::SetName), "name of this EntityBinding" },
+			{ "enabled", Library::Util::UnionCast<getter>(&EntityBinding::GetEnabled), Library::Util::UnionCast<setter>(&EntityBinding::SetEnabled), "whether or not this EntityBinding is enabled" },
+			{ "parent", Library::Util::UnionCast<getter>(&EntityBinding::GetParent), Library::Util::UnionCast<setter>(&EntityBinding::SetParent), "this EntityBinding's parent" },
+			{ "numChildren", Library::Util::UnionCast<getter>(&EntityBinding::NumChildren), nullptr, "how many children this Entity has" },
+			{ "hasChildren", Library::Util::UnionCast<getter>(&EntityBinding::HasChildren), nullptr, "whether or not this Entity has any children" },
+			{ "localTransform", Library::Util::UnionCast<getter>(&EntityBinding::GetLocalTransform), Library::Util::UnionCast<setter>(&EntityBinding::SetLocalTransform), "the local transform of this Entity" },
+			{ "worldTransform", Library::Util::UnionCast<getter>(&EntityBinding::GetWorldTransform), Library::Util::UnionCast<setter>(&EntityBinding::SetWorldTransform), "the world transform of this Entity" },
 			
 			{}
 		};
@@ -225,7 +226,7 @@ namespace Library::py
 		template<CoordinateSpace Space>
 		TransformWrapper* GetTransform()
 		{
-			TransformWrapper* ret = Util::New<TransformWrapper>();
+			TransformWrapper* ret = py::Util::New<TransformWrapper>();
 			const auto t = e->Transform<Space>();
 			std::memcpy(&ret->t, &t, sizeof(decltype(t)));
 			ret->space = Space;
@@ -233,7 +234,7 @@ namespace Library::py
 		}
 
 	public:
-		static EntityBinding* FromEntity(std::shared_ptr<Library::Entity> entity) noexcept;
+		static EntityBinding* FromEntity(Library::Entity::SharedEntity entity) noexcept;
 #pragma endregion
 	};
 }

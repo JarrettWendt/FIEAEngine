@@ -136,7 +136,7 @@ namespace Library
 	
 	constexpr size_t Entity::NumChildren() const noexcept
 	{
-		return children.Size();
+		return children.size();
 	}
 	
 	constexpr bool Entity::HasChildren() const noexcept
@@ -208,27 +208,27 @@ namespace Library
 	template <CoordinateSpace Space>
 	Entity::TransformWrapper<Space, true> Entity::Transform() const noexcept
 	{
-		return *this;
+		return *const_cast<Entity*>(this);
 	}
 #pragma endregion
 
 #pragma region Insert
 	template<std::derived_from<Entity> Derived, typename... Args>
-	inline std::shared_ptr<Derived> Entity::CreateChild(const String& childName, Args&&... args)
+	inline SharedPtr<Derived> Entity::CreateChild(const String& childName, Args&&... args)
 	{
-		return Adopt(childName, std::make_shared<Derived>(std::forward<Args>(args)...));
+		return Adopt(childName, SharedPtr<Derived>::Make(std::forward<Args>(args)...));
 	}
 
 	template<std::derived_from<Entity> Derived, typename ...Args>
-	inline std::shared_ptr<Derived> Entity::CreateChild(String&& childName, Args&& ...args)
+	inline SharedPtr<Derived> Entity::CreateChild(String&& childName, Args&& ...args)
 	{
-		return Adopt(std::move(childName), std::make_shared<Derived>(std::forward<Args>(args)...));
+		return Adopt(std::move(childName), SharedPtr<Derived>::Make(std::forward<Args>(args)...));
 	}
 	
 	template<std::derived_from<Entity> Derived, typename ...Args>
-	inline std::shared_ptr<Derived> Entity::CreateChild(Args&& ...args)
+	inline SharedPtr<Derived> Entity::CreateChild(Args&& ...args)
 	{
-		const auto child = std::make_shared<Derived>(std::forward<Args>(args)...);
+		const auto child = SharedPtr<Derived>::Make(std::forward<Args>(args)...);
 		return Adopt(child->GetName(), child);
 	}
 #pragma endregion

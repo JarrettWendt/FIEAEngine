@@ -5,6 +5,7 @@
 // Standard
 #include <algorithm>
 #include <atomic>
+#include <bitset>
 #include <chrono>
 #include <cinttypes>
 #include <filesystem>
@@ -37,6 +38,10 @@
 #include "Engine.h"
 #include "EngineTime.h"
 #include "Input.h"
+// Memory
+#include "Memory.h"
+#include "SmartPtr.h"
+#include "InternedString.h"
 // Util
 #include "Concept.h"
 #include "Literals.h"
@@ -44,6 +49,7 @@
 #include "Util.h"
 #include "Reflection.h"
 #include "Random.h"
+#include "Types.h"
 // Events
 #include "Event.h"
 #include "EventManager.h"

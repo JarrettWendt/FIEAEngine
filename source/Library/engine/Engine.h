@@ -5,26 +5,22 @@
 #include <gsl/gsl>
 
 #include "Macros.h"
-#include "SList.h"
+#include "SharedPtr.h"
+#include "Entity.h"
 
 namespace Library
-{
-	class Entity;
-	
+{	
 	class Engine final
 	{
 		friend Entity;
 		
 		/** the parentmost Entity */
-		static inline std::shared_ptr<Entity> world{ nullptr };
+		static inline SharedPtr<Entity> world{ nullptr };
 		
 		static inline std::string programName{};
 		static inline std::string pythonSourceDirectory{};
 		static inline const std::string initFileName{ "init.py" };
 		static inline const std::string shutdownFileName{ "del.py" };
-		
-		// TODO: This should be replaced with a garbage collector
-		static inline SList<std::weak_ptr<Entity>> pendingOrphans{};
 
 		static inline FILE* initFilePtr{ nullptr };
 		

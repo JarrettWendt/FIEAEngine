@@ -1,6 +1,12 @@
 // MIT License Copyright (c) 2020 Jarrett Wendt
 
 #pragma once
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
+#include <cwchar>
+
+#include "Macros.h"
 
 namespace Library::Memory
 {

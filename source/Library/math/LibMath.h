@@ -7,7 +7,7 @@
  */
 namespace Library::Math::Constants
 {
-	// these constants were retrieved from WolframAlpha
+	// these constants were retrieved from Wolfram|Alpha
 	constexpr long double PI_llf = 3.141592653589793238462643383279502884197169399375105820974L;
 	constexpr double PI_lf = double(PI_llf);
 	constexpr float PI_f = float(PI_llf);
