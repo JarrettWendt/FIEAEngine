@@ -93,7 +93,7 @@ namespace Library::Memory
 			Handle* Alloc(size_t numBytes, size_t alignment) noexcept;
 
 			/**
-			 * O(n)
+			 * O(n^2)
 			 *
 			 * Shuffles memory such that all unused memory is at the end.
 			 */
