@@ -1,5 +1,7 @@
 # FIEA Engine
 
+**This branch preserves the state of this repository at the time of my graduation in 2020**
+
 This is a custom game engine that I made from scratch during my graduate course at the Florida Interactive Entertainment Academy. This is naturally a derivation of an academic library crated by my professor [Dr. Paul Varcholik](https://www.varcholik.org/). I have taken lengths to improve on the original design with modern C++20 features.
 
 ## Dependencies
